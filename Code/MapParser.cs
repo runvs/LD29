@@ -80,7 +80,7 @@ namespace JamTemplate
                 switch (gid)
                 {
                     case 0:
-                        PlayerPosition = new Vector2i(xPos, yPos);
+                        PlayerPosition = new Vector2i(xPos, yPos + 1);
                         break;
                 }
 
