@@ -5,6 +5,7 @@
 
 using JamUtilities;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace JamTemplate
 {
@@ -51,9 +52,9 @@ namespace JamTemplate
 
         public void Draw(RenderWindow rw)
         {
-            TileSprite.Position = new SFML.Window.Vector2f(
-               GameProperties.TileSizeInPixel * TilePosition.X - Camera.CameraPosition.X,
-               GameProperties.TileSizeInPixel * TilePosition.Y - Camera.CameraPosition.Y
+            TileSprite.Position = new Vector2f(
+               GameProperties.TileSizeInPixelScaled * TilePosition.X - Camera.CameraPosition.X,
+               GameProperties.TileSizeInPixelScaled * TilePosition.Y - Camera.CameraPosition.Y
            );
 
             rw.Draw(TileSprite);
@@ -63,14 +64,7 @@ namespace JamTemplate
         {
             if (_type == TileType.Grass)
             {
-                //if (RandomGenerator.Random.NextDouble() > 0.5)
-                //{
-                //    TileTexture = new Texture("../GFX/tile_grass.png");
-                //}
-                //else
-                //{
-                //    TileTexture = new Texture("../GFX/tile_grass2.png");
-                //}
+                TileTexture = new Texture("../GFX/grass.png");
             }
             TileSprite = new Sprite(TileTexture);
             TileSprite.Scale = new SFML.Window.Vector2f(2.0f, 2.0f);

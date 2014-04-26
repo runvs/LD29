@@ -28,7 +28,7 @@ namespace JamTemplate
             _gameState = State.Menu;
 
             //TODO  Default values, replace with correct ones !
-            SmartSprite._scaleVector = new Vector2f(2.0f, 2.0f);
+            SmartSprite._scaleVector = new Vector2f(4.0f, 4.0f);
             ScreenEffects.Init(new Vector2u(800, 600));
             ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
             //ParticleManager.Gravity = GameProperties.GravitationalAcceleration;

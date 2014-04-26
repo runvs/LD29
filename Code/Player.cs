@@ -8,12 +8,12 @@ namespace JamTemplate
 {
     class Player
     {
-
         #region Fields
 
         public int playerNumber;
         public string PlayerName { get; private set; }
         private SmartSprite _sprite;
+        public Vector2f AbsolutePositionInPixel{ get; private set;}
 
         Dictionary<Keyboard.Key, Action> _actionMap;
         private float movementTimer = 0.0f; // time between two successive movement commands
@@ -59,8 +59,16 @@ namespace JamTemplate
 			_sprite.Update(deltaT);
         }
 
+
+        public Vector2f GetOnScreenPosition()
+        {
+            return AbsolutePositionInPixel - Camera.CameraPosition;
+        }
+
         public void Draw(SFML.Graphics.RenderWindow rw)
         {
+            _sprite.Position = GetOnScreenPosition();
+
             _sprite.Draw(rw);
         }
 
@@ -84,7 +92,7 @@ namespace JamTemplate
         private void LoadGraphics()
         {
 
-            //_sprite = new SmartSprite("../GFX/player.png");
+            _sprite = new SmartSprite("../GFX/grass.png");
         }
 
         #endregion Methods

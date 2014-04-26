@@ -3,6 +3,8 @@ using System;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
+using System.Collections.Generic;
+using SFML.Window;
 
 namespace JamTemplate
 {
@@ -10,6 +12,9 @@ namespace JamTemplate
     {
 
         #region Fields
+
+        private List<Tile> _tileList;
+        private Player _player;
 
         #endregion Fields
 
@@ -22,10 +27,10 @@ namespace JamTemplate
 
         public void GetInput()
         {
-            if (SFML.Window.Keyboard.IsKeyPressed(SFML.Window.Keyboard.Key.C))
-            {
-                //ScreenEffects.ScreenFlash(SFML.Graphics.Color.Black, 4.0f);
-            }
+            //if (SFML.Window.Keyboard.IsKeyPressed(Keyboard.Key.C))
+            //{
+            //    //ScreenEffects.ScreenFlash(SFML.Graphics.Color.Black, 4.0f);
+            //}
 
         }
 
@@ -34,6 +39,9 @@ namespace JamTemplate
             ScreenEffects.Update(timeObject);
             SpriteTrail.Update(timeObject);
             ParticleManager.Update(timeObject);
+
+            Camera.ShouldBePosition = _player.GetOnScreenPosition();
+            Camera.DoCameraMovement(timeObject);
         }
 
         public void Draw(RenderWindow rw)
@@ -41,14 +49,47 @@ namespace JamTemplate
             rw.Clear(SFML.Graphics.Color.Blue);
             ParticleManager.Draw(rw);
 
+            foreach (var t in _tileList)
+            {
+                t.Draw(rw);
+            }
 
+            _player.Draw(rw);
 
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
             ScreenEffects.Draw(rw);
+
         }
 
         private void InitGame()
         {
+            _tileList = new List<Tile>();
+            _player = new Player(this, 0);
+            //LoadWorld();
+            CreateDefaultWorld();
+        }
+
+        private void CreateDefaultWorld()
+        {
+            GameProperties.WorldSizeInTiles = new SFML.Window.Vector2i(16, 16);
+            for (int i = 0; i != GameProperties.WorldSizeInTiles.X; i++)
+            {
+                for (int j = 0; j != GameProperties.WorldSizeInTiles.Y; j++)
+                {
+                    Tile newTile;
+                    if (j >= GameProperties.WorldSizeInTiles.Y - 1)
+                    {
+                        newTile = new Tile(i, j, Tile.TileType.Grass);
+                        _tileList.Add(newTile);
+                    }
+                    
+                }
+            }
+        }
+
+        private void LoadWorld()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion Methods
