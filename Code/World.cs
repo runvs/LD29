@@ -186,7 +186,6 @@ namespace JamTemplate
 
             _tileList = parser.TerrainLayer;
             Vector2i playerPos = parser.PlayerPosition;
-            playerPos.Y += 1;
             _player.SetPlayerPosition(playerPos);
 
         }
