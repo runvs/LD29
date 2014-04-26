@@ -27,7 +27,7 @@ namespace JamTemplate
             applicationWindow.Closed += new EventHandler(OnClose);
 
             Game myGame = new Game();
-
+            JamUtilities.Mouse.Window = applicationWindow;
 
 
             int startTime = Environment.TickCount;
@@ -43,6 +43,7 @@ namespace JamTemplate
                 startTime = Environment.TickCount;
 
                 applicationWindow.DispatchEvents();
+                JamUtilities.Mouse.Update();
 
                 myGame.GetInput();
                 if (myGame.CanBeQuit)

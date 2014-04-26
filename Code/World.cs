@@ -32,6 +32,7 @@ namespace JamTemplate
             //    //ScreenEffects.ScreenFlash(SFML.Graphics.Color.Black, 4.0f);
             //}
 
+            _player.GetInput();
         }
 
         public void Update(TimeObject timeObject)
@@ -40,7 +41,9 @@ namespace JamTemplate
             SpriteTrail.Update(timeObject);
             ParticleManager.Update(timeObject);
 
-            Camera.ShouldBePosition = _player.GetOnScreenPosition();
+            _player.Update(timeObject);
+
+            Camera.ShouldBePosition = _player.GetOnScreenPosition() ;
             Camera.DoCameraMovement(timeObject);
         }
 

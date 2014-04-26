@@ -14,10 +14,11 @@ namespace JamTemplate
         public string PlayerName { get; private set; }
         private SmartSprite _sprite;
         public Vector2f AbsolutePositionInPixel{ get; private set;}
+        public Vector2f ShouldBePosition { get; private set; }
 
         Dictionary<Keyboard.Key, Action> _actionMap;
         private float movementTimer = 0.0f; // time between two successive movement commands
-        private World myWorld;
+        private World _world;
 
         #endregion Fields
 
@@ -25,7 +26,7 @@ namespace JamTemplate
 
         public Player(World world, int number)
         {
-            myWorld = world;
+            _world = world;
             playerNumber = number;
 
             _actionMap = new Dictionary<Keyboard.Key, Action>();
@@ -40,7 +41,8 @@ namespace JamTemplate
                 System.Console.Out.WriteLine(e.ToString());
             }
 
-            AbsolutePositionInPixel = new Vector2f(400, 800);
+            AbsolutePositionInPixel = new Vector2f(800, 14*64);
+            ShouldBePosition = new Vector2f(800, 14 * 64);
         }
 
         private void SetPlayerNumberDependendProperties()
@@ -54,11 +56,47 @@ namespace JamTemplate
             {
                 MapInputToActions();
             }
+
+            GetMouseInput();
         }
 
-        public void Update(float deltaT)
+        private void GetMouseInput()
+        {
+            Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y) + Camera.CameraPosition;
+            if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
+            {
+                System.Console.WriteLine(AbsoluteMousePosition);
+                  ShouldBePosition = AbsoluteMousePosition;
+            }
+
+            // check if clicked Position is valid;
+
+          
+
+        }
+
+        public void Update(TimeObject deltaT)
         {
 			_sprite.Update(deltaT);
+
+            DoPlayerMovement(deltaT);
+        }
+
+        private void DoPlayerMovement(TimeObject deltaT)
+        {
+            // calculate the difference vector between current and shouldbe position
+
+            Vector2f dif = ShouldBePosition - AbsolutePositionInPixel;
+
+            // TODO juice for movement feel
+
+            float difLenght = MathStuff.GetLength(dif);
+            if (difLenght >= 1.0f)
+            {
+                Vector2f moveVelocity = dif * deltaT.ElapsedGameTime * GameProperties.PlayerMaxVelocity;
+                AbsolutePositionInPixel += moveVelocity;
+            }
+
         }
 
 
@@ -93,7 +131,7 @@ namespace JamTemplate
 
         private void LoadGraphics()
         {
-            _sprite = new SmartSprite("../GFX/grass.png");
+            _sprite = new SmartSprite("../GFX/player.png");
         }
 
         #endregion Methods
