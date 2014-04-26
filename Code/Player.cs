@@ -62,19 +62,21 @@ namespace JamTemplate
 
         private void GetMouseInput()
         {
-            Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y) + Camera.CameraPosition;
-            if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
+            if (_waypointList.Count == 0)
             {
-                _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
-                if (_waypointList.Count != 0)
+                Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y) + Camera.CameraPosition;
+                if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
                 {
-                    _waypointList.RemoveAt(0);
+                    _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
+                    if (_waypointList.Count != 0)
+                    {
+                        _waypointList.RemoveAt(0);
+                    }
+                    else
+                    {
+                        System.Console.WriteLine("Could not find Path");
+                    }
                 }
-                else
-                {
-                    System.Console.WriteLine("Could not find path.");
-                }
-
             }
         }
 
