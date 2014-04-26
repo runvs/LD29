@@ -2,6 +2,7 @@
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -16,6 +17,8 @@ namespace JamTemplate
 
         World _myWorld;
         Score _gameStats;
+
+        Music _bgm; 
         float _timeTilNextInput = 0.0f;
 
         #endregion Fields
@@ -31,7 +34,7 @@ namespace JamTemplate
             SmartSprite._scaleVector = new Vector2f(4.0f, 4.0f);
             ScreenEffects.Init(new Vector2u(800, 600));
             //ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
-            //ParticleManager.Gravity = GameProperties.GravitationalAcceleration;
+            ParticleManager.Gravity = new Vector2f(0,3);
             Camera.MinPosition = new Vector2f(0, -200);
             
             try
@@ -45,6 +48,11 @@ namespace JamTemplate
             {
                 Console.WriteLine(e);
             }
+
+            _bgm = new Music("../SFX/music.ogg");
+            _bgm.Loop = true;
+            _bgm.Play();
+
         }
 
         public void GetInput()

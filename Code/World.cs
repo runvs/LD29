@@ -5,6 +5,7 @@ using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -23,6 +24,7 @@ namespace JamTemplate
         private Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
+
 
         #endregion Fields
 
@@ -144,7 +146,7 @@ namespace JamTemplate
 
         private void InitGame()
         {
-
+            
             StoryProgress._world = this;
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
@@ -155,7 +157,7 @@ namespace JamTemplate
 
             //AddSpeechBubble("Wow this already looks great!", new Vector2f(150, 25));
 
-            _functionDict.Add("basicExplosion", StoryProgress.BasicExplosion);
+            _functionDict.Add("basicExplosion", StoryProgress.CaveCollapse);
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
         }
 
@@ -289,13 +291,39 @@ namespace JamTemplate
             _player.SetPlayerPosition(parser.PlayerPosition);
             SetWorldDependentSettings();
             CreateWayPoints();
-            ClearSpeechBubbles();
+            ResetSpeechBubbles();
+
+            CreateWaterDropSpaces();
 
             _player.ResetPathfinding();
 
         }
 
-        private void ClearSpeechBubbles()
+        private void CreateWaterDropSpaces()
+        {
+            for (int i = 0; i <= 10; i++)
+            {
+                bool searching = true;
+                Tile finallyFound = null;
+                while (searching)
+                {
+                    int randomposition = RandomGenerator.Random.Next(_tileList.Count);
+                    Tile t = _tileList[randomposition];
+                    Vector2i tilePosition = t.TilePosition;
+                    Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
+                    if (tBelow == null)
+                    {
+                        finallyFound  = t;
+                        searching = true;
+                        break;
+                    }
+                }
+                Vector2f DropSpawnPosition = new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
+                ParticleManager.CreateAreaRain(new FloatRect(DropSpawnPosition.X, DropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled / 8), GameProperties.ColorBlue4, 0.35f + 0.1f *(float)RandomGenerator.Random.NextDouble() );
+            }
+        }
+
+        private void ResetSpeechBubbles()
         {
             _speechBubbleList.Clear();
         }
