@@ -64,18 +64,11 @@ namespace JamTemplate
         {
             if (_waypointList.Count == 0)
             {
-                Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y) + Camera.CameraPosition;
+                Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y + 64) + Camera.CameraPosition;
                 if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
                 {
                     _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
-                    if (_waypointList.Count != 0)
-                    {
-                        _waypointList.RemoveAt(0);
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Could not find Path");
-                    }
+                   
                 }
             }
         }
@@ -106,6 +99,7 @@ namespace JamTemplate
                 }
                 else
                 {
+                    AbsolutePositionInPixel = _waypointList[0];
                     _waypointList.RemoveAt(0);
                 }
             }
@@ -119,8 +113,8 @@ namespace JamTemplate
 
         public void SetPlayerPosition(Vector2i pos)
         {
-            AbsolutePositionInPixel = new Vector2f(pos.X * 64, pos.Y * 64);
-            ShouldBePosition = new Vector2f(pos.X * 64, pos.Y * 64);
+            AbsolutePositionInPixel = new Vector2f(pos.X * GameProperties.TileSizeInPixelScaled, pos.Y * GameProperties.TileSizeInPixelScaled);
+            ShouldBePosition = new Vector2f(pos.X * GameProperties.TileSizeInPixelScaled, pos.Y * GameProperties.TileSizeInPixelScaled);
         }
 
         // probably some juice

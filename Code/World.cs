@@ -138,7 +138,7 @@ namespace JamTemplate
 
         private Vector2f GetWayPointForTile(Vector2i tilePos)
         {
-            Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(tilePos.X)) * GameProperties.TileSizeInPixelScaled, tilePos.Y * GameProperties.TileSizeInPixelScaled - 1);
+            Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(tilePos.X)) * GameProperties.TileSizeInPixelScaled, (float) tilePos.Y * (float)GameProperties.TileSizeInPixelScaled);
 
             return absoluteWayPointCoordinates;
         }
@@ -182,7 +182,22 @@ namespace JamTemplate
             Vector2i startPositionInTiles = GetTileToPosition(start);
             Vector2i endPositionInTiles = GetTileToPosition(end);
 
-            List<PathFinderNode> path = new PathFinderFast(_waypointGrid).FindPath(new Point(startPositionInTiles.X, startPositionInTiles.Y), new Point(endPositionInTiles.X, endPositionInTiles.Y));
+            if (_waypointGrid[startPositionInTiles.X, startPositionInTiles.Y] == 0) // this should not happen
+            {
+                Console.WriteLine("Broken Player Position");
+            }
+           
+          
+
+            System.Console.WriteLine("");
+            System.Console.WriteLine(startPositionInTiles.X + " " + startPositionInTiles.Y + " " + _waypointGrid[startPositionInTiles.X, startPositionInTiles.Y]);
+            System.Console.WriteLine(endPositionInTiles.X + " " + endPositionInTiles.Y + " " + _waypointGrid[endPositionInTiles.X, endPositionInTiles.Y]);
+            System.Console.WriteLine("");
+
+
+            Point startPoint = new Point(startPositionInTiles.X, startPositionInTiles.Y);
+            Point endPoint = new Point(endPositionInTiles.X, endPositionInTiles.Y);
+            List<PathFinderNode> path = new PathFinderFast(_waypointGrid).FindPath(startPoint, endPoint);
             if (path != null)
             {
                 path.Reverse();
@@ -191,6 +206,10 @@ namespace JamTemplate
                     ret.Add(GetWayPointForTile(new Vector2i(pfn.X, pfn.Y)));
                 }
             }
+            else
+            {
+                System.Console.WriteLine("Could not find Path");
+            }
 
             return ret;
         }
@@ -198,24 +217,6 @@ namespace JamTemplate
         private void SetWorldDependentSettings()
         {
             Camera.MaxPosition = new Vector2f(GameProperties.WorldSizeInTiles.X, GameProperties.WorldSizeInTiles.Y) * GameProperties.TileSizeInPixelScaled;
-        }
-
-        private void CreateDefaultWorld()
-        {
-            GameProperties.WorldSizeInTiles = new Vector2i(16, 16);
-            for (int i = 0; i != GameProperties.WorldSizeInTiles.X; i++)
-            {
-                for (int j = 0; j != GameProperties.WorldSizeInTiles.Y; j++)
-                {
-                    Tile newTile;
-                    if (j >= GameProperties.WorldSizeInTiles.Y - 1)
-                    {
-                        newTile = new Tile(i, j, Tile.TileType.GRASS);
-                        _tileList.Add(newTile);
-                    }
-
-                }
-            }
         }
 
         private void LoadWorld(string levelName = null)
