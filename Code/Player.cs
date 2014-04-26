@@ -65,12 +65,16 @@ namespace JamTemplate
             Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y) + Camera.CameraPosition;
             if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
             {
-
                 _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
+
+                _waypointList.RemoveAt(0);
+
+                foreach (var wp in _waypointList)
+                {
+                    System.Console.WriteLine(wp);
+                }
+                System.Console.WriteLine(" ");
             }
-
-
-
         }
 
         public void Update(TimeObject deltaT)
