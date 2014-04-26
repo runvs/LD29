@@ -111,6 +111,12 @@ namespace JamTemplate
             }
         }
 
+        public void ResetPathfinding()
+        {
+            _waypointList.Clear();
+            ShouldBePosition = AbsolutePositionInPixel;
+        }
+
         public void SetPlayerPosition(Vector2i pos)
         {
             AbsolutePositionInPixel = new Vector2f(pos.X * 64, pos.Y * 64);

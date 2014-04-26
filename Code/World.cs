@@ -64,7 +64,6 @@ namespace JamTemplate
 
             CheckIfAreaTriggered();
 
-            Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
         }
@@ -120,9 +119,7 @@ namespace JamTemplate
 
             AddSpeechBubble("Whow this already looks great!", new Vector2f(150, 25));
 
-            SetWorldDependentSettings();
-
-            CreateWayPoints();
+           
         }
 
         private Tile GetTileOnPosition(int x, int y)
@@ -201,8 +198,6 @@ namespace JamTemplate
         private void SetWorldDependentSettings()
         {
             Camera.MaxPosition = new Vector2f(GameProperties.WorldSizeInTiles.X, GameProperties.WorldSizeInTiles.Y) * GameProperties.TileSizeInPixelScaled;
-            Camera.CameraPosition = _player.GetOnScreenPosition() - new Vector2f(400, 300);
-
         }
 
         private void CreateDefaultWorld()
@@ -231,6 +226,17 @@ namespace JamTemplate
             _tileList = parser.TerrainLayer;
             _triggerAreaList = parser.TriggerAreaList;
             _player.SetPlayerPosition(parser.PlayerPosition);
+            SetWorldDependentSettings();
+            CreateWayPoints();
+            ClearSpeechBubbles();
+
+            _player.ResetPathfinding();
+
+        }
+
+        private void ClearSpeechBubbles()
+        {
+            _speechBubbleList.Clear();
         }
 
         public void AddSpeechBubble(String text, Vector2f position)
