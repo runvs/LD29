@@ -19,6 +19,7 @@ namespace JamTemplate
         private List<Tile> _tileList;
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
+        private List<IGameObject> _speechBubbleList;
         private Player _player;
         private byte[,] _waypointGrid;
 
@@ -49,9 +50,20 @@ namespace JamTemplate
 
             _player.Update(timeObject);
 
+            List<IGameObject> newSpeechBubbleList = new List<IGameObject>();
+            foreach (var sb in _speechBubbleList)
+            {
+                if (!sb.IsDead())
+                {
+                    sb.Update(timeObject);
+                    newSpeechBubbleList.Add(sb);
+                }
+            }
+            _speechBubbleList = newSpeechBubbleList;
+
+
             CheckIfAreaTriggered();
 
-            //_player.SetPlayerPosition(new Vector2i(100, 100));
             Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
@@ -80,6 +92,11 @@ namespace JamTemplate
 
             _player.Draw(rw);
 
+            foreach (var sb in _speechBubbleList)
+            {
+                sb.Draw(rw);
+            }
+
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
             ScreenEffects.Draw(rw);
 
@@ -89,6 +106,7 @@ namespace JamTemplate
         {
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
+            _speechBubbleList = new List<IGameObject>();
             _player = new Player(this, 0);
             LoadWorld();
             //CreateDefaultWorld();
