@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using DeenGames.Utils;
+using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
@@ -16,6 +18,7 @@ namespace JamTemplate
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
         private Player _player;
+        private byte[,] _waypointGrid;
 
         #endregion Fields
 
@@ -78,30 +81,89 @@ namespace JamTemplate
             CreateWayPoints();
         }
 
+        private Tile GetTileOnPosition(int x, int y)
+        {
+            Tile ret = null;
+            foreach (var t in _tileList)
+            {
+                if (t.TilePosition.X == x && t.TilePosition.Y == y)
+                {
+                    ret = t;
+                    break;
+                }
+            }
+            return ret;
+        }
+
+        private Vector2f GetWayPointForTile(Vector2i tilePos)
+        {
+            Vector2f waypointPos = new Vector2f();
+            Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(tilePos.X)) * GameProperties.TileSizeInPixelScaled, tilePos.Y * GameProperties.TileSizeInPixelScaled - 1);
+
+            return waypointPos;
+        }
 
         private void CreateWayPoints()
         {
-            foreach (var t in _tileList)
-            {
-                // TODO more sophisticated Method here!
-                Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(t.TilePosition.X)) * GameProperties.TileSizeInPixelScaled, t.TilePosition.Y * GameProperties.TileSizeInPixelScaled - 1);
-                _waypointList.Add(absoluteWayPointCoordinates);
-            }
-        }
+            //foreach (var t in _tileList)
+            //{
+            //    Vector2i tilePosition = t.TilePosition;
+            //    if (GetTileOnPosition(tilePosition.X, tilePosition.Y - 1) != null)  // there is a tile above the current t Tile
+            //    {
+            //        continue;
+            //    }
+            //    // TODO more sophisticated Method here!
+                
+            //    _waypointList.Add(absoluteWayPointCoordinates);
+            //}
 
-        public Vector2f GetNearestWayPointToPosition(Vector2f vec)
-        {
-            Vector2f ret = new Vector2f();
-            float smallestDistanceSquared = 99999999999999999;
-            foreach (var wp in _waypointList)
+
+
+            int width = GameProperties.WorldSizeInTiles.X;
+            int height = GameProperties.WorldSizeInTiles.Y;
+            width =  PathFinderHelper.RoundToNearestPowerOfTwo(width);
+            height = PathFinderHelper.RoundToNearestPowerOfTwo(height);
+
+            _waypointGrid = new byte[width, height];
+            for (int i = 0; i < width; i++)
             {
-                float newDistance = MathStuff.GetLengthSquared(vec - wp);
-                if (smallestDistanceSquared >= newDistance)
+                for (int j = 0; j < height; j++)
                 {
-                    ret = wp;
-                    smallestDistanceSquared = newDistance;
+                    // the tile itself is existing and the tile above it is not existing
+                    if (GetTileOnPosition(i, j) != null && GetTileOnPosition(i, j - 1) == null)
+                    {
+                        _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
+                    }
+                    else
+                    {
+                        _waypointGrid[i, j] = PathFinderHelper.BLOCKED_TILE;
+                    }
                 }
             }
+
+        }
+
+        public Vector2i GetTileToPosition(Vector2f vec)
+        {
+            return new Vector2i((int)(vec.X / GameProperties.TileSizeInPixelScaled), (int)(vec.Y / GameProperties.TileSizeInPixelScaled));
+        }
+
+        public List<Vector2f> GetWaypointListToPosition(Vector2f start, Vector2f end)
+        {
+            List<Vector2f> ret = new List<Vector2f>();
+
+            Vector2i startPositionInTiles = GetTileToPosition(start);
+            Vector2i endPositionInTiles = GetTileToPosition(end);
+
+            List<PathFinderNode> path = new PathFinderFast(_waypointGrid).FindPath(new Point(startPositionInTiles.X, startPositionInTiles.Y), new Point(endPositionInTiles.X, endPositionInTiles.Y));
+            if (path != null)
+            {
+                foreach (var pfn in path)
+                {
+                    ret.Add(GetWayPointForTile(new Vector2i(pfn.X, pfn.Y)));
+                }
+            }
+
             return ret;
         }
 
@@ -141,10 +203,5 @@ namespace JamTemplate
 
         #endregion Methods
 
-
-        internal void GetWaypointPosition(Vector2f AbsoluteMousePosition)
-        {
-            
-        }
     }
 }

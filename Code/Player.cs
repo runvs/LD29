@@ -44,8 +44,8 @@ namespace JamTemplate
                 System.Console.Out.WriteLine(e.ToString());
             }
 
-            AbsolutePositionInPixel = new Vector2f(800, 14 * 64);
-            ShouldBePosition = new Vector2f(800, 14 * 64);
+            AbsolutePositionInPixel = new Vector2f(800, 15 * 64);
+            ShouldBePosition = new Vector2f(800, 15 * 64);
         }
 
         private void SetPlayerNumberDependendProperties()
@@ -69,9 +69,7 @@ namespace JamTemplate
             if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
             {
 
-                _world.GetWaypointPosition(AbsoluteMousePosition);
-
-                _waypointList.Add(_world.GetNearestWayPointToPosition(AbsoluteMousePosition));
+                _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
             }
 
 
