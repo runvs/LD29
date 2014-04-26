@@ -1,23 +1,22 @@
-﻿using System;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.Window;
 
 namespace JamTemplate
 {
+    public enum TriggerAreaType
+    {
+        TAT_PORTAL,
+        TAT_QUEST,
+        //TAT_ITEM  ?
+    }
+
     public class TriggerArea
     {
         private FloatRect _rect;
-
-        public enum TriggerAreaType
-        {
-            TAT_PORTAL,
-            TAT_QUEST,
-            //TAT_ITEM  ?
-        }
-
         private TriggerAreaType _type;
-        private String _id;
+        private string _id;
 
+        public string Id { get { return _id; } }
 
         public TriggerArea(FloatRect rect, TriggerAreaType type, string id)
         {

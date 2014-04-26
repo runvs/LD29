@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DeenGames.Utils;
 using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
@@ -48,10 +49,23 @@ namespace JamTemplate
 
             _player.Update(timeObject);
 
+            CheckIfAreaTriggered();
+
             //_player.SetPlayerPosition(new Vector2i(100, 100));
             Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
+        }
+
+        private void CheckIfAreaTriggered()
+        {
+            foreach (var area in _triggerAreaList)
+            {
+                if (area.CheckIsInside(_player.AbsolutePositionInPixel))
+                {
+                    Console.WriteLine("Player is in area {0}", area.Id);
+                }
+            }
         }
 
         public void Draw(RenderWindow rw)

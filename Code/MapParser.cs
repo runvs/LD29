@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
+using JamUtilities;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -83,14 +84,14 @@ namespace JamTemplate
                     case "TriggerArea":
                         if (node.Attributes["name"].Value == "Portal")
                         {
-                            var left = float.Parse(node.Attributes["x"].Value);
-                            var top = float.Parse(node.Attributes["y"].Value);
-                            var width = float.Parse(node.Attributes["width"].Value);
-                            var height = float.Parse(node.Attributes["height"].Value);
+                            var left = float.Parse(node.Attributes["x"].Value) * SmartSprite._scaleVector.X;
+                            var top = float.Parse(node.Attributes["y"].Value) * SmartSprite._scaleVector.Y;
+                            var width = float.Parse(node.Attributes["width"].Value) * SmartSprite._scaleVector.X;
+                            var height = float.Parse(node.Attributes["height"].Value) * SmartSprite._scaleVector.Y;
 
                             var id = node.SelectSingleNode("properties/property[@name='id']").Attributes["value"].Value;
 
-                            TriggerAreaList.Add(new TriggerArea(new FloatRect(left, top, width, height), TriggerArea.TriggerAreaType.TAT_PORTAL, id));
+                            TriggerAreaList.Add(new TriggerArea(new FloatRect(left, top, width, height), TriggerAreaType.TAT_PORTAL, id));
                         }
                         break;
                     case "Spawn":
