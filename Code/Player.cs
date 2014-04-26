@@ -39,6 +39,8 @@ namespace JamTemplate
                 System.Console.Out.WriteLine("Error loading player Graphics.");
                 System.Console.Out.WriteLine(e.ToString());
             }
+
+            AbsolutePositionInPixel = new Vector2f(400, 800);
         }
 
         private void SetPlayerNumberDependendProperties()
@@ -91,7 +93,6 @@ namespace JamTemplate
 
         private void LoadGraphics()
         {
-
             _sprite = new SmartSprite("../GFX/grass.png");
         }
 

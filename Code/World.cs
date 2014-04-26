@@ -67,6 +67,14 @@ namespace JamTemplate
             _player = new Player(this, 0);
             //LoadWorld();
             CreateDefaultWorld();
+
+            SetWorldDependentSettings();
+        }
+
+        private void SetWorldDependentSettings()
+        {
+            Camera.MaxPosition = new Vector2f(GameProperties.WorldSizeInTiles.X, GameProperties.WorldSizeInTiles.Y) * GameProperties.TileSizeInPixelScaled;
+            Camera.CameraPosition = _player.GetOnScreenPosition() - new Vector2f(400, 300);
         }
 
         private void CreateDefaultWorld()

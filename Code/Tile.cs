@@ -23,10 +23,7 @@ namespace JamTemplate
 
         #region Fields
 
-
-        SFML.Graphics.Texture TileTexture;
-
-        Sprite TileSprite;
+        SmartSprite _sprite;
 
         public SFML.Window.Vector2i TilePosition { get; private set; }
         public bool IsTileBlockd { get; private set; }
@@ -52,23 +49,20 @@ namespace JamTemplate
 
         public void Draw(RenderWindow rw)
         {
-            TileSprite.Position = new Vector2f(
+            _sprite.Position = new Vector2f(
                GameProperties.TileSizeInPixelScaled * TilePosition.X - Camera.CameraPosition.X,
                GameProperties.TileSizeInPixelScaled * TilePosition.Y - Camera.CameraPosition.Y
            );
 
-            rw.Draw(TileSprite);
+            _sprite.Draw(rw);
         }
 
         public void LoadGraphics()
         {
             if (_type == TileType.Grass)
             {
-                TileTexture = new Texture("../GFX/grass.png");
+                _sprite = new SmartSprite("../GFX/grass.png");
             }
-            TileSprite = new Sprite(TileTexture);
-            TileSprite.Scale = new SFML.Window.Vector2f(2.0f, 2.0f);
-
         }
 
 
