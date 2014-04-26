@@ -13,16 +13,15 @@ namespace JamTemplate
     public class TriggerArea
     {
         private FloatRect _rect;
-        private TriggerAreaType _type;
-        private string _id;
 
-        public string Id { get { return _id; } }
+        public string Id { get; private set; }
+        public TriggerAreaType Type { get; private set; }
 
         public TriggerArea(FloatRect rect, TriggerAreaType type, string id)
         {
             _rect = rect;
-            _type = type;
-            _id = id;
+            Type = type;
+            Id = id;
         }
 
         public bool CheckIsInside(Vector2f pos)

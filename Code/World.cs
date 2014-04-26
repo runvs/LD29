@@ -75,7 +75,15 @@ namespace JamTemplate
             {
                 if (area.CheckIsInside(_player.AbsolutePositionInPixel))
                 {
-                    Console.WriteLine("Player is in area {0}", area.Id);
+                    switch (area.Type)
+                    {
+                        case TriggerAreaType.TAT_PORTAL:
+                            LoadWorld(area.Id);
+                            Console.WriteLine("Loading level {0}", area.Id);
+                            return;
+
+                        default: break;
+                    }
                 }
             }
         }
@@ -110,7 +118,7 @@ namespace JamTemplate
             _player = new Player(this, 0);
             LoadWorld();
 
-            AddSpeechBubble("Whow this already looks great!", new Vector2f(150,25));
+            AddSpeechBubble("Whow this already looks great!", new Vector2f(150, 25));
 
             SetWorldDependentSettings();
 
@@ -215,9 +223,9 @@ namespace JamTemplate
             }
         }
 
-        private void LoadWorld()
+        private void LoadWorld(string levelName = null)
         {
-            var parser = new MapParser("../Data/Overworld.tmx");
+            var parser = new MapParser(levelName == null ? "../Data/Overworld.tmx" : string.Format("../Data/{0}.tmx", levelName));
             GameProperties.WorldSizeInTiles = parser.WorldSize;
 
             _tileList = parser.TerrainLayer;

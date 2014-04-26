@@ -19,7 +19,7 @@ namespace JamTemplate
         public Vector2i WorldSize { get; private set; }
         public Vector2i TileSize { get; private set; }
 
-        public MapParser(string fileName)
+        public MapParser(string fileName, bool isChangingLevel = false)
         {
             TerrainLayer = new List<Tile>();
             TriggerAreaList = new List<TriggerArea>();
@@ -42,7 +42,7 @@ namespace JamTemplate
 
             int xPos = 0, yPos = 0;
 
-            foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='TerrainLayer']/data/tile"))
+            foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='Terrain']/data/tile"))
             {
                 int gid = int.Parse(layerNode.Attributes["gid"].Value) - terrainOffset;
                 Tile.TileType type = Tile.TileType.GRASS;
@@ -82,7 +82,6 @@ namespace JamTemplate
                 switch (node.Attributes["type"].Value)
                 {
                     case "TriggerArea":
-                        if (node.Attributes["name"].Value == "Portal")
                         {
                             var left = float.Parse(node.Attributes["x"].Value) * SmartSprite._scaleVector.X;
                             var top = float.Parse(node.Attributes["y"].Value) * SmartSprite._scaleVector.Y;
@@ -95,7 +94,14 @@ namespace JamTemplate
                         }
                         break;
                     case "Spawn":
-                        if (node.Attributes["name"].Value == "PlayerSpawn")
+                        if (!isChangingLevel && node.Attributes["name"].Value == "PlayerSpawn")
+                        {
+                            PlayerPosition = new Vector2i(
+                                int.Parse(node.Attributes["x"].Value) / TileSize.X,
+                                int.Parse(node.Attributes["y"].Value) / TileSize.Y + 1
+                            );
+                        }
+                        else if (isChangingLevel && node.Attributes["name"].Value == "PlayerPortalSpawn")
                         {
                             PlayerPosition = new Vector2i(
                                 int.Parse(node.Attributes["x"].Value) / TileSize.X,
