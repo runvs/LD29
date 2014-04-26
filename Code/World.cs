@@ -134,7 +134,7 @@ namespace JamTemplate
         private void BasicExplosion(object o = null)
         {
             var shake = ScreenEffects.GetDynamicEffect("shake");
-            shake.StartEffect(1.0f, .05f, Color.White, 10.0f, ShakeDirection.AllDirections);
+            shake.StartEffect(1.0f, .025f, Color.White, 10.0f, ShakeDirection.AllDirections);
 
             ParticleProperties props = new ParticleProperties();
             props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
@@ -144,7 +144,7 @@ namespace JamTemplate
             props.sizeSingle = 15;
             props.RotationType = ParticleManager.ParticleRotationType.PRT_Velocity;
             props.AffectedByGravity = true;
-            var emitter = new ParticleEmitter(new FloatRect(50, 150, 100, 100), props, 10);
+            var emitter = new ParticleEmitter(new FloatRect(50, 150, 100, 100), props, 4);
             emitter.Update(3);
         }
 
