@@ -299,6 +299,8 @@ namespace JamTemplate
 
             _player.ResetPathfinding();
 
+            AddSpeechBubble("Tap above the ground to walk.", new Vector2f(_player.AbsolutePositionInPixel.X, _player.AbsolutePositionInPixel.Y - 200));
+
         }
 
         private void CreateWaterDropSpaces()

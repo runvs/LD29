@@ -62,12 +62,14 @@ namespace JamTemplate
 
         public static void TellMinerToGoIntoMine(object o = null)
         {
-            _world.AddSpeechBubble("Meeh, I am already late. I should hurry and go down in the mine.", new Vector2f(128, 45));
+            _world.AddSpeechBubble("Meeh, I am already late. I should hurry and get down in the mine.", 
+                new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 200));
         }
 
         internal static void SoWeWere(object obj)
         {
-            _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
+            _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", 
+                new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
         }
 
         internal static void NoEscape(object obj)

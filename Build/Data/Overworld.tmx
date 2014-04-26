@@ -2414,7 +2414,7 @@
     <property name="id" value="basicExplosion"/>
    </properties>
   </object>
-  <object name="Function" type="TriggerArea" x="53" y="17" width="53" height="91">
+  <object name="Function" type="TriggerArea" x="162" y="15" width="53" height="91">
    <properties>
     <property name="id" value="GoIntoMine"/>
    </properties>
