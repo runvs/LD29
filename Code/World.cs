@@ -46,8 +46,10 @@ namespace JamTemplate
             ParticleManager.Update(timeObject);
 
             _player.Update(timeObject);
-
-            Camera.ShouldBePosition = _player.GetOnScreenPosition();
+            
+            //_player.SetPlayerPosition(new Vector2i(100, 100));
+            Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400,300);
+            Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
         }
 

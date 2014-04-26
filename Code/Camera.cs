@@ -19,8 +19,6 @@ namespace JamTemplate
 
         public static void DoCameraMovement(JamUtilities.TimeObject deltaT)
         {
-            //Vector2f newCamPos = new Vector2f((_player.ActorPosition.X - 6) * GameProperties.TileSizeInPixel, (_player.ActorPosition.Y - 6) * GameProperties.TileSizeInPixel);
-
             Vector2f PlayerPosInPixels = ShouldBePosition;
             float DistanceXSquared = (float)(Math.Sign(CameraPosition.X - PlayerPosInPixels.X)) * (CameraPosition.X - PlayerPosInPixels.X) * (CameraPosition.X - PlayerPosInPixels.X);
             float DistanceYSquared = (float)(Math.Sign(CameraPosition.Y - PlayerPosInPixels.Y)) * (CameraPosition.Y - PlayerPosInPixels.Y) * (CameraPosition.Y - PlayerPosInPixels.Y);

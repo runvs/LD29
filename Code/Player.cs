@@ -66,14 +66,15 @@ namespace JamTemplate
             if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
             {
                 _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
-
-                _waypointList.RemoveAt(0);
-
-                foreach (var wp in _waypointList)
+                if (_waypointList.Count != 0)
                 {
-                    System.Console.WriteLine(wp);
+                    _waypointList.RemoveAt(0);
                 }
-                System.Console.WriteLine(" ");
+                else
+                {
+                    System.Console.WriteLine("Could not find path.");
+                }
+
             }
         }
 
