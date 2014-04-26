@@ -43,9 +43,6 @@ namespace JamTemplate
                 System.Console.Out.WriteLine("Error loading player Graphics.");
                 System.Console.Out.WriteLine(e.ToString());
             }
-
-            AbsolutePositionInPixel = new Vector2f(800, 15 * 64);
-            ShouldBePosition = new Vector2f(800, 15 * 64);
         }
 
         private void SetPlayerNumberDependendProperties()

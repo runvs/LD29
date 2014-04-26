@@ -97,27 +97,13 @@ namespace JamTemplate
 
         private Vector2f GetWayPointForTile(Vector2i tilePos)
         {
-            Vector2f waypointPos = new Vector2f();
             Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(tilePos.X)) * GameProperties.TileSizeInPixelScaled, tilePos.Y * GameProperties.TileSizeInPixelScaled - 1);
 
-            return waypointPos;
+            return absoluteWayPointCoordinates;
         }
 
         private void CreateWayPoints()
         {
-            //foreach (var t in _tileList)
-            //{
-            //    Vector2i tilePosition = t.TilePosition;
-            //    if (GetTileOnPosition(tilePosition.X, tilePosition.Y - 1) != null)  // there is a tile above the current t Tile
-            //    {
-            //        continue;
-            //    }
-            //    // TODO more sophisticated Method here!
-                
-            //    _waypointList.Add(absoluteWayPointCoordinates);
-            //}
-
-
 
             int width = GameProperties.WorldSizeInTiles.X;
             int height = GameProperties.WorldSizeInTiles.Y;
@@ -158,9 +144,10 @@ namespace JamTemplate
             List<PathFinderNode> path = new PathFinderFast(_waypointGrid).FindPath(new Point(startPositionInTiles.X, startPositionInTiles.Y), new Point(endPositionInTiles.X, endPositionInTiles.Y));
             if (path != null)
             {
+                path.Reverse();
                 foreach (var pfn in path)
                 {
-                    ret.Add(GetWayPointForTile(new Vector2i(pfn.X, pfn.Y)));
+                    ret.Add(GetWayPointForTile(new Vector2i(pfn.X , pfn.Y)));
                 }
             }
 
@@ -198,7 +185,10 @@ namespace JamTemplate
             GameProperties.WorldSizeInTiles = parser.WorldSize;
 
             _tileList = parser.TerrainLayer;
-            _player.SetPlayerPosition(parser.PlayerPosition);
+            Vector2i playerPos = parser.PlayerPosition;
+            playerPos.Y += 1;
+            _player.SetPlayerPosition(playerPos);
+
         }
 
         #endregion Methods
