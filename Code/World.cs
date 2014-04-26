@@ -133,20 +133,19 @@ namespace JamTemplate
 
         private void BasicExplosion(object o = null)
         {
+            var shake = ScreenEffects.GetDynamicEffect("shake");
+            shake.StartEffect(1.0f, .05f, Color.White, 10.0f, ShakeDirection.AllDirections);
+
             ParticleProperties props = new ParticleProperties();
             props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
             props.col = Color.Black;
-            props.lifeTime = 10.0f;
-            props.sizeMultiple = 0.0f;
-            props.sizeSingle = 10;
+            props.lifeTime = 4.0f;
+            props.sizeMultiple = 100.0f;
+            props.sizeSingle = 15;
             props.RotationType = ParticleManager.ParticleRotationType.PRT_Velocity;
             props.AffectedByGravity = true;
             var emitter = new ParticleEmitter(new FloatRect(50, 150, 100, 100), props, 10);
             emitter.Update(3);
-
-
-            //ParticleManager.SpawnSmokeCloud(new Vector2f(50, 50), 50, 20, Color.Black);
-            //ParticleManager.SpawnSmokeCloud(new Vector2f(50, 50), 50, 20, Color.Black);
         }
 
         private Tile GetTileOnPosition(int x, int y)
