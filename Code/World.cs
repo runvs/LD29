@@ -14,6 +14,7 @@ namespace JamTemplate
 
         #region Fields
 
+        private List<TriggerArea> _triggerAreaList;
         private List<Tile> _tileList;
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
@@ -46,9 +47,9 @@ namespace JamTemplate
             ParticleManager.Update(timeObject);
 
             _player.Update(timeObject);
-            
+
             //_player.SetPlayerPosition(new Vector2i(100, 100));
-            Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400,300);
+            Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
         }
@@ -109,7 +110,7 @@ namespace JamTemplate
 
             int width = GameProperties.WorldSizeInTiles.X;
             int height = GameProperties.WorldSizeInTiles.Y;
-            width =  PathFinderHelper.RoundToNearestPowerOfTwo(width);
+            width = PathFinderHelper.RoundToNearestPowerOfTwo(width);
             height = PathFinderHelper.RoundToNearestPowerOfTwo(height);
 
             _waypointGrid = new byte[width, height];
@@ -149,7 +150,7 @@ namespace JamTemplate
                 path.Reverse();
                 foreach (var pfn in path)
                 {
-                    ret.Add(GetWayPointForTile(new Vector2i(pfn.X , pfn.Y)));
+                    ret.Add(GetWayPointForTile(new Vector2i(pfn.X, pfn.Y)));
                 }
             }
 
@@ -187,8 +188,8 @@ namespace JamTemplate
             GameProperties.WorldSizeInTiles = parser.WorldSize;
 
             _tileList = parser.TerrainLayer;
-            Vector2i playerPos = parser.PlayerPosition;
-            _player.SetPlayerPosition(playerPos);
+            _triggerAreaList = parser.TriggerAreaList;
+            _player.SetPlayerPosition(parser.PlayerPosition);
 
         }
 

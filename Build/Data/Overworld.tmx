@@ -137,7 +137,12 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="ObjectLayer" width="13" height="10">
+ <objectgroup name="Objects" width="13" height="10">
   <object name="PlayerSpawn" type="Spawn" x="64" y="48" width="16" height="16"/>
+  <object name="Portal" type="TriggerArea" x="144" y="16" width="64" height="48">
+   <properties>
+    <property name="id" value="123"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

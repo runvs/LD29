@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
-using JamUtilities;
+using SFML.Graphics;
 using SFML.Window;
 
 namespace JamTemplate
@@ -13,6 +13,7 @@ namespace JamTemplate
     public class MapParser
     {
         public List<Tile> TerrainLayer { get; private set; }
+        public List<TriggerArea> TriggerAreaList { get; private set; }
         public Vector2i PlayerPosition { get; private set; }
         public Vector2i WorldSize { get; private set; }
         public Vector2i TileSize { get; private set; }
@@ -20,6 +21,7 @@ namespace JamTemplate
         public MapParser(string fileName)
         {
             TerrainLayer = new List<Tile>();
+            TriggerAreaList = new List<TriggerArea>();
 
             var doc = new XmlDocument();
             doc.Load(fileName);
@@ -74,21 +76,34 @@ namespace JamTemplate
 
             #region Load the object layer
 
-            foreach (XmlNode node in doc.SelectNodes("/map/objectgroup[@name='ObjectLayer']/object"))
+            foreach (XmlNode node in doc.SelectNodes("/map/objectgroup[@name='Objects']/object"))
             {
-                switch (node.Attributes["name"].Value)
+                switch (node.Attributes["type"].Value)
                 {
-                    default:
-                    case "PlayerSpawn":
+                    case "TriggerArea":
+                        if (node.Attributes["name"].Value == "Portal")
+                        {
+                            var left = float.Parse(node.Attributes["x"].Value);
+                            var top = float.Parse(node.Attributes["y"].Value);
+                            var width = float.Parse(node.Attributes["width"].Value);
+                            var height = float.Parse(node.Attributes["height"].Value);
+
+                            var id = node.SelectSingleNode("properties/property[@name='id']").Attributes["value"].Value;
+
+                            TriggerAreaList.Add(new TriggerArea(new FloatRect(left, top, width, height), TriggerArea.TriggerAreaType.TAT_PORTAL, id));
+                        }
+                        break;
+                    case "Spawn":
+                        if (node.Attributes["name"].Value == "PlayerSpawn")
                         {
                             PlayerPosition = new Vector2i(
                                 int.Parse(node.Attributes["x"].Value) / TileSize.X,
                                 int.Parse(node.Attributes["y"].Value) / TileSize.Y + 1
                             );
-
-
-                            break;
                         }
+                        break;
+
+                    default: break;
                 }
             }
 
