@@ -225,13 +225,12 @@ namespace JamTemplate
 
         private void LoadWorld(string levelName = null)
         {
-            var parser = new MapParser(levelName == null ? "../Data/Overworld.tmx" : string.Format("../Data/{0}.tmx", levelName));
+            var parser = new MapParser(levelName == null ? "../Data/Overworld.tmx" : string.Format("../Data/{0}.tmx", levelName), levelName != null);
             GameProperties.WorldSizeInTiles = parser.WorldSize;
 
             _tileList = parser.TerrainLayer;
             _triggerAreaList = parser.TriggerAreaList;
             _player.SetPlayerPosition(parser.PlayerPosition);
-
         }
 
         public void AddSpeechBubble(String text, Vector2f position)
