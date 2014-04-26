@@ -63,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Score.cs" />
     <Compile Include="Speechbubble.cs" />
+    <Compile Include="StoryProgress.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TriggerArea.cs" />
     <Compile Include="World.cs" />

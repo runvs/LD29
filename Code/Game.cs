@@ -30,15 +30,15 @@ namespace JamTemplate
             //TODO  Default values, replace with correct ones !
             SmartSprite._scaleVector = new Vector2f(4.0f, 4.0f);
             ScreenEffects.Init(new Vector2u(800, 600));
-            ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
+            //ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
             //ParticleManager.Gravity = GameProperties.GravitationalAcceleration;
-            Camera.MinPosition = new Vector2f(0, -200);
+            Camera.MinPosition = new Vector2f(-64, -200);
             
             try
             {
                 SmartText._font = new Font("../GFX/font.ttf");
 
-                SmartText._lineLengthInChars = 18;
+                SmartText._lineLengthInChars =22;
                 SmartText._lineSpread = 1.2f;
             }
             catch (Exception e)

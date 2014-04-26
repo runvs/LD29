@@ -114,30 +114,38 @@ namespace JamTemplate
                 sb.Draw(rw);
             }
 
-            ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+            DrawOverlayEffect(rw);
+
+           
             ScreenEffects.Draw(rw);
+        }
+
+        private void DrawOverlayEffect(RenderWindow rw)
+        {
+            ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+            if (StoryProgress.ExplosionHasHappened)
+            {
+                ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+                ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+            }
         }
 
         private void SetBackgroundColor(RenderWindow rw)
         {
             Color backgroundColor = GameProperties.ColorPink1;
-            if (_player.AbsolutePositionInPixel.Y >= GameProperties.TileSizeInPixelScaled * GameProperties.WorldOverUnderWorldChange1)
-            {
-                backgroundColor = GameProperties.ColorPink2;
-            }
-            if (_player.AbsolutePositionInPixel.Y >= GameProperties.TileSizeInPixelScaled * GameProperties.WorldOverUnderWorldChange2)
-            {
-                backgroundColor = GameProperties.ColorPink3;
-            }
-            if (_player.AbsolutePositionInPixel.Y >= GameProperties.TileSizeInPixelScaled * GameProperties.WorldOverUnderWorldChange3)
+
+            if (StoryProgress.ExplosionHasHappened)
             {
                 backgroundColor = GameProperties.ColorPink4;
             }
+
             rw.Clear(backgroundColor);
         }
 
         private void InitGame()
         {
+
+            StoryProgress._world = this;
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
             _speechBubbleList = new List<IGameObject>();
@@ -145,27 +153,13 @@ namespace JamTemplate
             _player = new Player(this, 0);
             LoadWorld();
 
-            AddSpeechBubble("Wow this already looks great!", new Vector2f(150, 25));
+            //AddSpeechBubble("Wow this already looks great!", new Vector2f(150, 25));
 
-            _functionDict.Add("basicExplosion", BasicExplosion);
+            _functionDict.Add("basicExplosion", StoryProgress.BasicExplosion);
+            _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
         }
 
-        private void BasicExplosion(object o = null)
-        {
-            var shake = ScreenEffects.GetDynamicEffect("shake");
-            shake.StartEffect(1.0f, .025f, Color.White, 10.0f, ShakeDirection.AllDirections);
-
-            ParticleProperties props = new ParticleProperties();
-            props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
-            props.col = Color.Black;
-            props.lifeTime = 4.0f;
-            props.sizeMultiple = 100.0f;
-            props.sizeSingle = 15;
-            props.RotationType = ParticleManager.ParticleRotationType.PRT_Velocity;
-            props.AffectedByGravity = true;
-            var emitter = new ParticleEmitter(new FloatRect(50, 150, 100, 100), props, 4);
-            emitter.Update(3);
-        }
+        
 
         public Tile GetTileOnPosition(int x, int y)
         {
