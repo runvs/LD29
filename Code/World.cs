@@ -48,7 +48,7 @@ namespace JamTemplate
             ScreenEffects.Update(timeObject);
             SpriteTrail.Update(timeObject);
             ParticleManager.Update(timeObject);
-
+            ParticleManager.GlobalPositionOffset = Camera.CameraPosition;
             _player.Update(timeObject);
 
             List<IGameObject> newSpeechBubbleList = new List<IGameObject>();
@@ -216,13 +216,14 @@ namespace JamTemplate
           
 
             /*System.Console.WriteLine("");
-            System.Console.WriteLine(startPositionInTiles.X + " " + startPositionInTiles.Y + " " + _waypointGrid[startPositionInTiles.X, startPositionInTiles.Y]);
-            System.Console.WriteLine(endPositionInTiles.X + " " + endPositionInTiles.Y + " " + _waypointGrid[endPositionInTiles.X, endPositionInTiles.Y]);
+            
             System.Console.WriteLine("");*/
 
 
             Point startPoint = new Point(startPositionInTiles.X, startPositionInTiles.Y);
             Point endPoint = new Point(endPositionInTiles.X, endPositionInTiles.Y);
+            //System.Console.WriteLine(startPoint.X + " " + startPoint.Y + " " + _waypointGrid[startPoint.X, startPoint.Y]);
+            //System.Console.WriteLine(endPoint.X + " " + endPoint.Y + " " + _waypointGrid[endPoint.X, endPoint.Y]);
             List<PathFinderNode> path = new PathFinderFast(_waypointGrid).FindPath(startPoint, endPoint);
             if (path != null)
             {

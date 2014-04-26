@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JamUtilities;
+using JamUtilities.ScreenEffects;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -99,7 +100,8 @@ namespace JamTemplate
                 _sprite.Draw(rw);
                 Color col = GameProperties.ColorBlue1;
                 col.A = (byte)((float)_sprite.Alpha / 185.0f * 255.0f);
-                SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos, new Vector2f(1.0f, 1.0f), col, rw);
+                screenPos += ScreenEffects.GlobalSpriteOffset;
+                SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos , new Vector2f(1.0f, 1.0f), col, rw);
             }
         }
 

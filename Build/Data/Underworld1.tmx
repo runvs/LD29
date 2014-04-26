@@ -168,7 +168,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="2"/>
+   <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1214,6 +1214,6 @@
    </properties>
   </object>
   <object name="PlayerPortalSpawn" type="Spawn" x="48" y="48" width="16" height="16"/>
-  <object name="PlayerSpawn" type="Spawn" x="280" y="83" width="16" height="16"/>
+  <object name="PlayerSpawn" type="Spawn" x="127" y="48" width="16" height="16"/>
  </objectgroup>
 </map>
