@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
@@ -71,8 +70,8 @@ namespace JamTemplate
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
             _player = new Player(this, 0);
-            //LoadWorld();
-            CreateDefaultWorld();
+            LoadWorld();
+            //CreateDefaultWorld();
 
             SetWorldDependentSettings();
 
@@ -115,7 +114,7 @@ namespace JamTemplate
 
         private void CreateDefaultWorld()
         {
-            GameProperties.WorldSizeInTiles = new SFML.Window.Vector2i(16, 16);
+            GameProperties.WorldSizeInTiles = new Vector2i(16, 16);
             for (int i = 0; i != GameProperties.WorldSizeInTiles.X; i++)
             {
                 for (int j = 0; j != GameProperties.WorldSizeInTiles.Y; j++)
@@ -123,7 +122,7 @@ namespace JamTemplate
                     Tile newTile;
                     if (j >= GameProperties.WorldSizeInTiles.Y - 1)
                     {
-                        newTile = new Tile(i, j, Tile.TileType.Grass);
+                        newTile = new Tile(i, j, Tile.TileType.GRASS);
                         _tileList.Add(newTile);
                     }
 
@@ -133,7 +132,11 @@ namespace JamTemplate
 
         private void LoadWorld()
         {
-            throw new NotImplementedException();
+            var parser = new MapParser("../Data/Overworld.tmx");
+            GameProperties.WorldSizeInTiles = parser.WorldSize;
+
+            _tileList = parser.TerrainLayer;
+            _player.SetPlayerPosition(parser.PlayerPosition);
         }
 
         #endregion Methods

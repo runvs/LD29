@@ -14,8 +14,9 @@ namespace JamTemplate
         public List<Tile> TerrainLayer { get; private set; }
         public List<IGameObject> ObjectLayer { get; private set; }
         public Vector2i PlayerPosition { get; private set; }
+        public Vector2i WorldSize { get; private set; }
 
-        public MapParser(string fileName, World world)
+        public MapParser(string fileName)
         {
             TerrainLayer = new List<Tile>();
             ObjectLayer = new List<IGameObject>();
@@ -28,7 +29,7 @@ namespace JamTemplate
 
             int width = int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value);
             int height = int.Parse(doc.SelectSingleNode("/map").Attributes["height"].Value);
-            GameProperties.WorldSizeInTiles = new Vector2i(width, height);
+            WorldSize = new Vector2i(width, height);
 
             #region Load the terrain layer
 
@@ -37,24 +38,32 @@ namespace JamTemplate
             foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='TerrainLayer']/data/tile"))
             {
                 int gid = int.Parse(layerNode.Attributes["gid"].Value) - terrainOffset;
-                JamTemplate.Tile.TileType type = Tile.TileType.Grass;
+                Tile.TileType type = Tile.TileType.GRASS;
+
                 switch (gid)
                 {
                     case 0:
-                        type = Tile.TileType.Grass;
+                        type = Tile.TileType.EARTH;
                         break;
                     case 1:
-                        type = Tile.TileType.Air;
+                        type = Tile.TileType.GRASS;
                         break;
+                    default:
+                        if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
+                        {
+                            yPos++;
+                        }
+                        xPos = (xPos + 1) % WorldSize.X;
+                        continue;
                 }
 
                 TerrainLayer.Add(new Tile(xPos, yPos, type));
 
-                if (xPos != 0 && (xPos + 1) % GameProperties.WorldSizeInTiles.X == 0)
+                if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
                 {
                     yPos++;
                 }
-                xPos = (xPos + 1) % GameProperties.WorldSizeInTiles.X;
+                xPos = (xPos + 1) % WorldSize.X;
             }
 
             #endregion
@@ -70,16 +79,16 @@ namespace JamTemplate
 
                 switch (gid)
                 {
-                    default:
-                        // TODO Load objects here
+                    case 0:
+                        PlayerPosition = new Vector2i(xPos, yPos);
                         break;
                 }
 
-                if (xPos != 0 && (xPos + 1) % GameProperties.WorldSizeInTiles.X == 0)
+                if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
                 {
                     yPos++;
                 }
-                xPos = (xPos + 1) % GameProperties.WorldSizeInTiles.X;
+                xPos = (xPos + 1) % WorldSize.X;
             }
 
             #endregion

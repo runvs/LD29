@@ -16,9 +16,8 @@ namespace JamTemplate
         #region Enums
         public enum TileType
         {
-            Air,
-            Grass,
-
+            GRASS,
+            EARTH
         }
         #endregion Enums
 
@@ -27,7 +26,7 @@ namespace JamTemplate
         SmartSprite _sprite;
 
         public SFML.Window.Vector2i TilePosition { get; private set; }
-        public bool IsTileBlockd { get; private set; }
+        public bool IsTileBlocked { get; private set; }
         private TileType _type;
 
 
@@ -41,11 +40,11 @@ namespace JamTemplate
             _type = tt;
             TilePosition = new SFML.Window.Vector2i(posX, posY);
             LoadGraphics();
-            IsTileBlockd = false;
+            IsTileBlocked = false;
 
-            if (_type == TileType.Grass )
+            if (_type == TileType.GRASS)
             {
-                IsTileBlockd = true;
+                IsTileBlocked = true;
             }
 
         }
@@ -60,11 +59,16 @@ namespace JamTemplate
             _sprite.Draw(rw);
         }
 
-        public void LoadGraphics()
+        private void LoadGraphics()
         {
-            if (_type == TileType.Grass)
+            switch (_type)
             {
-                _sprite = new SmartSprite("../GFX/grass.png");
+                case TileType.GRASS:
+                    _sprite = new SmartSprite("../GFX/grass.png");
+                    break;
+                case TileType.EARTH:
+                    _sprite = new SmartSprite("../GFX/earth.png");
+                    break;
             }
         }
 

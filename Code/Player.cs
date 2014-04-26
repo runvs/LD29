@@ -1,8 +1,7 @@
-﻿using SFML.Graphics;
-using SFML.Window;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using JamUtilities;
+using SFML.Window;
 
 namespace JamTemplate
 {
@@ -13,7 +12,7 @@ namespace JamTemplate
         public int playerNumber;
         public string PlayerName { get; private set; }
         private SmartSprite _sprite;
-        public Vector2f AbsolutePositionInPixel{ get; private set;}
+        public Vector2f AbsolutePositionInPixel { get; private set; }
         public Vector2f ShouldBePosition { get; private set; }
 
         private List<Vector2f> _waypointList;
@@ -45,7 +44,7 @@ namespace JamTemplate
                 System.Console.Out.WriteLine(e.ToString());
             }
 
-            AbsolutePositionInPixel = new Vector2f(800, 14*64);
+            AbsolutePositionInPixel = new Vector2f(800, 14 * 64);
             ShouldBePosition = new Vector2f(800, 14 * 64);
         }
 
@@ -81,14 +80,14 @@ namespace JamTemplate
 
         public void Update(TimeObject deltaT)
         {
-			_sprite.Update(deltaT);
+            _sprite.Update(deltaT);
             DoPlayerMovement(deltaT);
         }
 
         private void DoPlayerMovement(TimeObject deltaT)
         {
             // calculate the difference vector between current and shouldbe position
-            if(_waypointList.Count > 0)
+            if (_waypointList.Count > 0)
             {
                 ShouldBePosition = _waypointList[0];
 
@@ -108,6 +107,12 @@ namespace JamTemplate
                     _waypointList.RemoveAt(0);
                 }
             }
+        }
+
+        public void SetPlayerPosition(Vector2i pos)
+        {
+            AbsolutePositionInPixel = new Vector2f(pos.X * 64, pos.Y * 64);
+            ShouldBePosition = new Vector2f(pos.X * 64, pos.Y * 64);
         }
 
         // probably some juice
