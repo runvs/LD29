@@ -46,10 +46,10 @@ namespace JamTemplate
 
         public static float PlayerMaxVelocity { get { return 240.0f; } }
 
-        public static float PlayerDistanceToWaypointAccepted { get { return 5.0f; } }
+        public static float PlayerDistanceToWaypointAccepted { get { return 2.0f; } }
 
 
-        public static float SpeechBubbleLifeTime { get { return 5.5f; } }
+        public static float SpeechBubbleLifeTime { get { return 4.5f; } }
         public static float SpeechBubbleFadeTime { get { return 1.5f; } }
     }
 }

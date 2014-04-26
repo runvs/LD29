@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JamUtilities;
+using SFML.Graphics;
 using SFML.Window;
 
 namespace JamTemplate
@@ -70,8 +71,23 @@ namespace JamTemplate
             {
                 Vector2f screenPos = AbsolutePosition - Camera.CameraPosition ;
                 _sprite.Position = screenPos + _spriteOffset;
+
+                if (IsFadingOut)
+                {
+                    _sprite.Alpha = (byte)(185.0 * (1.0 - 
+                        PennerDoubleAnimation.GetValue(
+                        PennerDoubleAnimation.EquationType.CubicEaseIn,
+                        GameProperties.SpeechBubbleFadeTime- _remainingDisplayTime,
+                        0,1,GameProperties.SpeechBubbleFadeTime)));
+                }
+                else
+                {
+                    _sprite.Alpha = 185;
+                }
                 _sprite.Draw(rw);
-                SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos, new Vector2f(1.0f, 1.0f), GameProperties.ColorBlue1, rw);
+                Color col = GameProperties.ColorBlue1;
+                col.A = (byte)((float)_sprite.Alpha / 185.0f * 255.0f);
+                SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos, new Vector2f(1.0f, 1.0f), col, rw);
             }
         }
 

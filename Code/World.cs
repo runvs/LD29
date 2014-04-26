@@ -82,7 +82,7 @@ namespace JamTemplate
 
         public void Draw(RenderWindow rw)
         {
-            rw.Clear(SFML.Graphics.Color.Blue);
+            rw.Clear(GameProperties.ColorGrey3);
             ParticleManager.Draw(rw);
 
             foreach (var t in _tileList)
