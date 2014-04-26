@@ -15,6 +15,7 @@ namespace JamTemplate
         public List<IGameObject> ObjectLayer { get; private set; }
         public Vector2i PlayerPosition { get; private set; }
         public Vector2i WorldSize { get; private set; }
+        public Vector2i TileSize { get; private set; }
 
         public MapParser(string fileName)
         {
@@ -25,11 +26,15 @@ namespace JamTemplate
             doc.Load(fileName);
 
             int terrainOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Terrain']").Attributes["firstgid"].Value);
-            int objectOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Objects']").Attributes["firstgid"].Value);
+            TileSize = new Vector2i(
+                int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value),
+                int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value)
+            );
 
-            int width = int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value);
-            int height = int.Parse(doc.SelectSingleNode("/map").Attributes["height"].Value);
-            WorldSize = new Vector2i(width, height);
+            WorldSize = new Vector2i(
+                int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value),
+                int.Parse(doc.SelectSingleNode("/map").Attributes["height"].Value)
+            );
 
             #region Load the terrain layer
 
@@ -70,25 +75,22 @@ namespace JamTemplate
 
             #region Load the object layer
 
-            xPos = 0;
-            yPos = 0;
-
-            foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='ObjectLayer']/data/tile"))
+            foreach (XmlNode node in doc.SelectNodes("/map/objectgroup[@name='ObjectLayer']/object"))
             {
-                int gid = int.Parse(layerNode.Attributes["gid"].Value) - objectOffset;
-
-                switch (gid)
+                switch (node.Attributes["name"].Value)
                 {
-                    case 0:
-                        PlayerPosition = new Vector2i(xPos, yPos + 1);
-                        break;
-                }
+                    default:
+                    case "PlayerSpawn":
+                        {
+                            PlayerPosition = new Vector2i(
+                                int.Parse(node.Attributes["x"].Value) / TileSize.X,
+                                int.Parse(node.Attributes["y"].Value) / TileSize.Y + 1
+                            );
 
-                if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
-                {
-                    yPos++;
+
+                            break;
+                        }
                 }
-                xPos = (xPos + 1) % WorldSize.X;
             }
 
             #endregion
