@@ -29,8 +29,8 @@ namespace JamTemplate
 
             int terrainOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Terrain']").Attributes["firstgid"].Value);
             TileSize = new Vector2i(
-                int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value),
-                int.Parse(doc.SelectSingleNode("/map").Attributes["width"].Value)
+                int.Parse(doc.SelectSingleNode("/map").Attributes["tilewidth"].Value),
+                int.Parse(doc.SelectSingleNode("/map").Attributes["tilewidth"].Value)
             );
 
             WorldSize = new Vector2i(
