@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -22,14 +19,14 @@ namespace JamTemplate
         private String _id;
 
 
-        public TriggerArea(FloatRect rect, TriggerAreaType type ,  string id)
+        public TriggerArea(FloatRect rect, TriggerAreaType type, string id)
         {
             _rect = rect;
             _type = type;
             _id = id;
         }
 
-        bool CheckIsInside(Vector2f pos)
+        public bool CheckIsInside(Vector2f pos)
         {
             return _rect.Contains(pos.X, pos.Y);
         }
