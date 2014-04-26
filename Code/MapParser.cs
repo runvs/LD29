@@ -96,8 +96,8 @@ namespace JamTemplate
                             case "Portal":
                                 TriggerAreaList.Add(new TriggerArea(floatRect, TriggerAreaType.PORTAL, id));
                                 break;
-                            case "Explosion":
-                                TriggerAreaList.Add(new TriggerArea(floatRect, TriggerAreaType.EXPLOSION, id, true));
+                            case "Function":
+                                TriggerAreaList.Add(new TriggerArea(floatRect, TriggerAreaType.FUNCTION, id, true));
                                 break;
                             default: break;
                         }

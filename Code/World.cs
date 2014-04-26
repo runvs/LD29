@@ -82,7 +82,7 @@ namespace JamTemplate
                             Console.WriteLine("Loading level {0}", area.Id);
                             return;
 
-                        case TriggerAreaType.EXPLOSION:
+                        case TriggerAreaType.FUNCTION:
                             if (_functionDict.ContainsKey(area.Id))
                             {
                                 _functionDict[area.Id](null);

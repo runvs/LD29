@@ -7,7 +7,7 @@ namespace JamTemplate
     {
         PORTAL,
         QUEST,
-        EXPLOSION
+        FUNCTION
         //TAT_ITEM  ?
     }
 
