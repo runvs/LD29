@@ -206,6 +206,10 @@ namespace JamTemplate
                     {
                         _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
                     }
+                    else if (GetTileOnPosition(i, j) != null && GetTileOnPosition(i, j).GetTileType() == Tile.TileType.LADDER)
+                    {
+                        _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
+                    }
                     else
                     {
                         _waypointGrid[i, j] = PathFinderHelper.BLOCKED_TILE;

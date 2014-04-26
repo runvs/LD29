@@ -17,7 +17,8 @@ namespace JamTemplate
         public enum TileType
         {
             GRASS,
-            EARTH
+            EARTH,
+            LADDER
         }
         #endregion Enums
 
@@ -28,6 +29,11 @@ namespace JamTemplate
         public SFML.Window.Vector2i TilePosition { get; private set; }
         public bool IsTileBlocked { get; private set; }
         private TileType _type;
+
+        public TileType GetTileType()
+        {
+            return _type;
+        }
 
 
 
@@ -68,6 +74,9 @@ namespace JamTemplate
                     break;
                 case TileType.EARTH:
                     _sprite = new SmartSprite("../GFX/earth.png");
+                    break;
+                case TileType.LADDER:
+                    _sprite = new SmartSprite("../GFX/ladder.png");
                     break;
             }
         }
