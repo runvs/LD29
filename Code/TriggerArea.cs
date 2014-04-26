@@ -5,8 +5,9 @@ namespace JamTemplate
 {
     public enum TriggerAreaType
     {
-        TAT_PORTAL,
-        TAT_QUEST,
+        PORTAL,
+        QUEST,
+        EXPLOSION
         //TAT_ITEM  ?
     }
 
@@ -33,8 +34,15 @@ namespace JamTemplate
             if (IsTriggeredOnce && HasTriggered)
                 return false;
 
-            HasTriggered = true;
-            return _rect.Contains(pos.X, pos.Y);
+            if (_rect.Contains(pos.X, pos.Y))
+            {
+                HasTriggered = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

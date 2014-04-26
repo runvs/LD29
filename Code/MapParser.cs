@@ -82,15 +82,24 @@ namespace JamTemplate
                 switch (node.Attributes["type"].Value)
                 {
                     case "TriggerArea":
+                        var nodeName = node.Attributes["name"].Value;
+                        var floatRect = new FloatRect(
+                            float.Parse(node.Attributes["x"].Value) * SmartSprite._scaleVector.X,
+                            float.Parse(node.Attributes["y"].Value) * SmartSprite._scaleVector.Y,
+                            float.Parse(node.Attributes["width"].Value) * SmartSprite._scaleVector.X,
+                            float.Parse(node.Attributes["height"].Value) * SmartSprite._scaleVector.Y
+                        );
+                        var id = node.SelectSingleNode("properties/property[@name='id']").Attributes["value"].Value;
+
+                        switch (nodeName)
                         {
-                            var left = float.Parse(node.Attributes["x"].Value) * SmartSprite._scaleVector.X;
-                            var top = float.Parse(node.Attributes["y"].Value) * SmartSprite._scaleVector.Y;
-                            var width = float.Parse(node.Attributes["width"].Value) * SmartSprite._scaleVector.X;
-                            var height = float.Parse(node.Attributes["height"].Value) * SmartSprite._scaleVector.Y;
-
-                            var id = node.SelectSingleNode("properties/property[@name='id']").Attributes["value"].Value;
-
-                            TriggerAreaList.Add(new TriggerArea(new FloatRect(left, top, width, height), TriggerAreaType.TAT_PORTAL, id));
+                            case "Portal":
+                                TriggerAreaList.Add(new TriggerArea(floatRect, TriggerAreaType.PORTAL, id));
+                                break;
+                            case "Explosion":
+                                TriggerAreaList.Add(new TriggerArea(floatRect, TriggerAreaType.EXPLOSION, id, true));
+                                break;
+                            default: break;
                         }
                         break;
                     case "Spawn":

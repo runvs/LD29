@@ -145,5 +145,10 @@
    </properties>
   </object>
   <object name="PlayerPortalSpawn" type="Spawn" x="144" y="48" width="16" height="16"/>
+  <object name="Explosion" type="TriggerArea" x="16" y="32" width="16" height="32">
+   <properties>
+    <property name="id" value="basicExplosion"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

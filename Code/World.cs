@@ -22,6 +22,7 @@ namespace JamTemplate
         private List<IGameObject> _speechBubbleList;
         private Player _player;
         private byte[,] _waypointGrid;
+        private Dictionary<string, Action<object>> _functionDict;
 
         #endregion Fields
 
@@ -76,10 +77,17 @@ namespace JamTemplate
                 {
                     switch (area.Type)
                     {
-                        case TriggerAreaType.TAT_PORTAL:
+                        case TriggerAreaType.PORTAL:
                             LoadWorld(area.Id);
                             Console.WriteLine("Loading level {0}", area.Id);
                             return;
+
+                        case TriggerAreaType.EXPLOSION:
+                            if (_functionDict.ContainsKey(area.Id))
+                            {
+                                _functionDict[area.Id](null);
+                            }
+                            break;
 
                         default: break;
                     }
@@ -114,12 +122,31 @@ namespace JamTemplate
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
             _speechBubbleList = new List<IGameObject>();
+            _functionDict = new Dictionary<string, Action<object>>();
             _player = new Player(this, 0);
             LoadWorld();
 
-            AddSpeechBubble("Whow this already looks great!", new Vector2f(150, 25));
+            AddSpeechBubble("Wow this already looks great!", new Vector2f(150, 25));
 
-           
+            _functionDict.Add("basicExplosion", BasicExplosion);
+        }
+
+        private void BasicExplosion(object o = null)
+        {
+            ParticleProperties props = new ParticleProperties();
+            props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
+            props.col = Color.Black;
+            props.lifeTime = 10.0f;
+            props.sizeMultiple = 0.0f;
+            props.sizeSingle = 10;
+            props.RotationType = ParticleManager.ParticleRotationType.PRT_Velocity;
+            props.AffectedByGravity = true;
+            var emitter = new ParticleEmitter(new FloatRect(50, 150, 100, 100), props, 10);
+            emitter.Update(3);
+
+
+            //ParticleManager.SpawnSmokeCloud(new Vector2f(50, 50), 50, 20, Color.Black);
+            //ParticleManager.SpawnSmokeCloud(new Vector2f(50, 50), 50, 20, Color.Black);
         }
 
         private Tile GetTileOnPosition(int x, int y)
@@ -189,10 +216,10 @@ namespace JamTemplate
            
           
 
-            System.Console.WriteLine("");
+            /*System.Console.WriteLine("");
             System.Console.WriteLine(startPositionInTiles.X + " " + startPositionInTiles.Y + " " + _waypointGrid[startPositionInTiles.X, startPositionInTiles.Y]);
             System.Console.WriteLine(endPositionInTiles.X + " " + endPositionInTiles.Y + " " + _waypointGrid[endPositionInTiles.X, endPositionInTiles.Y]);
-            System.Console.WriteLine("");
+            System.Console.WriteLine("");*/
 
 
             Point startPoint = new Point(startPositionInTiles.X, startPositionInTiles.Y);
