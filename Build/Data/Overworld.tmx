@@ -2419,5 +2419,10 @@
     <property name="id" value="GoIntoMine"/>
    </properties>
   </object>
+  <object name="Function" type="TriggerArea" x="156" y="163" width="35" height="66">
+   <properties>
+    <property name="id" value="SoWeWere"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -21,7 +21,7 @@ namespace JamTemplate
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
-        private Player _player;
+        public Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
 
@@ -159,6 +159,8 @@ namespace JamTemplate
 
             _functionDict.Add("basicExplosion", StoryProgress.CaveCollapse);
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
+            _functionDict.Add("SoWeWere", StoryProgress.SoWeWere);
+            _functionDict.Add("NoEscape", StoryProgress.NoEscape);
         }
 
         
@@ -301,7 +303,7 @@ namespace JamTemplate
 
         private void CreateWaterDropSpaces()
         {
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= GameProperties.WorldWaterDropSpaces; i++)
             {
                 bool searching = true;
                 Tile finallyFound = null;

@@ -24,6 +24,7 @@ namespace JamTemplate
         private static Vector2f _spriteOffset;
         private static Texture _glowShadeTexture;
         private static Sprite _glowShadeSprite;
+        private float _timeSinceStart;
 
 
 
@@ -40,6 +41,7 @@ namespace JamTemplate
                 _glowShadeSprite = new Sprite(_glowShadeTexture);
                 _glowShadeSprite.Scale = new Vector2f(1.0f, 0.35f);
             }
+            _timeSinceStart = 0.0f;
             Text = text;
             AbsolutePosition = position;
 
@@ -56,6 +58,7 @@ namespace JamTemplate
         {
             _sprite.Update(timeObject);
             _remainingDisplayTime -= timeObject.ElapsedGameTime;
+            _timeSinceStart += timeObject.ElapsedGameTime;
             if (!IsFadingOut)
             {
                 if (_remainingDisplayTime <= 0)
@@ -77,7 +80,11 @@ namespace JamTemplate
         {
             if (!IsDead)
             {
-                Vector2f screenPos = AbsolutePosition - Camera.CameraPosition ;
+                Vector2f screenPos = 
+                    AbsolutePosition - 
+                    Camera.CameraPosition + 
+                    new Vector2f(3.0f * (float)Math.Sin(_timeSinceStart*2 + 4.2f), 
+                        12 * (float)Math.Sin(_timeSinceStart * 2));
                 _sprite.Position = screenPos + _spriteOffset;
                 _glowShadeSprite.Position = screenPos + _spriteOffset;
 
@@ -87,7 +94,7 @@ namespace JamTemplate
                         0,1,GameProperties.SpeechBubbleFadeTime));
                 if (IsFadingOut)
                 {
-                    _sprite.Alpha = (byte)(185.0 *  alphaVal);
+                    _sprite.Alpha = (byte)(135.0 *  alphaVal);
                     Color colshade = Color.White;
                     colshade.A = (byte)(255.0f * alphaVal);
                     _glowShadeSprite.Color = colshade;
@@ -100,7 +107,8 @@ namespace JamTemplate
                 _sprite.Draw(rw);
                 Color col = GameProperties.ColorBlue1;
                 col.A = (byte)((float)_sprite.Alpha / 185.0f * 255.0f);
-                screenPos += ScreenEffects.GlobalSpriteOffset;
+                screenPos += ScreenEffects.GlobalSpriteOffset + new Vector2f(- 1.0f * (float)Math.Sin(_timeSinceStart * 0.5 + 3.2f),
+                        - 4 * (float)Math.Sin(_timeSinceStart* 1.5 + 2)); ;
                 SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos , new Vector2f(1.0f, 1.0f), col, rw);
             }
         }

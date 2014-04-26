@@ -6,7 +6,7 @@ using SFML.Window;
 
 namespace JamTemplate
 {
-    class Player
+    public class Player
     {
         #region Fields
 

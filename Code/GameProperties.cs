@@ -51,5 +51,7 @@ namespace JamTemplate
 
         public static float SpeechBubbleLifeTime { get { return 4.5f; } }
         public static float SpeechBubbleFadeTime { get { return 1.5f; } }
+
+        public static int WorldWaterDropSpaces { get { return 20; } }
     }
 }
