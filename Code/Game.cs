@@ -32,7 +32,7 @@ namespace JamTemplate
             ScreenEffects.Init(new Vector2u(800, 600));
             //ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
             //ParticleManager.Gravity = GameProperties.GravitationalAcceleration;
-            Camera.MinPosition = new Vector2f(-64, -200);
+            Camera.MinPosition = new Vector2f(0, -200);
             
             try
             {

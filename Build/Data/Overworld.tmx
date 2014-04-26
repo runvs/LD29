@@ -1514,7 +1514,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="0"/>
    <tile gid="3"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -2408,7 +2408,7 @@
   </data>
  </layer>
  <objectgroup name="Objects" width="60" height="40">
-  <object name="PlayerSpawn" type="Spawn" x="8" y="65" width="17" height="16"/>
+  <object name="PlayerSpawn" type="Spawn" x="21" y="65" width="17" height="16"/>
   <object name="Function" type="TriggerArea" x="201" y="180" width="16" height="48">
    <properties>
     <property name="id" value="basicExplosion"/>

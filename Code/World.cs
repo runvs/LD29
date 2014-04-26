@@ -21,7 +21,7 @@ namespace JamTemplate
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
         private Player _player;
-        private byte[,] _waypointGrid;
+        internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
 
         #endregion Fields
@@ -173,6 +173,22 @@ namespace JamTemplate
                 }
             }
             return ret;
+        }
+
+        internal void RemoveTileAt(Vector2i tilePos)
+        {
+
+            List<Tile> newList = new List<Tile>();
+
+            foreach (var t in _tileList)
+            {
+                if (!t.TilePosition.Equals( tilePos))
+                {
+                    newList.Add(t);
+                }
+            }
+            _tileList = newList;
+
         }
 
         private Vector2f GetWayPointForTile(Vector2i tilePos)

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace JamTemplate
 {
@@ -21,7 +23,7 @@ namespace JamTemplate
             var shake = ScreenEffects.GetDynamicEffect("shake");
             shake.StartEffect(1.0f, .025f, Color.White, 10.0f, ShakeDirection.AllDirections);
 
-            //ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.75f, 0.05f, GameProperties.ColorBrown2, 2);
+            ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.75f, 0.05f, GameProperties.ColorBrown2, 2);
 
             ParticleProperties props = new ParticleProperties();
             props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
@@ -34,6 +36,12 @@ namespace JamTemplate
             var emitter = new ParticleEmitter(new FloatRect(960, 704, 128, 256), props, 4);
             emitter.Update(3);
             ExplosionHasHappened = true;
+
+            for(int i = 9; i != 13; i++)
+            {
+                _world._waypointGrid[17, i] = PathFinderHelper.BLOCKED_TILE;
+                _world.RemoveTileAt(new Vector2i(17, i));
+            }
 
             // todo Spawn Debris and rocks, block the path
         }
