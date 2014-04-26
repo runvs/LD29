@@ -15,6 +15,8 @@ namespace JamTemplate
         public Vector2f AbsolutePositionInPixel { get; private set; }
         public Vector2f ShouldBePosition { get; private set; }
 
+
+
         private List<Vector2f> _waypointList;
 
         Dictionary<Keyboard.Key, Action> _actionMap;

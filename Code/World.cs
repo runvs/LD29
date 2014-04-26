@@ -97,7 +97,9 @@ namespace JamTemplate
 
         public void Draw(RenderWindow rw)
         {
-            rw.Clear(GameProperties.ColorGrey3);
+            SetBackgroundColor(rw);
+
+
             ParticleManager.Draw(rw);
 
             foreach (var t in _tileList)
@@ -114,7 +116,24 @@ namespace JamTemplate
 
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
             ScreenEffects.Draw(rw);
+        }
 
+        private void SetBackgroundColor(RenderWindow rw)
+        {
+            Color backgroundColor = GameProperties.ColorPink1;
+            if (_player.AbsolutePositionInPixel.Y >= GameProperties.TileSizeInPixelScaled * GameProperties.WorldOverUnderWorldChange1)
+            {
+                backgroundColor = GameProperties.ColorPink2;
+            }
+            if (_player.AbsolutePositionInPixel.Y >= GameProperties.TileSizeInPixelScaled * GameProperties.WorldOverUnderWorldChange2)
+            {
+                backgroundColor = GameProperties.ColorPink3;
+            }
+            if (_player.AbsolutePositionInPixel.Y >= GameProperties.TileSizeInPixelScaled * GameProperties.WorldOverUnderWorldChange3)
+            {
+                backgroundColor = GameProperties.ColorPink4;
+            }
+            rw.Clear(backgroundColor);
         }
 
         private void InitGame()
