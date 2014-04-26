@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JamUtilities;
+using SFML.Graphics;
 using SFML.Window;
 
 namespace JamTemplate
@@ -15,6 +16,8 @@ namespace JamTemplate
         public Vector2f AbsolutePositionInPixel { get; private set; }
         public Vector2f ShouldBePosition { get; private set; }
 
+        public Texture _glowspriteTexture;
+        public Sprite _glowSpriteSprite;
 
 
         private List<Vector2f> _waypointList;
@@ -32,13 +35,17 @@ namespace JamTemplate
             _world = world;
             playerNumber = number;
 
-
+            
 
             _actionMap = new Dictionary<Keyboard.Key, Action>();
             _waypointList = new List<Vector2f>();
             try
             {
                 LoadGraphics();
+                JamUtilities.GlowSpriteCreator.CreateRadialGlow(out _glowspriteTexture, 64, GameProperties.ColorGrey1, 0.2f, PennerDoubleAnimation.EquationType.SineEaseIn);
+                _glowSpriteSprite = new Sprite(_glowspriteTexture);
+                _glowSpriteSprite.Scale = new Vector2f(1.0f, 0.25f);
+                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2, GameProperties.TileSizeInPixelScaled - 35);
             }
             catch (SFML.LoadingFailedException e)
             {
@@ -140,6 +147,13 @@ namespace JamTemplate
         public void Draw(SFML.Graphics.RenderWindow rw)
         {
             _sprite.Position = GetOnScreenPosition();
+            _glowSpriteSprite.Position = GetOnScreenPosition();
+
+            Tile tilePlayerIsOn = _world.GetTileOnPosition((int)(AbsolutePositionInPixel.X / GameProperties.TileSizeInPixelScaled), (int)(AbsolutePositionInPixel.Y / GameProperties.TileSizeInPixelScaled));
+            if (tilePlayerIsOn != null && tilePlayerIsOn.GetTileType() != Tile.TileType.LADDER)
+            {
+                rw.Draw(_glowSpriteSprite);
+            }
 
             _sprite.Draw(rw);
         }

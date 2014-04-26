@@ -167,7 +167,7 @@ namespace JamTemplate
             emitter.Update(3);
         }
 
-        private Tile GetTileOnPosition(int x, int y)
+        public Tile GetTileOnPosition(int x, int y)
         {
             Tile ret = null;
             foreach (var t in _tileList)
