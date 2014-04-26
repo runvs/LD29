@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
+using JamUtilities;
 using SFML.Window;
 
 namespace JamTemplate
@@ -12,7 +13,6 @@ namespace JamTemplate
     public class MapParser
     {
         public List<Tile> TerrainLayer { get; private set; }
-        public List<IGameObject> ObjectLayer { get; private set; }
         public Vector2i PlayerPosition { get; private set; }
         public Vector2i WorldSize { get; private set; }
         public Vector2i TileSize { get; private set; }
@@ -20,7 +20,6 @@ namespace JamTemplate
         public MapParser(string fileName)
         {
             TerrainLayer = new List<Tile>();
-            ObjectLayer = new List<IGameObject>();
 
             var doc = new XmlDocument();
             doc.Load(fileName);

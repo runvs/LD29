@@ -7,7 +7,7 @@ using SFML.Window;
 
 namespace JamTemplate
 {
-    public class TriggerArea : JamUtilities.IGameObject
+    public class TriggerArea
     {
         private FloatRect _rect;
 
