@@ -1,14 +1,14 @@
-﻿using SFML.Graphics;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
-using System.Collections.Generic;
+using SFML.Graphics;
 using SFML.Window;
 
 namespace JamTemplate
 {
-    class World
+    public class World
     {
 
         #region Fields
@@ -43,7 +43,7 @@ namespace JamTemplate
 
             _player.Update(timeObject);
 
-            Camera.ShouldBePosition = _player.GetOnScreenPosition() ;
+            Camera.ShouldBePosition = _player.GetOnScreenPosition();
             Camera.DoCameraMovement(timeObject);
         }
 
@@ -93,7 +93,7 @@ namespace JamTemplate
                         newTile = new Tile(i, j, Tile.TileType.Grass);
                         _tileList.Add(newTile);
                     }
-                    
+
                 }
             }
         }
