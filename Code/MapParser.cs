@@ -55,6 +55,9 @@ namespace JamTemplate
                     case 1:
                         type = Tile.TileType.GRASS;
                         break;
+                    case 2:
+                        type = Tile.TileType.LADDER;
+                        break;
                     default:
                         if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
                         {
