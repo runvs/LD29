@@ -17,11 +17,20 @@ namespace JamTemplate
 
         private float _remainingDisplayTime;
 
-        private SmartSprite _sprite;
+        private static SmartSprite _sprite;
+        private static bool _isInitialized = false;
+        private static Vector2f _spriteOffset;
 
 
         public Speechbubble(string text, Vector2f position)
         {
+            if (!_isInitialized)
+            {
+                _isInitialized = true;
+                _sprite = new SmartSprite("../GFX/speech.png");
+                _spriteOffset = new Vector2f(-25, -15);
+                _sprite.Alpha = 185;
+            }
             Text = text;
             AbsolutePosition = position;
 
@@ -57,8 +66,13 @@ namespace JamTemplate
 
         public void Draw(SFML.Graphics.RenderWindow rw)
         {
-            _sprite.Draw(rw);
-            SmartText.DrawText(Text, TextAlignment.LEFT, AbsolutePosition, new Vector2f(1.0f, 1.0f), GameProperties.ColorBlue1, rw);
+            if (!IsDead)
+            {
+                Vector2f screenPos = AbsolutePosition - Camera.CameraPosition ;
+                _sprite.Position = screenPos + _spriteOffset;
+                _sprite.Draw(rw);
+                SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos, new Vector2f(1.0f, 1.0f), GameProperties.ColorBlue1, rw);
+            }
         }
 
         bool IGameObject.IsDead()

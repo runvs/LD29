@@ -109,7 +109,8 @@ namespace JamTemplate
             _speechBubbleList = new List<IGameObject>();
             _player = new Player(this, 0);
             LoadWorld();
-            //CreateDefaultWorld();
+
+            AddSpeechBubble("Whow this already looks great!", new Vector2f(150,25));
 
             SetWorldDependentSettings();
 
@@ -223,6 +224,12 @@ namespace JamTemplate
             _triggerAreaList = parser.TriggerAreaList;
             _player.SetPlayerPosition(parser.PlayerPosition);
 
+        }
+
+        public void AddSpeechBubble(String text, Vector2f position)
+        {
+            Speechbubble sb = new Speechbubble(text, position);
+            _speechBubbleList.Add(sb);
         }
 
         #endregion Methods
