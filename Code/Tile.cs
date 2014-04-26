@@ -3,6 +3,7 @@
 /// Published by Julian Dinges and Simon Weis, 2013
 /// Contact laguna_1989@gmx.net
 
+using System.Collections.Generic;
 using JamUtilities;
 using SFML.Graphics;
 using SFML.Window;
@@ -28,6 +29,8 @@ namespace JamTemplate
         public SFML.Window.Vector2i TilePosition { get; private set; }
         public bool IsTileBlockd { get; private set; }
         private TileType _type;
+
+
 
         #endregion Fields
 

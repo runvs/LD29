@@ -69,12 +69,10 @@ namespace JamTemplate
             Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y) + Camera.CameraPosition;
             if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
             {
-              //System.Console.WriteLine(AbsoluteMousePosition);
 
-                // check if clicked Position is valid;
+                _world.GetWaypointPosition(AbsoluteMousePosition);
 
-
-                _waypointList.Add(AbsoluteMousePosition);
+                _waypointList.Add(_world.GetNearestWayPointToPosition(AbsoluteMousePosition));
             }
 
 
@@ -157,6 +155,7 @@ namespace JamTemplate
         private void LoadGraphics()
         {
             _sprite = new SmartSprite("../GFX/player.png");
+            _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal / 2.0f, GameProperties.TileSizeInPixelOriginal);
         }
 
         #endregion Methods

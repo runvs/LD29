@@ -14,6 +14,8 @@ namespace JamTemplate
         #region Fields
 
         private List<Tile> _tileList;
+        // holds all the Waypoints in absolut coordinates
+        private List<Vector2f> _waypointList;
         private Player _player;
 
         #endregion Fields
@@ -67,17 +69,48 @@ namespace JamTemplate
         private void InitGame()
         {
             _tileList = new List<Tile>();
+            _waypointList = new List<Vector2f>();
             _player = new Player(this, 0);
             //LoadWorld();
             CreateDefaultWorld();
 
             SetWorldDependentSettings();
+
+            CreateWayPoints();
+        }
+
+
+        private void CreateWayPoints()
+        {
+            foreach (var t in _tileList)
+            {
+                // TODO more sophisticated Method here!
+                Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(t.TilePosition.X)) * GameProperties.TileSizeInPixelScaled, t.TilePosition.Y * GameProperties.TileSizeInPixelScaled - 1);
+                _waypointList.Add(absoluteWayPointCoordinates);
+            }
+        }
+
+        public Vector2f GetNearestWayPointToPosition(Vector2f vec)
+        {
+            Vector2f ret = new Vector2f();
+            float smallestDistanceSquared = 99999999999999999;
+            foreach (var wp in _waypointList)
+            {
+                float newDistance = MathStuff.GetLengthSquared(vec - wp);
+                if (smallestDistanceSquared >= newDistance)
+                {
+                    ret = wp;
+                    smallestDistanceSquared = newDistance;
+                }
+            }
+            return ret;
         }
 
         private void SetWorldDependentSettings()
         {
             Camera.MaxPosition = new Vector2f(GameProperties.WorldSizeInTiles.X, GameProperties.WorldSizeInTiles.Y) * GameProperties.TileSizeInPixelScaled;
             Camera.CameraPosition = _player.GetOnScreenPosition() - new Vector2f(400, 300);
+
         }
 
         private void CreateDefaultWorld()
@@ -105,5 +138,10 @@ namespace JamTemplate
 
         #endregion Methods
 
+
+        internal void GetWaypointPosition(Vector2f AbsoluteMousePosition)
+        {
+            
+        }
     }
 }
