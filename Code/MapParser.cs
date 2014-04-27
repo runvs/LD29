@@ -3,7 +3,6 @@
 /// Published by Julian Dinges and Simon Weis, 2013
 /// Contact laguna_1989@gmx.net
 
-using System;
 using System.Collections.Generic;
 using System.Xml;
 using JamUtilities;
@@ -52,17 +51,83 @@ namespace JamTemplate
             foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='Terrain']/data/tile"))
             {
                 int gid = int.Parse(layerNode.Attributes["gid"].Value) - terrainOffset;
-                Tile.TileType type = Tile.TileType.GRASS;
+                Tile.TileType type = Tile.TileType.OVERWORLD_TOP;
 
                 switch (gid)
                 {
                     case 0:
-                        type = Tile.TileType.EARTH;
+                        type = Tile.TileType.UNDERWORLD_FLOAT;
                         break;
                     case 1:
-                        type = Tile.TileType.GRASS;
+                        type = Tile.TileType.UNDERWORLD_TOP_LEFT_RIGHT;
                         break;
                     case 2:
+                        type = Tile.TileType.UNDERWORLD_TOP_BOTTOM_LEFT;
+                        break;
+                    case 3:
+                        type = Tile.TileType.UNDERWORLD_TOP_BOTTOM_RIGHT;
+                        break;
+                    case 4:
+                        type = Tile.TileType.UNDERWORLD_TOP_BOTTOM;
+                        break;
+                    case 5:
+                        type = Tile.TileType.UNDERWORLD_TOP_LEFT;
+                        break;
+                    case 6:
+                        type = Tile.TileType.UNDERWORLD_TOP_RIGHT;
+                        break;
+                    case 7:
+                        type = Tile.TileType.UNDERWORLD_TOP;
+                        break;
+                    case 8:
+                        type = Tile.TileType.OVERWORLD_FLOAT;
+                        break;
+                    case 9:
+                        type = Tile.TileType.OVERWORLD_TOP_LEFT_RIGHT;
+                        break;
+                    case 10:
+                        type = Tile.TileType.OVERWORLD_TOP_BOTTOM_LEFT;
+                        break;
+                    case 11:
+                        type = Tile.TileType.UNDERWORLD_BOTTOM_LEFT_RIGHT;
+                        break;
+                    case 12:
+                        type = Tile.TileType.OVERWORLD_TOP_BOTTOM_RIGHT;
+                        break;
+                    case 13:
+                        type = Tile.TileType.UNDERWORLD_LEFT_RIGHT;
+                        break;
+                    case 14:
+                        type = Tile.TileType.OVERWORLD_TOP_BOTTOM;
+                        break;
+                    case 15:
+                        type = Tile.TileType.OVERWORLD_TOP_LEFT;
+                        break;
+                    case 16:
+                        type = Tile.TileType.UNDERWORLD_BOTTOM_LEFT;
+                        break;
+                    case 17:
+                        type = Tile.TileType.UNDERWORLD_BOTTOM_RIGHT;
+                        break;
+                    case 18:
+                        type = Tile.TileType.OVERWORLD_TOP_RIGHT;
+                        break;
+                    case 19:
+                        type = Tile.TileType.UNDERWORLD_LEFT;
+                        break;
+                    case 20:
+                        type = Tile.TileType.UNDERWORLD_BOTTOM;
+                        break;
+                    case 21:
+                        type = Tile.TileType.UNDERWORLD_RIGHT;
+                        break;
+                    case 22:
+                        type = Tile.TileType.OVERWORLD_TOP;
+                        break;
+                    case 23:
+                        type = Tile.TileType.UNDERWORLD_MID;
+                        break;
+                    case 24:
                         type = Tile.TileType.LADDER;
                         break;
                     default:

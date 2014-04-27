@@ -15,14 +15,39 @@ namespace JamTemplate
         #region Enums
         public enum TileType
         {
-            GRASS,
-            EARTH,
             LADDER,
             CABLE,
             GENERATOR_1,
             GENERATOR_2,
             LAMP,
-            MINING_BUILDING
+            MINING_BUILDING,
+
+            OVERWORLD_TOP,
+            OVERWORLD_TOP_LEFT,
+            OVERWORLD_TOP_RIGHT,
+            OVERWORLD_TOP_BOTTOM,
+            OVERWORLD_TOP_BOTTOM_LEFT,
+            OVERWORLD_TOP_BOTTOM_RIGHT,
+            OVERWORLD_TOP_LEFT_RIGHT,
+            OVERWORLD_FLOAT,
+
+            UNDERWORLD_MID,
+            UNDERWORLD_TOP,
+            UNDERWORLD_BOTTOM,
+            UNDERWORLD_TOP_LEFT,
+            UNDERWORLD_TOP_RIGHT,
+            UNDERWORLD_TOP_BOTTOM,
+            UNDERWORLD_TOP_BOTTOM_LEFT,
+            UNDERWORLD_TOP_BOTTOM_RIGHT,
+            UNDERWORLD_TOP_LEFT_RIGHT,
+            UNDERWORLD_LEFT,
+            UNDERWORLD_RIGHT,
+            UNDERWORLD_BOTTOM_LEFT,
+            UNDERWORLD_BOTTOM_RIGHT,
+            UNDERWORLD_LEFT_RIGHT,
+            UNDERWORLD_BOTTOM_LEFT_RIGHT,
+            UNDERWORLD_FLOAT
+
         }
         #endregion Enums
 
@@ -52,7 +77,7 @@ namespace JamTemplate
             LoadGraphics();
             IsTileBlocked = false;
 
-            if (_type == TileType.GRASS)
+            if (_type == TileType.OVERWORLD_TOP)
             {
                 IsTileBlocked = true;
             }
@@ -73,12 +98,6 @@ namespace JamTemplate
         {
             switch (_type)
             {
-                case TileType.GRASS:
-                    _sprite = new SmartSprite("../GFX/grass.png");
-                    break;
-                case TileType.EARTH:
-                    _sprite = new SmartSprite("../GFX/earth.png");
-                    break;
                 case TileType.LADDER:
                     _sprite = new SmartSprite("../GFX/ladder.png");
                     break;
@@ -96,6 +115,9 @@ namespace JamTemplate
                     break;
                 case TileType.MINING_BUILDING:
                     _sprite = new SmartSprite("../GFX/mining_building.png");
+                    break;
+                default:
+                    _sprite = new SmartSprite(string.Format("../GFX/tiles/{0}.png", _type.ToString()));
                     break;
             }
         }
