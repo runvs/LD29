@@ -267,8 +267,8 @@ namespace JamTemplate
 
         private void CreateClouds()
         {
-            Color cloudColor = GameProperties.ColorPink4;
-            Color backgroundColor = GameProperties.ColorPink1;
+            Color cloudColor = GameProperties.ColorGrey1;
+            Color backgroundColor = GameProperties.ColorPink4;
 
             _cloudList = new System.Collections.Generic.List<AreatricCloud>();
             for (int i = 0; i != 120; i++)

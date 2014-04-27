@@ -177,6 +177,8 @@
             <filename>../GFX/generator_1.png</filename>
             <filename>../GFX/generator_2.png</filename>
             <filename>../GFX/mining_building.png</filename>
+            <filename>../GFX/drill_machine.png</filename>
+            <filename>../GFX/miner.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
