@@ -18,6 +18,7 @@ namespace JamTemplate
         public static bool HasPickedUpCable = false;
         public static bool HasRepairedGenerator = false;
         public static bool HasPickedUpHelm = false;
+        public static bool HasReachedExit = false;
 
         private static void DoExplosion()
         {
@@ -71,11 +72,10 @@ namespace JamTemplate
             _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.",
                 new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 200));
         }
-
-        internal static void NoEscape(object obj)
+        internal static void WhatToDo(object obj)
         {
-            //_world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", 
-            // new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
+            _world.AddSpeechBubble("At first Light would be a great Idea. Let's power the generator to the left.",
+                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
         }
 
         internal static void VisitGeneratorArea(object obj)
@@ -170,8 +170,18 @@ namespace JamTemplate
 
         internal static void Finished(object obj)
         {
-            _world.AddSpeechBubble("Oh no. The Ladder is damaged. I need to take the long way.",
+            _world.AddSpeechBubble("So I finally managed to reach the surface. What a relief",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+            Color col = GameProperties.ColorBlue1;
+            col.A = 175;
+            ScreenEffects.GetDynamicEffect("fadeIn").StartEffect(0.9f, 0.05f, col, 1);
+            ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.2f, 0.05f, col, 1);
+            HasReachedExit = true;
         }
+
+
+
+        
     }
 }
+

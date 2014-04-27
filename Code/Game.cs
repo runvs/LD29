@@ -21,6 +21,8 @@ namespace JamTemplate
         Music _bgm; 
         float _timeTilNextInput = 0.0f;
 
+        bool loading = false;
+
         #endregion Fields
 
         #region Methods
@@ -78,7 +80,9 @@ namespace JamTemplate
         {
             if (Keyboard.IsKeyPressed(Keyboard.Key.Return))
             {
-                StartGame();
+                
+                
+                loading = true;
             }
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.C))
@@ -141,14 +145,25 @@ namespace JamTemplate
 
         private void DrawMenu(RenderWindow rw)
         {
-            SmartText.DrawText("$GameTitle$", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
+            if (!loading)
+            {
+                SmartText.DrawText("$GameTitle$", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
 
-            SmartText.DrawText("Start [Return]", TextAlignment.MID, new Vector2f(400.0f, 250.0f), rw);
-            SmartText.DrawText("W A S D & LShift", TextAlignment.MID, new Vector2f(530.0f, 340.0f), rw);
-            SmartText.DrawText("Arrows & RCtrl", TextAlignment.MID, new Vector2f(180.0f, 340.0f), rw);
+                SmartText.DrawText("Start [Return]", TextAlignment.MID, new Vector2f(400.0f, 250.0f), rw);
+                SmartText.DrawText("W A S D & LShift", TextAlignment.MID, new Vector2f(530.0f, 340.0f), rw);
+                SmartText.DrawText("Arrows & RCtrl", TextAlignment.MID, new Vector2f(180.0f, 340.0f), rw);
 
-            SmartText.DrawText("[C]redits", TextAlignment.LEFT, new Vector2f(30.0f, 550.0f), rw);
-            ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+                SmartText.DrawText("[C]redits", TextAlignment.LEFT, new Vector2f(30.0f, 550.0f), rw);
+                ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+            }
+            else
+            {
+                SmartText.DrawText("Loading", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
+                rw.Display();
+                
+                StartGame();
+                
+            }
         }
 
         private void DrawCredits(RenderWindow rw)
@@ -179,8 +194,12 @@ namespace JamTemplate
 
         private void StartGame()
         {
-            _myWorld = new World();
-            ChangeGameState(State.Game, 0.1f);
+            if (loading)
+            {
+                _myWorld = new World();
+                ChangeGameState(State.Game, 0.1f);
+                loading = false;
+            }
         }
 
 

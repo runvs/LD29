@@ -171,6 +171,10 @@ namespace JamTemplate
             {
                 backgroundColor = GameProperties.ColorPink3;
             }
+            if (StoryProgress.HasReachedExit)
+            {
+                backgroundColor = GameProperties.ColorPink1;
+            }
 
             rw.Clear(backgroundColor);
         }
@@ -196,12 +200,12 @@ namespace JamTemplate
             _functionDict.Add("basicExplosion", StoryProgress.CaveCollapse);
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
             _functionDict.Add("SoWeWere", StoryProgress.SoWeWere);
-            _functionDict.Add("NoEscape", StoryProgress.NoEscape);
+            _functionDict.Add("WhatToDo", StoryProgress.WhatToDo);
             _functionDict.Add("GeneratorArea", StoryProgress.VisitGeneratorArea);
             _functionDict.Add("Cable", StoryProgress.PickupCable);
             _functionDict.Add("LadderDamaged", StoryProgress.LadderDamaged);
 
-            _functionDict.Add("Finished", StoryProgress.Finished);
+            _functionDict.Add("Finish", StoryProgress.Finished);
 
         }
 
