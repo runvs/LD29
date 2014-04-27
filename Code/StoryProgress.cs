@@ -15,7 +15,7 @@ namespace JamTemplate
 
         public static bool HasPickedUpHelm = false;
         public static bool ExplosionHasHappened = false;
-        
+
         public static bool HasBeenToGenerator = false;
         public static bool HasPickedUpCable = false;
         public static bool HasRepairedGenerator = false;
@@ -25,7 +25,7 @@ namespace JamTemplate
         public static bool HasBeenToDrill = false;
         public static bool HasPickedUpDrillHead = false;
         public static bool HasRepairedDrill = false;
-        
+
         public static bool HasReachedExit = false;
 
 
@@ -79,12 +79,12 @@ namespace JamTemplate
 
         internal static void SoWeWere(object obj)
         {
-            _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.",
+            _world.AddSpeechBubble("Now I'm trapped beneath the surface. I hope there's another way out!",
                 new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 200));
         }
         internal static void WhatToDo(object obj)
         {
-            _world.AddSpeechBubble("At first some light would be great. Let's power the generator to the left.",
+            _world.AddSpeechBubble("First we need some light. Let's power the generator to the left.",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
         }
 
@@ -94,20 +94,20 @@ namespace JamTemplate
             {
                 if (HasBeenToGenerator)
                 {
-                    _world.AddSpeechBubble("I knew the generator could be repaired with the cable!",
+                    _world.AddSpeechBubble("Now that we have light, let's find a way out of here...",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                     RepairGenerator();
                 }
                 else
                 {
-                    _world.AddSpeechBubble("Huch?",
+                    _world.AddSpeechBubble("Oh that's what it's for. Now let's find a way out of here...",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                     RepairGenerator();
                 }
             }
             else
             {
-                _world.AddSpeechBubble("We need to repair the Generator. Some Cables were damaged by the collapse.",
+                _world.AddSpeechBubble("I need to repair the generator. Some cables have been damaged by the collapse.",
                      new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 HasBeenToGenerator = true;
             }
@@ -132,7 +132,7 @@ namespace JamTemplate
             }
             else
             {
-                Text = "This cable might be useful. I'll take it with me";
+                Text = "This cable might be useful. I'll take it with me.";
             }
             HasPickedUpCable = true;
             _world.AddSpeechBubble(Text,
@@ -151,7 +151,7 @@ namespace JamTemplate
 
         internal static void Helm(object obj)
         {
-            _world.AddSpeechBubble("*Pick up Helmet*.",
+            _world.AddSpeechBubble("There's my helmet.",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
             _world._player.ChangeSprite("../GFX/player_helmet.png");
             HasPickedUpHelm = true;
@@ -161,7 +161,7 @@ namespace JamTemplate
         {
             if (!HasPickedUpHelm)
             {
-                _world.AddSpeechBubble("I should get my Helm first. Its in the Corp's house.",
+                _world.AddSpeechBubble("I should get my helmet first. Its outside the mining cabin.",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 // move Player up
                 _world._player.ResetPathfinding();
@@ -178,21 +178,20 @@ namespace JamTemplate
 
         internal static void LadderDamaged(object obj)
         {
-            _world.AddSpeechBubble("Oh no. The Ladder is damaged. I need to take the long way.",
+            _world.AddSpeechBubble("Oh no. The ladder has also been damaged. I need to take the long way.",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
         }
 
         internal static void Finished(object obj)
         {
-            _world.AddSpeechBubble("So I finally managed to reach the surface. What a relief",
+            _world.AddSpeechBubble("I finally managed to reach the surface. What a relief!",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
             Color col = GameProperties.ColorBlue1;
-            ScreenEffects.GetDynamicEffect("fadeIn").StartEffect(5.0f, 0.05f, col, 1);  
+            ScreenEffects.GetDynamicEffect("fadeIn").StartEffect(5.0f, 0.05f, col, 1);
             col.A = 175;
             ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.2f, 0.05f, col, 1);
             HasReachedExit = true;
         }
-
 
         private static void TellMinersStory()
         {
@@ -203,7 +202,7 @@ namespace JamTemplate
             }
             else if (MinersRescued == 2)
             {
-                _world.AddSpeechBubble("Edward was getting the Drillhead from southwest.",
+                _world.AddSpeechBubble("Edward was getting the new drill head from the southwest.",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
             }
             else if (MinersRescued == 3)
@@ -217,7 +216,7 @@ namespace JamTemplate
         {
             if (!HasRepairedGenerator)
             {
-                _world.AddSpeechBubble("I cannot see anything. Can someone switch on the lights?",
+                _world.AddSpeechBubble("I can't see anything. Can someone switch on the lights?",
                                new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 _world._player.ResetPathfinding();
                 _world._player.SetWaypoint(new Vector2f(_world._player.AbsolutePositionInPixel.X - 128, _world._player.AbsolutePositionInPixel.Y));
@@ -236,13 +235,11 @@ namespace JamTemplate
             }
         }
 
-        
-
         internal static void Miner2(object obj)
         {
             if (!HasRepairedGenerator)
             {
-                _world.AddSpeechBubble("I do not see anything. Can someone switch on the lights?",
+                _world.AddSpeechBubble("I can't see anything. Can someone switch on the lights?",
                                new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 _world._player.ResetPathfinding();
                 _world._player.SetWaypoint(new Vector2f(_world._player.AbsolutePositionInPixel.X + 128, _world._player.AbsolutePositionInPixel.Y));
@@ -288,7 +285,7 @@ namespace JamTemplate
         {
             if (!HasRepairedGenerator)
             {
-                _world.AddSpeechBubble("I cannot see anything. Can someone switch on the lights?",
+                _world.AddSpeechBubble("I can't see anything. Can someone switch on the lights?",
                                new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 _world._player.ResetPathfinding();
                 _world._player.SetWaypoint(new Vector2f(_world._player.AbsolutePositionInPixel.X + 64, _world._player.AbsolutePositionInPixel.Y + 64));
@@ -304,7 +301,7 @@ namespace JamTemplate
             {
                 if (MinersRescued < 3)
                 {
-                    _world.AddSpeechBubble("Oh you need to find my three Friends. They were in the tunnels.",
+                    _world.AddSpeechBubble("Please see for my three friends. They were in the shaft tunnels.",
                                 new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
 
                     _world._player.ResetPathfinding();
@@ -319,7 +316,7 @@ namespace JamTemplate
                 }
                 else
                 {
-                    _world.AddSpeechBubble("Yes of course. Here is the Drillhead.",
+                    _world.AddSpeechBubble("Yes of course. Here is the drill head.",
                                 new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                     HasPickedUpDrillHead = true;
                 }
@@ -331,7 +328,7 @@ namespace JamTemplate
         {
             if (!HasPickedUpDrillHead)
             {
-                _world.AddSpeechBubble("A state-of-the-art drill machine. Unfortunately the head is broken.",
+                _world.AddSpeechBubble("A state-of-the-art drill. Unfortunately the head has broken down.",
                                new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 _world._player.ResetPathfinding();
                 _world._player.SetWaypoint(new Vector2f(_world._player.AbsolutePositionInPixel.X - 128, _world._player.AbsolutePositionInPixel.Y));
@@ -345,7 +342,7 @@ namespace JamTemplate
             }
             else
             {
-                _world.AddSpeechBubble("I place the drillhead. ",
+                _world.AddSpeechBubble("I place the drillhead.",
                                new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
 
                 DoNiceDrillStuff();
@@ -358,7 +355,7 @@ namespace JamTemplate
             for (int i = 40; i != 46; i++)
             {
                 // remove the middle layer
-                _world._waypointGrid[i,38] = PathFinderHelper.EMPTY_TILE;
+                _world._waypointGrid[i, 38] = PathFinderHelper.EMPTY_TILE;
                 _world.RemoveTileAt(new Vector2i(i, 37));
 
                 // remove the layer below and replace it with the correct tiles
@@ -400,8 +397,6 @@ namespace JamTemplate
             HasReachedExit          = false;
         }
 
-
-
         internal static void ThisWay(object obj)
         {
             _world.AddSpeechBubble("Let's go! This way.",
@@ -410,7 +405,7 @@ namespace JamTemplate
 
         internal static void UpNorth(object obj)
         {
-            _world.AddSpeechBubble("Just Go up and east.",
+            _world.AddSpeechBubble("Just go up and east.",
                                new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
         }
     }
