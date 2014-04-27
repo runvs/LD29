@@ -182,7 +182,12 @@ namespace JamTemplate
 
 
 
-        
+
+
+        internal static void DrillFound(object obj)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
 

@@ -230,6 +230,16 @@ namespace JamTemplate
             _functionDict.Add("WhatToDo", StoryProgress.WhatToDo);
             _functionDict.Add("GeneratorArea", StoryProgress.VisitGeneratorArea);
             _functionDict.Add("Cable", StoryProgress.PickupCable);
+
+            _functionDict.Add("Miner1", StoryProgress.Miner1);
+            _functionDict.Add("Miner2", StoryProgress.Miner2);
+            _functionDict.Add("Miner3", StoryProgress.Miner3);
+
+            _functionDict.Add("DrillFound", StoryProgress.DrillFound);
+            _functionDict.Add("DrillMachine", StoryProgress.DrillMachine);
+
+
+
             _functionDict.Add("LadderDamaged", StoryProgress.LadderDamaged);
 
             _functionDict.Add("Finish", StoryProgress.Finished);
