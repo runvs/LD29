@@ -379,13 +379,6 @@ namespace JamTemplate
                 Console.WriteLine("Broken Player Position");
             }
 
-
-
-            /*System.Console.WriteLine("");
-            
-            System.Console.WriteLine("");*/
-
-
             Point startPoint = new Point(startPositionInTiles.X, startPositionInTiles.Y);
             Point endPoint = new Point(endPositionInTiles.X, endPositionInTiles.Y);
             //System.Console.WriteLine(startPoint.X + " " + startPoint.Y + " " + _waypointGrid[startPoint.X, startPoint.Y]);
@@ -401,7 +394,7 @@ namespace JamTemplate
             }
             else
             {
-                System.Console.WriteLine("Could not find Path");
+                //System.Console.WriteLine("Could not find Path");
             }
 
             return ret;

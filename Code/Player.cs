@@ -93,7 +93,7 @@ namespace JamTemplate
 
         private void GetMouseInput()
         {
-            if (_waypointList.Count == 0)
+            if (JamUtilities.Mouse.IsMouseInWindow && _waypointList.Count == 0)
             {
                 Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y + 64) + Camera.CameraPosition;
                 if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
