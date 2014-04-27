@@ -17,6 +17,9 @@ namespace JamTemplate
         public static World _world;
 
         public static bool ExplosionHasHappened = false;
+        public static bool HasBeenToGenerator = false;
+        public static bool HasPickedUpCable = false;
+        public static bool HasRepairedGenerator = false;
 
         private static void DoExplosion(  )
         {
@@ -69,12 +72,36 @@ namespace JamTemplate
         internal static void SoWeWere(object obj)
         {
             _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", 
-                new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
+                new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 200));
         }
 
         internal static void NoEscape(object obj)
         {
-            //_world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.");
+            //_world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", 
+                // new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
+        }
+
+        internal static void VisitGeneratorArea(object obj)
+        {
+            _world.AddSpeechBubble("We need to repair the Generator. Some Cables were damaged by the collapse.", 
+                 new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+            HasBeenToGenerator = true;
+        }
+
+        internal static void PickupCable(object obj)
+        {
+            string Text = "";
+            if (HasBeenToGenerator)
+            {
+                Text = "Finally I found a cable to repair the generator.";
+            }
+            else
+            {
+                Text = "This Cable might be useful. I'll take it with me";
+            }
+            HasPickedUpCable = true;
+            _world.AddSpeechBubble(Text,
+                    new Vector2f(_world._player.AbsolutePositionInPixel.X - 200, _world._player.AbsolutePositionInPixel.Y - 256));
         }
     }
 }

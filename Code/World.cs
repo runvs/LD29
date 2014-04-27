@@ -161,6 +161,9 @@ namespace JamTemplate
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
             _functionDict.Add("SoWeWere", StoryProgress.SoWeWere);
             _functionDict.Add("NoEscape", StoryProgress.NoEscape);
+            _functionDict.Add("GeneratorArea", StoryProgress.VisitGeneratorArea);
+            _functionDict.Add("Cable", StoryProgress.PickupCable);
+
         }
 
         
