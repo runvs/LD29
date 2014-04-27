@@ -57,7 +57,7 @@ namespace JamTemplate
 
         public void Draw(SFML.Graphics.RenderWindow rw)
         {
-            //if (StoryProgress.HasRepairedGenerator)
+            if (StoryProgress.HasRepairedGenerator)
             {
                 // draw Lamp Sprite?
 

@@ -86,7 +86,7 @@ namespace JamTemplate
                     AbsolutePosition - 
                     Camera.CameraPosition + 
                     new Vector2f(3.0f * (float)Math.Sin(_timeSinceStart*2 + 4.2f), 
-                        12 * (float)Math.Sin(_timeSinceStart * 2));
+                        12 * (float)Math.Sin(_timeSinceStart * 1.5));
                 _sprite.Position = screenPos + _spriteOffset;
                 _glowShadeSprite.Position = screenPos + _spriteOffset;
 
@@ -117,7 +117,7 @@ namespace JamTemplate
                 col.A = (byte)((float)_sprite.Alpha / 185.0f * 255.0f);
                 screenPos += ScreenEffects.GlobalSpriteOffset + 
                         new Vector2f(- 1.0f * (float)Math.Sin(_timeSinceStart * 0.5 + 3.2f),
-                        - 4 * (float)Math.Sin(_timeSinceStart* 1.5 + 2)); ;
+                        - 4 * (float)Math.Sin(_timeSinceStart* 1.25 + 2)); ;
                 SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos , new Vector2f(1.0f, 1.0f), col, rw);
             }
         }

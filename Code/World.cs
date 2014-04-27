@@ -166,6 +166,7 @@ namespace JamTemplate
             _player = new Player(this, 0);
             LoadWorld();
 
+            _functionDict.Add("Helm", StoryProgress.Helm);
             _functionDict.Add("basicExplosion", StoryProgress.CaveCollapse);
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
             _functionDict.Add("SoWeWere", StoryProgress.SoWeWere);

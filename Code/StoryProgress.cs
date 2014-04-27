@@ -84,11 +84,13 @@ namespace JamTemplate
                 {
                     _world.AddSpeechBubble("I knew the generator could be repaired with the cable!",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+                    HasRepairedGenerator = true;
                 }
                 else
                 {
                     _world.AddSpeechBubble("Huch?",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+                    HasRepairedGenerator = true;
                 }
             }
             else
@@ -122,6 +124,11 @@ namespace JamTemplate
                     area.ResetTriggered();
                 }
             }
+        }
+
+        internal static void Helm(object obj)
+        {
+            //throw new NotImplementedException();
         }
     }
 }
