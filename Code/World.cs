@@ -384,7 +384,10 @@ namespace JamTemplate
 
             AddSpeechBubble("Tap above the ground to walk.", new Vector2f(_player.AbsolutePositionInPixel.X, _player.AbsolutePositionInPixel.Y - 200));
 
-            ParticleManager.CreateChimney(new FloatRect(1038, 195, 3,3), GameProperties.ColorPink4, 40);
+            ParticleManager.CreateChimney(
+                new FloatRect(20 * GameProperties.TileSizeInPixelScaled + 29, 2 * GameProperties.TileSizeInPixelScaled + 3, 8, 2),
+                GameProperties.ColorPink4, 
+                90);
 
         }
 
