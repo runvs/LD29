@@ -123,6 +123,7 @@ namespace JamTemplate
             HasPickedUpCable = true;
             _world.AddSpeechBubble(Text,
                     new Vector2f(_world._player.AbsolutePositionInPixel.X - 200, _world._player.AbsolutePositionInPixel.Y - 256));
+            _world.RemoveDecorationAt(new Vector2i(5, 22));
 
             // Re-enable the generator's trigger area
             foreach (var area in _world._triggerAreaList)
@@ -159,6 +160,18 @@ namespace JamTemplate
                     }
                 }
             }
+        }
+
+        internal static void LadderDamaged(object obj)
+        {
+            _world.AddSpeechBubble("Oh no. The Ladder is damaged. I need to take the long way.",
+                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+        }
+
+        internal static void Finished(object obj)
+        {
+            _world.AddSpeechBubble("Oh no. The Ladder is damaged. I need to take the long way.",
+                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
         }
     }
 }

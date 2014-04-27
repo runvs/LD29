@@ -199,6 +199,9 @@ namespace JamTemplate
             _functionDict.Add("NoEscape", StoryProgress.NoEscape);
             _functionDict.Add("GeneratorArea", StoryProgress.VisitGeneratorArea);
             _functionDict.Add("Cable", StoryProgress.PickupCable);
+            _functionDict.Add("LadderDamaged", StoryProgress.LadderDamaged);
+
+            _functionDict.Add("Finished", StoryProgress.Finished);
 
         }
 
@@ -236,7 +239,6 @@ namespace JamTemplate
 
         internal void RemoveTileAt(Vector2i tilePos)
         {
-
             List<Tile> newList = new List<Tile>();
 
             foreach (var t in _tileList)
@@ -247,8 +249,22 @@ namespace JamTemplate
                 }
             }
             _tileList = newList;
-
         }
+
+        internal void RemoveDecorationAt(Vector2i tilePos)
+        {
+            List<Tile> newList = new List<Tile>();
+
+            foreach (var t in _decorationTileList)
+            {
+                if (!t.TilePosition.Equals(tilePos))
+                {
+                    newList.Add(t);
+                }
+            }
+            _decorationTileList = newList;
+        }
+
 
         private Vector2f GetWayPointForTile(Vector2i tilePos)
         {
@@ -339,7 +355,7 @@ namespace JamTemplate
 
         private void SetWorldDependentSettings()
         {
-            Camera.MaxPosition = new Vector2f(GameProperties.WorldSizeInTiles.X, GameProperties.WorldSizeInTiles.Y) * GameProperties.TileSizeInPixelScaled;
+            Camera.MaxPosition = new Vector2f(GameProperties.WorldSizeInTiles.X - 13, GameProperties.WorldSizeInTiles.Y - 10) * GameProperties.TileSizeInPixelScaled;
         }
 
         private void LoadWorld(string levelName = null)
