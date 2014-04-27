@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using JamUtilities;
+using SFML;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -19,7 +20,7 @@ namespace JamTemplate
         public Texture _glowspriteTexture;
         public Sprite _glowSpriteSprite;
 
-        
+
 
         private List<Vector2f> _waypointList;
 
@@ -36,7 +37,7 @@ namespace JamTemplate
             _world = world;
             playerNumber = number;
 
-            
+
 
             _actionMap = new Dictionary<Keyboard.Key, Action>();
             _waypointList = new List<Vector2f>();
@@ -48,7 +49,7 @@ namespace JamTemplate
                 _glowSpriteSprite.Scale = new Vector2f(1.0f, 0.25f);
                 _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2, GameProperties.TileSizeInPixelScaled - 35);
             }
-            catch (SFML.LoadingFailedException e)
+            catch (LoadingFailedException e)
             {
                 System.Console.Out.WriteLine("Error loading player Graphics.");
                 System.Console.Out.WriteLine(e.ToString());
@@ -83,7 +84,7 @@ namespace JamTemplate
                 if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
                 {
                     _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
-                   
+
                 }
             }
         }
@@ -144,13 +145,19 @@ namespace JamTemplate
             return factor;
         }
 
+        internal void ChangeSprite(string path)
+        {
+            _sprite = new SmartSprite(path);
+            _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal / 2.0f, GameProperties.TileSizeInPixelOriginal);
+        }
+
 
         public Vector2f GetOnScreenPosition()
         {
             return AbsolutePositionInPixel - Camera.CameraPosition;
         }
 
-        public void Draw(SFML.Graphics.RenderWindow rw)
+        public void Draw(RenderWindow rw)
         {
             _sprite.Position = GetOnScreenPosition();
             _glowSpriteSprite.Position = GetOnScreenPosition();

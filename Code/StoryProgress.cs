@@ -1,5 +1,4 @@
 ﻿using DeenGames.Utils.AStarPathFinder;
-using System;
 
 using JamUtilities;
 using JamUtilities.Particles;
@@ -137,9 +136,10 @@ namespace JamTemplate
 
         internal static void Helm(object obj)
         {
-            _world.AddSpeechBubble("*Pick up Helm*.",
+            _world.AddSpeechBubble("*Pick up Helmet*.",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
-            HasPickedUpHelm = true; 
+            _world._player.ChangeSprite("../GFX/player_helmet.png");
+            HasPickedUpHelm = true;
         }
 
         internal static void MoveIn(object obj)
