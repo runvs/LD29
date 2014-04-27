@@ -16,6 +16,7 @@ namespace JamTemplate
         public static bool HasBeenToGenerator = false;
         public static bool HasPickedUpCable = false;
         public static bool HasRepairedGenerator = false;
+        public static bool HasPickedUpHelm = false;
 
         private static void DoExplosion()
         {
@@ -134,7 +135,28 @@ namespace JamTemplate
 
         internal static void Helm(object obj)
         {
-            //throw new NotImplementedException();
+            _world.AddSpeechBubble("*Pick up Helm*.",
+                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+            HasPickedUpHelm = true; 
+        }
+
+        internal static void MoveIn(object obj)
+        {
+            if (!HasPickedUpHelm)
+            {
+                _world.AddSpeechBubble("I should get my Helm first. Its in the Corp's house.",
+                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+                // move Player up
+                _world._player.ResetPathfinding();
+                _world._player.SetWaypoint(new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 64));
+                foreach (var area in _world._triggerAreaList)
+                {
+                    if (area.Type == TriggerAreaType.FUNCTION && area.Id == "MoveIn")
+                    {
+                        area.ResetTriggered();
+                    }
+                }
+            }
         }
     }
 }

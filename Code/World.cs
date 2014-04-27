@@ -20,7 +20,7 @@ namespace JamTemplate
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
-        private List<IGameObject> _lampList;
+        private List<Lamp> _lampList;
         public Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
@@ -113,6 +113,10 @@ namespace JamTemplate
             {
                 t.Draw(rw);
             }
+            foreach (var l in _lampList)
+            {
+                l.DrawLamp(rw);
+            }
 
             _player.Draw(rw);
 
@@ -122,7 +126,7 @@ namespace JamTemplate
             }
             foreach (var l in _lampList)
             {
-                l.Draw(rw);
+                l.DrawGlow(rw);
             }
 
             DrawOverlayEffect(rw);
@@ -168,12 +172,13 @@ namespace JamTemplate
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
             _speechBubbleList = new List<IGameObject>();
-            _lampList = new List<IGameObject>();
+            _lampList = new List<Lamp>();
             _functionDict = new Dictionary<string, Action<object>>();
             _player = new Player(this, 0);
             LoadWorld();
 
             _functionDict.Add("Helm", StoryProgress.Helm);
+            _functionDict.Add("MoveIn", StoryProgress.MoveIn);
             _functionDict.Add("basicExplosion", StoryProgress.CaveCollapse);
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
             _functionDict.Add("SoWeWere", StoryProgress.SoWeWere);

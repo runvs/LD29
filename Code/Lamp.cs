@@ -18,6 +18,7 @@ namespace JamTemplate
         private Vector2f _positionOffset;
         private float _lifeTime;
         private float _frequencyFactor;
+        private static SmartSprite _sprite;
 
         public Lamp(Vector2f position)
         {
@@ -25,6 +26,7 @@ namespace JamTemplate
             _positionOffset = new Vector2f();
             _lifeTime = 0.0f;
             _frequencyFactor = ((float)( 0.1 + 2.5 * RandomGenerator.Random.NextDouble()));
+            
             //Console.WriteLine(_frequencyFactor);
             if (!IsInitialized)
             {
@@ -34,7 +36,10 @@ namespace JamTemplate
                     GameProperties.ColorBlue1,
                     0.75f, PennerDoubleAnimation.EquationType.CubicEaseOut);
                 _glowSpriteSprite = new Sprite(_glowSpriteTexture);
-                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f, GameProperties.TileSizeInPixelScaled/3.0f);
+                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f, GameProperties.TileSizeInPixelScaled/3.0f + 6);
+
+                _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
+                _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal/2.0f, 2.5f);
             }
             
         }
@@ -57,23 +62,39 @@ namespace JamTemplate
 
         public void Draw(SFML.Graphics.RenderWindow rw)
         {
-            if (StoryProgress.HasRepairedGenerator)
+            DrawLamp(rw);
+            DrawGlow(rw);
+        }
+
+        public void DrawLamp(SFML.Graphics.RenderWindow rw)
+        {
+            Vector2f pos = AbsolutePositionInPixel - Camera.CameraPosition + _positionOffset + ScreenEffects.GlobalSpriteOffset; ;
+
+            // draw Lamp Sprite?
+            _sprite.Position = pos;
+            _sprite.Draw(rw);
+        }
+
+        public void DrawGlow(SFML.Graphics.RenderWindow rw)
+        {
+            Vector2f pos = AbsolutePositionInPixel - Camera.CameraPosition + _positionOffset + ScreenEffects.GlobalSpriteOffset; ;
+            if (StoryProgress.HasRepairedGenerator || !StoryProgress.ExplosionHasHappened)
             {
-                // draw Lamp Sprite?
-
-
                 // change the glowsprites alpha 
                 float t = _lifeTime + _frequencyFactor;
-                // lamps flicker
-                // lamps swing around?
                 Color col = Color.White;
                 double alphaValue = Math.Abs(Math.Cos(Math.Sin(t * 3.0) + t * 3.0));
                 col.A = (byte)(240.0 - 140.0 * alphaValue);
                 
                 _glowSpriteSprite.Color = col;
+                
                 // draw Glowsprite
-                _glowSpriteSprite.Position = AbsolutePositionInPixel - Camera.CameraPosition + _positionOffset + ScreenEffects.GlobalSpriteOffset;
+                _glowSpriteSprite.Position = pos;
                 rw.Draw(_glowSpriteSprite);
+
+
+
+                
             }
             
         }

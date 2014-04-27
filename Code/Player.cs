@@ -19,6 +19,7 @@ namespace JamTemplate
         public Texture _glowspriteTexture;
         public Sprite _glowSpriteSprite;
 
+        
 
         private List<Vector2f> _waypointList;
 
@@ -67,6 +68,11 @@ namespace JamTemplate
             }
 
             GetMouseInput();
+        }
+
+        public void SetWaypoint(Vector2f newPos)
+        {
+            _waypointList.Add(newPos);
         }
 
         private void GetMouseInput()

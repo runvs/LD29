@@ -2439,5 +2439,10 @@
     <property name="id" value="Helm"/>
    </properties>
   </object>
+  <object name="Function" type="TriggerArea" x="270" y="95" width="19" height="65">
+   <properties>
+    <property name="id" value="MoveIn"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
