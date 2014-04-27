@@ -25,6 +25,8 @@ namespace JamTemplate
             MINER,
             DRILL,
 
+            BACKGROUND_WALL,
+
             OVERWORLD_TOP,
             OVERWORLD_TOP_LEFT,
             OVERWORLD_TOP_RIGHT,
@@ -125,6 +127,9 @@ namespace JamTemplate
                     break;
                 case TileType.DRILL:
                     _sprite = new SmartSprite("../GFX/drill_machine.png");
+                    break;
+                case TileType.BACKGROUND_WALL:
+                    _sprite = new SmartSprite("../GFX/background_wall.png");
                     break;
                 default:
                     _sprite = new SmartSprite(string.Format("../GFX/tiles/{0}.png", _type.ToString()));

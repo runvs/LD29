@@ -15,6 +15,7 @@ namespace JamTemplate
     {
         public List<Tile> TerrainLayer { get; private set; }
         public List<Tile> DecorationLayer { get; private set; }
+        public List<Tile> BackgroundDecorationLayer { get; private set; }
         public List<Lamp> LampList { get; private set; }
         public List<TriggerArea> TriggerAreaList { get; private set; }
         public Vector2i PlayerPosition { get; private set; }
@@ -24,6 +25,7 @@ namespace JamTemplate
         public MapParser(string fileName, bool isChangingLevel = false)
         {
             DecorationLayer = new List<Tile>();
+            BackgroundDecorationLayer = new List<Tile>();
             TerrainLayer = new List<Tile>();
             LampList = new List<Lamp>();
             TriggerAreaList = new List<TriggerArea>();
@@ -33,6 +35,7 @@ namespace JamTemplate
 
             int terrainOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Terrain']").Attributes["firstgid"].Value);
             int decorationOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Decoration']").Attributes["firstgid"].Value);
+            int backgroundDecorationsOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='BackgroundDecorations']").Attributes["firstgid"].Value);
 
             TileSize = new Vector2i(
                 int.Parse(doc.SelectSingleNode("/map").Attributes["tilewidth"].Value),
@@ -270,6 +273,27 @@ namespace JamTemplate
             }
 
             #endregion
+
+            #region Load the background decorations layer
+
+            xPos = yPos = 0;
+
+            foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='BackgroundDecorations']/data/tile"))
+            {
+                int gid = int.Parse(layerNode.Attributes["gid"].Value) - backgroundDecorationsOffset;
+                if (gid == 0)
+                {
+                    BackgroundDecorationLayer.Add(new Tile(xPos, yPos, Tile.TileType.BACKGROUND_WALL));
+                }
+
+                if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
+                {
+                    yPos++;
+                }
+                xPos = (xPos + 1) % WorldSize.X;
+            }
+
+            #endregion Load the background decorations layer
         }
     }
 }

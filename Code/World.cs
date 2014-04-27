@@ -19,6 +19,7 @@ namespace JamTemplate
         public List<TriggerArea> _triggerAreaList;
         private List<Tile> _tileList;
         private List<Tile> _decorationTileList;
+        private List<Tile> _backgroundDecorationTileList;
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
@@ -27,6 +28,7 @@ namespace JamTemplate
         public Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
+        private SmartSprite _backgroundImage;
 
         private Music _generatorHum;
         private SoundBuffer _explosionSndBuf;
@@ -77,6 +79,9 @@ namespace JamTemplate
 
             UpdateGeneratorSound();
 
+            _backgroundImage.Position = new Vector2f(-0.1f * Camera.CameraPosition.X, -Camera.CameraPosition.Y);
+            _backgroundImage.Update(timeObject);
+
 
             CheckIfAreaTriggered();
 
@@ -94,10 +99,10 @@ namespace JamTemplate
             }
 
             Vector2f GeneratorPosition = new Vector2f(3, 14) * GameProperties.TileSizeInPixelScaled;
-            float distanceSquaredInverse = 1.0f/MathStuff.GetLengthSquared(GeneratorPosition - _player.AbsolutePositionInPixel);
+            float distanceSquaredInverse = 1.0f / MathStuff.GetLengthSquared(GeneratorPosition - _player.AbsolutePositionInPixel);
 
             _generatorHum.Volume = distanceSquaredInverse * 800000;
-            
+
         }
 
         private void CheckIfAreaTriggered()
@@ -130,6 +135,8 @@ namespace JamTemplate
         {
             DrawBackgroundColor(rw);
 
+            _backgroundImage.Draw(rw);
+
 
             ParticleManager.Draw(rw);
 
@@ -138,6 +145,10 @@ namespace JamTemplate
                 ac.Draw(rw);
             }
 
+            foreach (var b in _backgroundDecorationTileList)
+            {
+                b.Draw(rw);
+            }
             foreach (var t in _tileList)
             {
                 t.Draw(rw);
@@ -158,8 +169,6 @@ namespace JamTemplate
                 l.DrawGlow(rw);
             }
 
-
-
             DrawOverlayEffect(rw);
 
 
@@ -173,7 +182,7 @@ namespace JamTemplate
             if (StoryProgress.ExplosionHasHappened && !StoryProgress.HasReachedExit)
             {
                 ScreenEffects.GetStaticEffect("vignette").Draw(rw);
-                if (!StoryProgress.HasRepairedGenerator )
+                if (!StoryProgress.HasRepairedGenerator)
                 {
                     ScreenEffects.GetStaticEffect("vignette").Draw(rw);
                 }
@@ -243,8 +252,8 @@ namespace JamTemplate
             _functionDict.Add("LadderDamaged", StoryProgress.LadderDamaged);
             _functionDict.Add("ThisWay", StoryProgress.ThisWay);
             _functionDict.Add("UpNorth", StoryProgress.UpNorth);
-            
-            
+
+
 
 
             _functionDict.Add("Finish", StoryProgress.Finished);
@@ -271,8 +280,6 @@ namespace JamTemplate
                 _cloudList.Add(ac);
             }
         }
-
-
 
         public Tile GetTileOnPosition(int x, int y)
         {
@@ -315,7 +322,6 @@ namespace JamTemplate
             }
             _decorationTileList = newList;
         }
-
 
         private Vector2f GetWayPointForTile(Vector2i tilePos)
         {
@@ -415,6 +421,7 @@ namespace JamTemplate
             GameProperties.WorldSizeInTiles = parser.WorldSize;
 
             _decorationTileList = parser.DecorationLayer;
+            _backgroundDecorationTileList = parser.BackgroundDecorationLayer;
             _lampList = parser.LampList;
             _tileList = parser.TerrainLayer;
             _triggerAreaList = parser.TriggerAreaList;
@@ -425,8 +432,6 @@ namespace JamTemplate
 
             CreateWaterDropSpaces();
 
-            CreateLampPositions();
-
             _player.ResetPathfinding();
 
             AddSpeechBubble("Tap above the ground to walk.", new Vector2f(_player.AbsolutePositionInPixel.X, _player.AbsolutePositionInPixel.Y - 200));
@@ -436,25 +441,9 @@ namespace JamTemplate
                 GameProperties.ColorPink4,
                 90);
 
-        }
-
-        private void CreateLampPositions()
-        {
-            //foreach (var startingTile in _tileList)
-            //{
-            //    Tile t = startingTile;
-            //    Vector2i tilePosition = t.TilePosition;
-            //    Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
-            //    if (tBelow == null)
-            //    {
-            //        if (RandomGenerator.Random.NextDouble() > 0.5)
-            //        {
-            //            Vector2f lampPosition =
-            //                new Vector2f((float)(tilePosition.X) + 0.5f, (float)(tilePosition.Y) + 1.15f) * GameProperties.TileSizeInPixelScaled;
-            //            _lampList.Add(new Lamp(lampPosition));
-            //        }
-            //    }
-            //}
+            // Create background image
+            _backgroundImage = new SmartSprite("../GFX/background_top.png");
+            _backgroundImage.Origin = new Vector2f(0, 67);
         }
 
         private void CreateWaterDropSpaces()
