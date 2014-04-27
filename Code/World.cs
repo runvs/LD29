@@ -21,6 +21,7 @@ namespace JamTemplate
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
+        private List<IGameObject> _lampList;
         public Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
@@ -63,6 +64,11 @@ namespace JamTemplate
                 }
             }
             _speechBubbleList = newSpeechBubbleList;
+            foreach (var l in _lampList)
+            {
+                l.Update(timeObject);
+            }
+            
 
 
             CheckIfAreaTriggered();
@@ -115,6 +121,10 @@ namespace JamTemplate
             {
                 sb.Draw(rw);
             }
+            foreach (var l in _lampList)
+            {
+                l.Draw(rw);
+            }
 
             DrawOverlayEffect(rw);
 
@@ -125,6 +135,7 @@ namespace JamTemplate
         private void DrawOverlayEffect(RenderWindow rw)
         {
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+            ScreenEffects.GetStaticEffect("scanlines").Draw(rw);
             if (StoryProgress.ExplosionHasHappened)
             {
                 ScreenEffects.GetStaticEffect("vignette").Draw(rw);
@@ -151,11 +162,10 @@ namespace JamTemplate
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
             _speechBubbleList = new List<IGameObject>();
+            _lampList = new List<IGameObject>();
             _functionDict = new Dictionary<string, Action<object>>();
             _player = new Player(this, 0);
             LoadWorld();
-
-            //AddSpeechBubble("Wow this already looks great!", new Vector2f(150, 25));
 
             _functionDict.Add("basicExplosion", StoryProgress.CaveCollapse);
             _functionDict.Add("GoIntoMine", StoryProgress.TellMinerToGoIntoMine);
@@ -205,7 +215,7 @@ namespace JamTemplate
             return absoluteWayPointCoordinates;
         }
 
-        private void CreateWayPoints()
+        private void CreateWaypoints()
         {
 
             int width = GameProperties.WorldSizeInTiles.X;
@@ -224,6 +234,10 @@ namespace JamTemplate
                         _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
                     }
                     else if (GetTileOnPosition(i, j) != null && GetTileOnPosition(i, j).GetTileType() == Tile.TileType.LADDER)
+                    {
+                        _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
+                    }
+                    else if (GetTileOnPosition(i, j-1) != null && GetTileOnPosition(i, j-1).GetTileType() == Tile.TileType.LADDER)
                     {
                         _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
                     }
@@ -295,14 +309,40 @@ namespace JamTemplate
             _triggerAreaList = parser.TriggerAreaList;
             _player.SetPlayerPosition(parser.PlayerPosition);
             SetWorldDependentSettings();
-            CreateWayPoints();
+            CreateWaypoints();
             ResetSpeechBubbles();
 
             CreateWaterDropSpaces();
 
+            CreateLampPositions();
+
             _player.ResetPathfinding();
 
             AddSpeechBubble("Tap above the ground to walk.", new Vector2f(_player.AbsolutePositionInPixel.X, _player.AbsolutePositionInPixel.Y - 200));
+
+        }
+
+        private void CreateLampPositions()
+        {
+             foreach(var startingTile in _tileList)
+             {
+                Tile t = startingTile;
+                Vector2i tilePosition = t.TilePosition;
+                Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
+                if (tBelow == null)
+                {
+                    if (RandomGenerator.Random.NextDouble() > 0.5)
+                    {
+                        Vector2f lampPosition =
+                            new Vector2f((float)(tilePosition.X) + 0.5f, (float)(tilePosition.Y) + 1.15f) * GameProperties.TileSizeInPixelScaled;
+                        _lampList.Add(new Lamp(lampPosition));
+                    }
+                }
+                 //Vector2f DropSpawnPosition = new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
+                 //ParticleManager.CreateAreaRain(new FloatRect(DropSpawnPosition.X, DropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled / 8), GameProperties.ColorBlue4, 0.35f + 0.1f * (float)RandomGenerator.Random.NextDouble());
+            }
+
+           
 
         }
 
@@ -320,13 +360,20 @@ namespace JamTemplate
                     Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
                     if (tBelow == null)
                     {
-                        finallyFound  = t;
+                        finallyFound = t;
                         searching = true;
                         break;
                     }
                 }
-                Vector2f DropSpawnPosition = new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
-                ParticleManager.CreateAreaRain(new FloatRect(DropSpawnPosition.X, DropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled / 8), GameProperties.ColorBlue4, 0.35f + 0.1f *(float)RandomGenerator.Random.NextDouble() );
+                Vector2f dropSpawnPosition = 
+                    new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
+                ParticleManager.CreateAreaRain(new FloatRect(
+                    dropSpawnPosition.X, 
+                    dropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, 
+                    GameProperties.TileSizeInPixelScaled, 
+                    GameProperties.TileSizeInPixelScaled / 8), 
+                    GameProperties.ColorBlue4, 
+                    0.35f + 0.1f * (float)RandomGenerator.Random.NextDouble());
             }
         }
 

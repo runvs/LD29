@@ -57,6 +57,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameProperties.cs" />
+    <Compile Include="Lamp.cs" />
     <Compile Include="MapParser.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
