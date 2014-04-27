@@ -84,7 +84,7 @@ namespace JamTemplate
         }
         internal static void WhatToDo(object obj)
         {
-            _world.AddSpeechBubble("At first Light would be a great Idea. Let's power the generator to the left.",
+            _world.AddSpeechBubble("At first some light would be great. Let's power the generator to the left.",
                          new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
         }
 

@@ -80,10 +80,8 @@ namespace JamTemplate
 
         private void GetInputMenu()
         {
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Return))
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Return) || SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) )
             {
-                
-                
                 loading = true;
             }
 
@@ -155,9 +153,9 @@ namespace JamTemplate
             {
                 SmartText.DrawText("$GameTitle$", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
 
-                SmartText.DrawText("Start [Return]", TextAlignment.MID, new Vector2f(400.0f, 250.0f), rw);
-                SmartText.DrawText("W A S D & LShift", TextAlignment.MID, new Vector2f(530.0f, 340.0f), rw);
-                SmartText.DrawText("Arrows & RCtrl", TextAlignment.MID, new Vector2f(180.0f, 340.0f), rw);
+                SmartText.DrawText("Start [Click]", TextAlignment.MID, new Vector2f(400.0f, 250.0f), rw);
+                //SmartText.DrawText("W A S D & LShift", TextAlignment.MID, new Vector2f(530.0f, 340.0f), rw);
+                //SmartText.DrawText("Arrows & RCtrl", TextAlignment.MID, new Vector2f(180.0f, 340.0f), rw);
 
                 SmartText.DrawText("[C]redits", TextAlignment.LEFT, new Vector2f(30.0f, 550.0f), rw);
                 ScreenEffects.GetStaticEffect("vignette").Draw(rw);
@@ -165,6 +163,7 @@ namespace JamTemplate
             else
             {
                 SmartText.DrawText("Loading", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
+                ScreenEffects.GetStaticEffect("vignette").Draw(rw);
                 rw.Display();
                 
                 StartGame();
@@ -178,16 +177,18 @@ namespace JamTemplate
             SmartText.DrawText("$GameTitle$", TextAlignment.MID, new Vector2f(400.0f, 20.0f), 1.5f, rw);
 
             SmartText.DrawText("A Game by", TextAlignment.MID, new Vector2f(400.0f, 100.0f), 0.75f, rw);
-            SmartText.DrawText("$DeveloperNames$", TextAlignment.MID, new Vector2f(400.0f, 135.0f), rw);
+            SmartText.DrawText("Julian Dinges & Simon Weis", TextAlignment.MID, new Vector2f(400.0f, 135.0f), rw);
 
             SmartText.DrawText("Visual Studio 2012 \t C#", TextAlignment.MID, new Vector2f(400, 170), 0.75f, rw);
             SmartText.DrawText("aseprite \t SFML.NET 2.1", TextAlignment.MID, new Vector2f(400, 200), 0.75f, rw);
             SmartText.DrawText("Cubase 5 \t SFXR", TextAlignment.MID, new Vector2f(400, 230), 0.75f, rw);
+            SmartText.DrawText("AStarPathfinder \t AutoTileGen", TextAlignment.MID, new Vector2f(400, 260), 0.75f, rw);
+            SmartText.DrawText("SVN \t SmartTimelapse", TextAlignment.MID, new Vector2f(400, 290), 0.75f, rw);
 
             SmartText.DrawText("Thanks to", TextAlignment.MID, new Vector2f(400, 350), 0.75f, rw);
             SmartText.DrawText("Families & Friends for their great support", TextAlignment.MID, new Vector2f(400, 375), 0.75f, rw);
 
-            SmartText.DrawText("Created $Date$", TextAlignment.MID, new Vector2f(400.0f, 500.0f), 0.75f, rw);
+            SmartText.DrawText("Created April 2014 for LD29", TextAlignment.MID, new Vector2f(400.0f, 500.0f), 0.75f, rw);
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
         }
 
