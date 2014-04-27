@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DeenGames.Utils.AStarPathFinder;
+﻿using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
@@ -21,7 +17,7 @@ namespace JamTemplate
         public static bool HasPickedUpCable = false;
         public static bool HasRepairedGenerator = false;
 
-        private static void DoExplosion(  )
+        private static void DoExplosion()
         {
             ParticleProperties props = new ParticleProperties();
             props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
@@ -53,8 +49,7 @@ namespace JamTemplate
             ExplosionHasHappened = true;
 
 
-
-            for(int i = 9; i != 13; i++)
+            for (int i = 9; i != 13; i++)
             {
                 _world._waypointGrid[17, i] = PathFinderHelper.BLOCKED_TILE;
                 _world.RemoveTileAt(new Vector2i(17, i));
@@ -65,27 +60,43 @@ namespace JamTemplate
 
         public static void TellMinerToGoIntoMine(object o = null)
         {
-            _world.AddSpeechBubble("Meeh, I am already late. I should hurry and get down in the mine.", 
+            _world.AddSpeechBubble("Meh, I am already late. I should hurry and get down in the mine.",
                 new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 200));
         }
 
         internal static void SoWeWere(object obj)
         {
-            _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", 
+            _world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.",
                 new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 200));
         }
 
         internal static void NoEscape(object obj)
         {
             //_world.AddSpeechBubble("So we were trapped beneath the surface with this way out blocked.", 
-                // new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
+            // new Vector2f(_world._player.AbsolutePositionInPixel.X, _world._player.AbsolutePositionInPixel.Y - 256));
         }
 
         internal static void VisitGeneratorArea(object obj)
         {
-            _world.AddSpeechBubble("We need to repair the Generator. Some Cables were damaged by the collapse.", 
-                 new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
-            HasBeenToGenerator = true;
+            if (HasPickedUpCable)
+            {
+                if (HasBeenToGenerator)
+                {
+                    _world.AddSpeechBubble("I knew the generator could be repaired with the cable!",
+                        new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+                }
+                else
+                {
+                    _world.AddSpeechBubble("Huch?",
+                        new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+                }
+            }
+            else
+            {
+                _world.AddSpeechBubble("We need to repair the Generator. Some Cables were damaged by the collapse.",
+                     new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+                HasBeenToGenerator = true;
+            }
         }
 
         internal static void PickupCable(object obj)
@@ -93,15 +104,24 @@ namespace JamTemplate
             string Text = "";
             if (HasBeenToGenerator)
             {
-                Text = "Finally I found a cable to repair the generator.";
+                Text = "This cable could be useful to repair the generator.";
             }
             else
             {
-                Text = "This Cable might be useful. I'll take it with me";
+                Text = "This cable might be useful. I'll take it with me";
             }
             HasPickedUpCable = true;
             _world.AddSpeechBubble(Text,
                     new Vector2f(_world._player.AbsolutePositionInPixel.X - 200, _world._player.AbsolutePositionInPixel.Y - 256));
+
+            // Re-enable the generator's trigger area
+            foreach (var area in _world._triggerAreaList)
+            {
+                if (area.Type == TriggerAreaType.FUNCTION && area.Id == "GeneratorArea")
+                {
+                    area.ResetTriggered();
+                }
+            }
         }
     }
 }

@@ -5,7 +5,6 @@ using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
-using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -16,7 +15,7 @@ namespace JamTemplate
 
         #region Fields
 
-        private List<TriggerArea> _triggerAreaList;
+        public List<TriggerArea> _triggerAreaList;
         private List<Tile> _tileList;
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
@@ -68,7 +67,7 @@ namespace JamTemplate
             {
                 l.Update(timeObject);
             }
-            
+
 
 
             CheckIfAreaTriggered();
@@ -128,7 +127,7 @@ namespace JamTemplate
 
             DrawOverlayEffect(rw);
 
-           
+
             ScreenEffects.Draw(rw);
         }
 
@@ -157,7 +156,7 @@ namespace JamTemplate
 
         private void InitGame()
         {
-            
+
             StoryProgress._world = this;
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
@@ -176,7 +175,7 @@ namespace JamTemplate
 
         }
 
-        
+
 
         public Tile GetTileOnPosition(int x, int y)
         {
@@ -199,7 +198,7 @@ namespace JamTemplate
 
             foreach (var t in _tileList)
             {
-                if (!t.TilePosition.Equals( tilePos))
+                if (!t.TilePosition.Equals(tilePos))
                 {
                     newList.Add(t);
                 }
@@ -210,7 +209,7 @@ namespace JamTemplate
 
         private Vector2f GetWayPointForTile(Vector2i tilePos)
         {
-            Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(tilePos.X)) * GameProperties.TileSizeInPixelScaled, (float) tilePos.Y * (float)GameProperties.TileSizeInPixelScaled);
+            Vector2f absoluteWayPointCoordinates = new Vector2f((0.5f + (float)(tilePos.X)) * GameProperties.TileSizeInPixelScaled, (float)tilePos.Y * (float)GameProperties.TileSizeInPixelScaled);
 
             return absoluteWayPointCoordinates;
         }
@@ -237,7 +236,7 @@ namespace JamTemplate
                     {
                         _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
                     }
-                    else if (GetTileOnPosition(i, j-1) != null && GetTileOnPosition(i, j-1).GetTileType() == Tile.TileType.LADDER)
+                    else if (GetTileOnPosition(i, j - 1) != null && GetTileOnPosition(i, j - 1).GetTileType() == Tile.TileType.LADDER)
                     {
                         _waypointGrid[i, j] = PathFinderHelper.EMPTY_TILE;
                     }
@@ -266,8 +265,8 @@ namespace JamTemplate
             {
                 Console.WriteLine("Broken Player Position");
             }
-           
-          
+
+
 
             /*System.Console.WriteLine("");
             
@@ -324,8 +323,8 @@ namespace JamTemplate
 
         private void CreateLampPositions()
         {
-             foreach(var startingTile in _tileList)
-             {
+            foreach (var startingTile in _tileList)
+            {
                 Tile t = startingTile;
                 Vector2i tilePosition = t.TilePosition;
                 Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
@@ -338,11 +337,11 @@ namespace JamTemplate
                         _lampList.Add(new Lamp(lampPosition));
                     }
                 }
-                 //Vector2f DropSpawnPosition = new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
-                 //ParticleManager.CreateAreaRain(new FloatRect(DropSpawnPosition.X, DropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled / 8), GameProperties.ColorBlue4, 0.35f + 0.1f * (float)RandomGenerator.Random.NextDouble());
+                //Vector2f DropSpawnPosition = new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
+                //ParticleManager.CreateAreaRain(new FloatRect(DropSpawnPosition.X, DropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled / 8), GameProperties.ColorBlue4, 0.35f + 0.1f * (float)RandomGenerator.Random.NextDouble());
             }
 
-           
+
 
         }
 
@@ -365,14 +364,14 @@ namespace JamTemplate
                         break;
                     }
                 }
-                Vector2f dropSpawnPosition = 
+                Vector2f dropSpawnPosition =
                     new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
                 ParticleManager.CreateAreaRain(new FloatRect(
-                    dropSpawnPosition.X, 
-                    dropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, 
-                    GameProperties.TileSizeInPixelScaled, 
-                    GameProperties.TileSizeInPixelScaled / 8), 
-                    GameProperties.ColorBlue4, 
+                    dropSpawnPosition.X,
+                    dropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled,
+                    GameProperties.TileSizeInPixelScaled,
+                    GameProperties.TileSizeInPixelScaled / 8),
+                    GameProperties.ColorBlue4,
                     0.35f + 0.1f * (float)RandomGenerator.Random.NextDouble());
             }
         }

@@ -44,5 +44,10 @@ namespace JamTemplate
                 return false;
             }
         }
+
+        public void ResetTriggered()
+        {
+            HasTriggered = false;
+        }
     }
 }
