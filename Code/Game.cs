@@ -162,7 +162,7 @@ namespace JamTemplate
         {
             if (!loading)
             {
-                SmartText.DrawText("$GameTitle$", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
+                SmartText.DrawText("Escaping Scofield Mine", TextAlignment.MID, new Vector2f(400.0f, 150.0f), 1.5f, rw);
 
                 SmartText.DrawText("Start [Click]", TextAlignment.MID, new Vector2f(400.0f, 250.0f), rw);
                 //SmartText.DrawText("W A S D & LShift", TextAlignment.MID, new Vector2f(530.0f, 340.0f), rw);
@@ -185,7 +185,8 @@ namespace JamTemplate
         private void DrawCredits(RenderWindow rw)
         {
 
-            SmartText.DrawText("$GameTitle$", TextAlignment.MID, new Vector2f(400.0f, 20.0f), 1.5f, rw);
+            SmartText.DrawText("Thank you for playing", TextAlignment.MID, new Vector2f(400.0f, 2.0f), 0.75f, rw);
+            SmartText.DrawText("Escaping Scofield Mine", TextAlignment.MID, new Vector2f(400.0f, 20.0f), 1.5f, rw);
 
             SmartText.DrawText("A Game by", TextAlignment.MID, new Vector2f(400.0f, 100.0f), 0.75f, rw);
             SmartText.DrawText("Julian Dinges & Simon Weis", TextAlignment.MID, new Vector2f(400.0f, 135.0f), rw);
