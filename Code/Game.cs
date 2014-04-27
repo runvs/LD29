@@ -135,7 +135,7 @@ namespace JamTemplate
             }
             else if (_gameState == State.Menu && this._timeTilNextInput <= 0.0f)
             {
-				_bgm.Volume = 75;
+                _bgm.Volume = 75;
                 CanBeQuit = true;
             }
 

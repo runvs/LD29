@@ -1,6 +1,6 @@
-﻿using SFML.Graphics;
+﻿using System;
+using SFML.Graphics;
 using SFML.Window;
-using System;
 
 namespace JamTemplate
 {
@@ -19,7 +19,7 @@ namespace JamTemplate
 
         static void Main(string[] args)
         {
-            var applicationWindow = new RenderWindow(new VideoMode(800, 600, 32), "$WindowTitle$");
+            var applicationWindow = new RenderWindow(new VideoMode(800, 600, 32), "Escaping Scofield Mine");
 
             applicationWindow.SetFramerateLimit(60);
             applicationWindow.SetVerticalSyncEnabled(true);
