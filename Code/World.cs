@@ -5,6 +5,7 @@ using DeenGames.Utils.AStarPathFinder;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -26,6 +27,10 @@ namespace JamTemplate
         public Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
+
+        private Music _generatorHum;
+        private SoundBuffer _explosionSndBuf;
+        private Sound _explosionSound;
 
 
         #endregion Fields
@@ -70,6 +75,7 @@ namespace JamTemplate
                 l.Update(timeObject);
             }
 
+            UpdateGeneratorSound();
 
 
             CheckIfAreaTriggered();
@@ -77,6 +83,21 @@ namespace JamTemplate
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
             AreatricCloud.GlobalPositionOffset = Camera.CameraPosition * 0.75f;
+        }
+
+        private void UpdateGeneratorSound()
+        {
+            // 
+            if (StoryProgress.HasRepairedGenerator && _generatorHum.Status == SoundStatus.Stopped || _generatorHum.Status == SoundStatus.Paused)
+            {
+                _generatorHum.Play();
+            }
+
+            Vector2f GeneratorPosition = new Vector2f(3, 14) * GameProperties.TileSizeInPixelScaled;
+            float distanceSquaredInverse = 1.0f/MathStuff.GetLengthSquared(GeneratorPosition - _player.AbsolutePositionInPixel);
+
+            _generatorHum.Volume = distanceSquaredInverse * 800000;
+            
         }
 
         private void CheckIfAreaTriggered()
@@ -182,6 +203,12 @@ namespace JamTemplate
         private void InitGame()
         {
 
+            _generatorHum = new Music("../SFX/generator.ogg");
+            _generatorHum.Loop = true;
+
+            _explosionSndBuf = new SoundBuffer("../SFX/explosion.ogg");
+            _explosionSound = new Sound(_explosionSndBuf);
+            _explosionSound.Volume = 50;
             StoryProgress._world = this;
             _decorationTileList = new List<Tile>();
             _tileList = new List<Tile>();
@@ -207,6 +234,11 @@ namespace JamTemplate
 
             _functionDict.Add("Finish", StoryProgress.Finished);
 
+        }
+
+        internal void PlayExplosionSound()
+        {
+            _explosionSound.Play();
         }
 
         private void CreateClouds()

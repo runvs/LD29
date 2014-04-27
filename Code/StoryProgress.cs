@@ -38,6 +38,7 @@ namespace JamTemplate
             props.lifeTime = 5.5f;
             emitter = new ParticleEmitter(new FloatRect(960, 704, 128, 256), props, 14);
             emitter.Update(3);
+            _world.PlayExplosionSound();
         }
 
         public static void CaveCollapse(object o = null)

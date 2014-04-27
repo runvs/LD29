@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JamUtilities;
 using SFML;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -20,6 +21,11 @@ namespace JamTemplate
         public Texture _glowspriteTexture;
         public Sprite _glowSpriteSprite;
 
+        private SoundBuffer _clickSndBuf;
+        private Sound _clickSound;
+
+        private SoundBuffer _walkSndBuf;
+        private Sound _walkSound;
 
 
         private List<Vector2f> _waypointList;
@@ -48,6 +54,15 @@ namespace JamTemplate
                 _glowSpriteSprite = new Sprite(_glowspriteTexture);
                 _glowSpriteSprite.Scale = new Vector2f(1.0f, 0.25f);
                 _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2, GameProperties.TileSizeInPixelScaled - 35);
+
+                _clickSndBuf = new SoundBuffer("../SFX/click.ogg");
+                _clickSound = new Sound (_clickSndBuf);
+                _clickSound.Volume = 150;
+                _walkSndBuf = new SoundBuffer("../SFX/walking.ogg");
+                _walkSound = new Sound(_walkSndBuf);
+                _walkSound.Loop = true;
+                _walkSound.Volume = 20;
+                
             }
             catch (LoadingFailedException e)
             {
@@ -83,7 +98,13 @@ namespace JamTemplate
                 Vector2f AbsoluteMousePosition = new Vector2f(JamUtilities.Mouse.MousePositionInWindow.X, JamUtilities.Mouse.MousePositionInWindow.Y + 64) + Camera.CameraPosition;
                 if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
                 {
+
                     _waypointList = _world.GetWaypointListToPosition(AbsolutePositionInPixel, AbsoluteMousePosition);
+
+                    if (_clickSound.Status == SoundStatus.Stopped || _clickSound.Status == SoundStatus.Paused)
+                    {
+                        _clickSound.Play();
+                    }
 
                 }
             }
@@ -101,6 +122,10 @@ namespace JamTemplate
             if (_waypointList.Count > 0)
             {
                 ShouldBePosition = _waypointList[0];
+                if (_walkSound.Status == SoundStatus.Paused || _walkSound.Status == SoundStatus.Stopped)
+                {
+                    _walkSound.Play();
+                }
 
 
                 Vector2f dif = ShouldBePosition - AbsolutePositionInPixel;
@@ -119,6 +144,11 @@ namespace JamTemplate
                     _waypointList.RemoveAt(0);
                 }
             }
+            else
+            {
+                _walkSound.Pause();
+            }
+
         }
 
         public void ResetPathfinding()

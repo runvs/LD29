@@ -52,6 +52,7 @@ namespace JamTemplate
             }
 
             _bgm = new Music("../SFX/music.ogg");
+            _bgm.Volume = 75;
             _bgm.Loop = true;
             _bgm.Play();
 
