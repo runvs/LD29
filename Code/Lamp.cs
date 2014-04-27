@@ -15,7 +15,6 @@ namespace JamTemplate
         private Vector2f _positionOffset;
         private float _lifeTime;
         private float _frequencyFactor;
-        private static SmartSprite _sprite;
 
         public Lamp(Vector2f position)
         {
@@ -33,10 +32,9 @@ namespace JamTemplate
                     GameProperties.ColorBlue1,
                     0.85f, PennerDoubleAnimation.EquationType.CubicEaseOut);
                 _glowSpriteSprite = new Sprite(_glowSpriteTexture);
-                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f + 21, GameProperties.TileSizeInPixelScaled / 3.0f + 20);
-
-                _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
-                _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal / 2.0f, 2.5f);
+                _glowSpriteSprite.Origin = new Vector2f(
+                    GameProperties.TileSizeInPixelScaled / 2.0f + 21, 
+                    GameProperties.TileSizeInPixelScaled / 3.0f + 27);
             }
 
         }
@@ -59,17 +57,7 @@ namespace JamTemplate
 
         public void Draw(SFML.Graphics.RenderWindow rw)
         {
-            DrawLamp(rw);
             DrawGlow(rw);
-        }
-
-        public void DrawLamp(SFML.Graphics.RenderWindow rw)
-        {
-            Vector2f pos = AbsolutePositionInPixel - Camera.CameraPosition + _positionOffset + ScreenEffects.GlobalSpriteOffset; ;
-
-            // draw Lamp Sprite?
-            _sprite.Position = pos;
-            _sprite.Draw(rw);
         }
 
         public void DrawGlow(SFML.Graphics.RenderWindow rw)

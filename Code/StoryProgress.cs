@@ -116,7 +116,9 @@ namespace JamTemplate
         private static void RepairGenerator()
         {
             HasRepairedGenerator = true;
-            ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.75f, 0.05f, GameProperties.ColorBlue1, 1);
+            Color col = GameProperties.ColorBlue1;
+            col.A = 175;
+            ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.75f, 0.05f, col, 1);
             FloatRect rect = new FloatRect(128, 14 * GameProperties.TileSizeInPixelScaled, 128, 64);
             ParticleManager.CreateSparksSpawner(rect, GameProperties.ColorBlue1, 0.5f);
         }
@@ -372,13 +374,13 @@ namespace JamTemplate
 
             ParticleProperties props = new ParticleProperties();
             props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
-            props.col = GameProperties.ColorBrown3;
+            props.col = GameProperties.ColorBrown4;
             props.lifeTime = 2.5f;
             props.sizeMultiple = 100.0f;
             props.sizeSingle = 8;
             props.RotationType = ParticleManager.ParticleRotationType.PRT_None;
             props.AffectedByGravity = false;
-            var emitter = new ParticleEmitter(new FloatRect(40*GameProperties.TileSizeInPixelScaled, 37 * GameProperties.TileSizeInPixelScaled, 5 * GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled), props, 5);
+            var emitter = new ParticleEmitter(new FloatRect(40*GameProperties.TileSizeInPixelScaled, 37 * GameProperties.TileSizeInPixelScaled, 5 * GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled), props, 50);
             emitter.Update(3);
 
         }

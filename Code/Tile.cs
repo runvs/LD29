@@ -112,6 +112,7 @@ namespace JamTemplate
                     break;
                 case TileType.LAMP:
                     _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
+                    _sprite.Origin = new Vector2f(0,2);
                     break;
                 case TileType.MINING_BUILDING:
                     _sprite = new SmartSprite("../GFX/mining_building.png");
