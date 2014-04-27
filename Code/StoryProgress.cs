@@ -84,13 +84,13 @@ namespace JamTemplate
                 {
                     _world.AddSpeechBubble("I knew the generator could be repaired with the cable!",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
-                    HasRepairedGenerator = true;
+                    RepairGenerator();
                 }
                 else
                 {
                     _world.AddSpeechBubble("Huch?",
                         new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
-                    HasRepairedGenerator = true;
+                    RepairGenerator();
                 }
             }
             else
@@ -99,6 +99,12 @@ namespace JamTemplate
                      new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
                 HasBeenToGenerator = true;
             }
+        }
+
+        private static void RepairGenerator()
+        {
+            HasRepairedGenerator = true;
+            ScreenEffects.GetDynamicEffect("fadeOut").StartEffect(0.75f, 0.05f, GameProperties.ColorBlue1, 1);
         }
 
         internal static void PickupCable(object obj)

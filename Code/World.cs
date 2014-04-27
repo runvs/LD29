@@ -104,7 +104,7 @@ namespace JamTemplate
 
         public void Draw(RenderWindow rw)
         {
-            SetBackgroundColor(rw);
+            DrawBackgroundColor(rw);
 
 
             ParticleManager.Draw(rw);
@@ -138,17 +138,24 @@ namespace JamTemplate
             if (StoryProgress.ExplosionHasHappened)
             {
                 ScreenEffects.GetStaticEffect("vignette").Draw(rw);
-                ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+                if (!StoryProgress.HasRepairedGenerator)
+                {
+                    ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+                }
             }
         }
 
-        private void SetBackgroundColor(RenderWindow rw)
+        private void DrawBackgroundColor(RenderWindow rw)
         {
             Color backgroundColor = GameProperties.ColorPink1;
 
             if (StoryProgress.ExplosionHasHappened)
             {
                 backgroundColor = GameProperties.ColorPink4;
+            }
+            if (StoryProgress.HasRepairedGenerator)
+            {
+                backgroundColor = GameProperties.ColorPink3;
             }
 
             rw.Clear(backgroundColor);
