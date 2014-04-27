@@ -3,7 +3,6 @@
 /// Published by Julian Dinges and Simon Weis, 2013
 /// Contact laguna_1989@gmx.net
 
-using System.Collections.Generic;
 using JamUtilities;
 using SFML.Graphics;
 using SFML.Window;
@@ -18,7 +17,11 @@ namespace JamTemplate
         {
             GRASS,
             EARTH,
-            LADDER
+            LADDER,
+            CABLE,
+            GENERATOR_1,
+            GENERATOR_2,
+            LAMP
         }
         #endregion Enums
 
@@ -77,6 +80,18 @@ namespace JamTemplate
                     break;
                 case TileType.LADDER:
                     _sprite = new SmartSprite("../GFX/ladder.png");
+                    break;
+                case TileType.CABLE:
+                    _sprite = new SmartSprite("../GFX/cable.png");
+                    break;
+                case TileType.GENERATOR_1:
+                    _sprite = new SmartSprite("../GFX/generator_1.png");
+                    break;
+                case TileType.GENERATOR_2:
+                    _sprite = new SmartSprite("../GFX/generator_2.png");
+                    break;
+                case TileType.LAMP:
+                    _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
                     break;
             }
         }

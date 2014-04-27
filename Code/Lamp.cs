@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using JamUtilities;
 using JamUtilities.ScreenEffects;
 using SFML.Graphics;
@@ -11,9 +8,9 @@ namespace JamTemplate
 {
     public class Lamp : IGameObject
     {
-        private  Texture _glowSpriteTexture;
-        private  Sprite _glowSpriteSprite;
-        private  bool IsInitialized = false;
+        private Texture _glowSpriteTexture;
+        private Sprite _glowSpriteSprite;
+        private bool IsInitialized = false;
         public Vector2f AbsolutePositionInPixel { get; private set; }
         private Vector2f _positionOffset;
         private float _lifeTime;
@@ -23,25 +20,25 @@ namespace JamTemplate
         public Lamp(Vector2f position)
         {
             AbsolutePositionInPixel = position;
-            _positionOffset = new Vector2f();
+            _positionOffset = new Vector2f(30, 5);
             _lifeTime = 0.0f;
-            _frequencyFactor = ((float)( 0.1 + 2.5 * RandomGenerator.Random.NextDouble()));
-            
+            _frequencyFactor = ((float)(0.1 + 2.5 * RandomGenerator.Random.NextDouble()));
+
             //Console.WriteLine(_frequencyFactor);
             if (!IsInitialized)
             {
                 GlowSpriteCreator.CreateRadialGlow(
                     out _glowSpriteTexture,
-                    (uint)(GameProperties.TileSizeInPixelScaled ),
+                    (uint)(GameProperties.TileSizeInPixelScaled),
                     GameProperties.ColorBlue1,
                     0.75f, PennerDoubleAnimation.EquationType.CubicEaseOut);
                 _glowSpriteSprite = new Sprite(_glowSpriteTexture);
-                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f, GameProperties.TileSizeInPixelScaled/3.0f + 6);
+                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f, GameProperties.TileSizeInPixelScaled / 3.0f + 6);
 
                 _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
-                _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal/2.0f, 2.5f);
+                _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal / 2.0f, 2.5f);
             }
-            
+
         }
 
         public bool IsDead()
@@ -57,7 +54,7 @@ namespace JamTemplate
         public void Update(TimeObject timeObject)
         {
             _lifeTime += timeObject.ElapsedGameTime * _frequencyFactor;
-            
+
         }
 
         public void Draw(SFML.Graphics.RenderWindow rw)
@@ -85,20 +82,20 @@ namespace JamTemplate
                 Color col = Color.White;
                 double alphaValue = Math.Abs(Math.Cos(Math.Sin(t * 3.0) + t * 3.0));
                 col.A = (byte)(240.0 - 140.0 * alphaValue);
-                
+
                 _glowSpriteSprite.Color = col;
-                
+
                 // draw Glowsprite
                 _glowSpriteSprite.Position = pos;
                 rw.Draw(_glowSpriteSprite);
 
 
 
-                
+
             }
-            
+
         }
 
-        
+
     }
 }

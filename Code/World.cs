@@ -17,6 +17,7 @@ namespace JamTemplate
 
         public List<TriggerArea> _triggerAreaList;
         private List<Tile> _tileList;
+        private List<Tile> _decorationTileList;
         // holds all the Waypoints in absolut coordinates
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
@@ -120,9 +121,9 @@ namespace JamTemplate
             {
                 t.Draw(rw);
             }
-            foreach (var l in _lampList)
+            foreach (var d in _decorationTileList)
             {
-                l.DrawLamp(rw);
+                d.Draw(rw);
             }
 
             _player.Draw(rw);
@@ -178,6 +179,7 @@ namespace JamTemplate
         {
 
             StoryProgress._world = this;
+            _decorationTileList = new List<Tile>();
             _tileList = new List<Tile>();
             _waypointList = new List<Vector2f>();
             _speechBubbleList = new List<IGameObject>();
@@ -345,6 +347,8 @@ namespace JamTemplate
             var parser = new MapParser(levelName == null ? "../Data/Overworld.tmx" : string.Format("../Data/{0}.tmx", levelName), levelName != null);
             GameProperties.WorldSizeInTiles = parser.WorldSize;
 
+            _decorationTileList = parser.DecorationLayer;
+            _lampList = parser.LampList;
             _tileList = parser.TerrainLayer;
             _triggerAreaList = parser.TriggerAreaList;
             _player.SetPlayerPosition(parser.PlayerPosition);

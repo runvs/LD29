@@ -14,6 +14,8 @@ namespace JamTemplate
     public class MapParser
     {
         public List<Tile> TerrainLayer { get; private set; }
+        public List<Tile> DecorationLayer { get; private set; }
+        public List<Lamp> LampList { get; private set; }
         public List<TriggerArea> TriggerAreaList { get; private set; }
         public Vector2i PlayerPosition { get; private set; }
         public Vector2i WorldSize { get; private set; }
@@ -21,13 +23,17 @@ namespace JamTemplate
 
         public MapParser(string fileName, bool isChangingLevel = false)
         {
+            DecorationLayer = new List<Tile>();
             TerrainLayer = new List<Tile>();
+            LampList = new List<Lamp>();
             TriggerAreaList = new List<TriggerArea>();
 
             var doc = new XmlDocument();
             doc.Load(fileName);
 
             int terrainOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Terrain']").Attributes["firstgid"].Value);
+            int decorationOffset = int.Parse(doc.SelectSingleNode("/map/tileset[@name='Decoration']").Attributes["firstgid"].Value);
+
             TileSize = new Vector2i(
                 int.Parse(doc.SelectSingleNode("/map").Attributes["tilewidth"].Value),
                 int.Parse(doc.SelectSingleNode("/map").Attributes["tilewidth"].Value)
@@ -68,6 +74,53 @@ namespace JamTemplate
                 }
 
                 TerrainLayer.Add(new Tile(xPos, yPos, type));
+
+                if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
+                {
+                    yPos++;
+                }
+                xPos = (xPos + 1) % WorldSize.X;
+            }
+
+            #endregion
+
+            #region Load the decorations layer
+
+            xPos = yPos = 0;
+
+            foreach (XmlNode layerNode in doc.SelectNodes("/map/layer[@name='Decorations']/data/tile"))
+            {
+                int gid = int.Parse(layerNode.Attributes["gid"].Value) - decorationOffset;
+                Tile.TileType type = Tile.TileType.LAMP;
+
+                switch (gid)
+                {
+                    case 0:
+                        type = Tile.TileType.GENERATOR_2;
+                        break;
+                    case 1:
+                        type = Tile.TileType.GENERATOR_1;
+                        break;
+                    case 2:
+                        type = Tile.TileType.LAMP;
+                        LampList.Add(new Lamp(new Vector2f(
+                            xPos * TileSize.X * SmartSprite._scaleVector.X,
+                            yPos * TileSize.Y * SmartSprite._scaleVector.Y
+                        )));
+                        break;
+                    case 3:
+                        type = Tile.TileType.CABLE;
+                        break;
+                    default:
+                        if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
+                        {
+                            yPos++;
+                        }
+                        xPos = (xPos + 1) % WorldSize.X;
+                        continue;
+                }
+
+                DecorationLayer.Add(new Tile(xPos, yPos, type));
 
                 if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
                 {
