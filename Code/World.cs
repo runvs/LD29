@@ -251,10 +251,9 @@ namespace JamTemplate
             _functionDict.Add("ThisWay", StoryProgress.ThisWay);
             _functionDict.Add("UpNorth", StoryProgress.UpNorth);
 
-
-
-
             _functionDict.Add("Finish", StoryProgress.Finished);
+
+            Camera.CameraPosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
 
         }
 
