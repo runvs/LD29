@@ -357,8 +357,6 @@ namespace JamTemplate
         {
             for (int i = 40; i != 46; i++)
             {
-
-
                 // remove the middle layer
                 _world._waypointGrid[i,38] = PathFinderHelper.EMPTY_TILE;
                 _world.RemoveTileAt(new Vector2i(i, 37));
@@ -380,9 +378,26 @@ namespace JamTemplate
             props.sizeSingle = 8;
             props.RotationType = ParticleManager.ParticleRotationType.PRT_None;
             props.AffectedByGravity = false;
-            var emitter = new ParticleEmitter(new FloatRect(40*GameProperties.TileSizeInPixelScaled, 37 * GameProperties.TileSizeInPixelScaled, 5 * GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled), props, 50);
+            var emitter = new ParticleEmitter(new FloatRect(40*GameProperties.TileSizeInPixelScaled, 37 * GameProperties.TileSizeInPixelScaled, 5 * GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled), props, 20);
             emitter.Update(3);
+        }
 
+        public static void ResetStory()
+        {
+            HasPickedUpHelm         = false;
+            ExplosionHasHappened    = false;
+        
+            HasBeenToGenerator      = false;
+            HasPickedUpCable        = false;
+            HasRepairedGenerator    = false;
+            
+            MinersRescued           = 0;
+
+            HasBeenToDrill          = false;
+            HasPickedUpDrillHead    = false;
+            HasRepairedDrill        = false;
+        
+            HasReachedExit          = false;
         }
 
 

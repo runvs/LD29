@@ -115,16 +115,27 @@ namespace JamTemplate
                // Game End Condition
                 if (StoryProgress.HasReachedExit)
                 {
+                    _myWorld._player.StopPlayerWalkSound();
+
                     _endingTimer += deltaT;
                     if (_endingTimer >= 5)
                     {
                         ChangeGameState(State.Credits);
                     }
+                    if(_bgm.Volume > 1.0f)
+                    {
+                        _bgm.Volume -= 75.0f/5.0f*deltaT;
+                    }
+                }
+                else
+                {
+                    _bgm.Volume = 75;
                 }
 
             }
             else if (_gameState == State.Menu && this._timeTilNextInput <= 0.0f)
             {
+				_bgm.Volume = 75;
                 CanBeQuit = true;
             }
 
@@ -206,6 +217,7 @@ namespace JamTemplate
                 _myWorld = new World();
                 ChangeGameState(State.Game, 0.1f);
                 loading = false;
+                StoryProgress.ResetStory();
             }
         }
 

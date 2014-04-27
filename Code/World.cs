@@ -137,9 +137,6 @@ namespace JamTemplate
 
             _backgroundImage.Draw(rw);
 
-
-            ParticleManager.Draw(rw);
-
             foreach (var ac in _cloudList)
             {
                 ac.Draw(rw);
@@ -149,6 +146,7 @@ namespace JamTemplate
             {
                 b.Draw(rw);
             }
+            ParticleManager.Draw(rw);
             foreach (var t in _tileList)
             {
                 t.Draw(rw);

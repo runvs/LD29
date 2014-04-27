@@ -148,7 +148,10 @@ namespace JamTemplate
             {
                 _walkSound.Pause();
             }
-
+        }
+        public void StopPlayerWalkSound()
+        {
+            _walkSound.Pause();
         }
 
         public void ResetPathfinding()
