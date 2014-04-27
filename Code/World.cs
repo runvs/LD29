@@ -384,6 +384,8 @@ namespace JamTemplate
 
             AddSpeechBubble("Tap above the ground to walk.", new Vector2f(_player.AbsolutePositionInPixel.X, _player.AbsolutePositionInPixel.Y - 200));
 
+            ParticleManager.CreateChimney(new FloatRect(1038, 195, 3,3), GameProperties.ColorPink4, 40);
+
         }
 
         private void CreateLampPositions()
@@ -426,7 +428,7 @@ namespace JamTemplate
                 }
                 Vector2f dropSpawnPosition =
                     new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
-                ParticleManager.CreateAreaRain(new FloatRect(
+                ParticleManager.CreateRainArea(new FloatRect(
                     dropSpawnPosition.X,
                     dropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled,
                     GameProperties.TileSizeInPixelScaled,
