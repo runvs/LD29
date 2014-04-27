@@ -170,10 +170,10 @@ namespace JamTemplate
         {
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
             ScreenEffects.GetStaticEffect("scanlines").Draw(rw);
-            if (StoryProgress.ExplosionHasHappened)
+            if (StoryProgress.ExplosionHasHappened && !StoryProgress.HasReachedExit)
             {
                 ScreenEffects.GetStaticEffect("vignette").Draw(rw);
-                if (!StoryProgress.HasRepairedGenerator)
+                if (!StoryProgress.HasRepairedGenerator )
                 {
                     ScreenEffects.GetStaticEffect("vignette").Draw(rw);
                 }

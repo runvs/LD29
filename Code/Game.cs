@@ -16,12 +16,12 @@ namespace JamTemplate
         private State _gameState;
 
         World _myWorld;
-        Score _gameStats;
 
         Music _bgm; 
         float _timeTilNextInput = 0.0f;
 
-        bool loading = false;
+        bool loading = false; 
+        float _endingTimer;
 
         #endregion Fields
 
@@ -38,6 +38,7 @@ namespace JamTemplate
             //ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
             ParticleManager.Gravity = new Vector2f(0,3);
             Camera.MinPosition = new Vector2f(0, -200);
+            _endingTimer = 0.0f; 
             
             try
             {
@@ -70,7 +71,7 @@ namespace JamTemplate
                 {
                     _myWorld.GetInput();
                 }
-                else if (_gameState == State.Credits || _gameState == State.Score)
+                else if (_gameState == State.Credits)
                 {
                     GetInputCreditsScore();
                 }
@@ -114,6 +115,14 @@ namespace JamTemplate
                 _myWorld.Update(Timing.Update(deltaT));
 
                // Game End Condition
+                if (StoryProgress.HasReachedExit)
+                {
+                    _endingTimer += deltaT;
+                    if (_endingTimer >= 5)
+                    {
+                        ChangeGameState(State.Credits);
+                    }
+                }
 
             }
             else if (_gameState == State.Menu && this._timeTilNextInput <= 0.0f)
@@ -137,10 +146,6 @@ namespace JamTemplate
             else if (_gameState == State.Credits)
             {
                 DrawCredits(rw);
-            }
-            else if (_gameState == State.Score)
-            {
-                _gameStats.Draw(rw);
             }
         }
 
@@ -212,7 +217,6 @@ namespace JamTemplate
         {
             Menu,
             Game,
-            Score,
             Credits
         }
 

@@ -29,11 +29,11 @@ namespace JamTemplate
             {
                 GlowSpriteCreator.CreateRadialGlow(
                     out _glowSpriteTexture,
-                    (uint)(GameProperties.TileSizeInPixelScaled),
+                    (uint)(GameProperties.TileSizeInPixelScaled * 1.75),
                     GameProperties.ColorBlue1,
-                    0.75f, PennerDoubleAnimation.EquationType.CubicEaseOut);
+                    0.85f, PennerDoubleAnimation.EquationType.CubicEaseOut);
                 _glowSpriteSprite = new Sprite(_glowSpriteTexture);
-                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f, GameProperties.TileSizeInPixelScaled / 3.0f + 6);
+                _glowSpriteSprite.Origin = new Vector2f(GameProperties.TileSizeInPixelScaled / 2.0f + 21, GameProperties.TileSizeInPixelScaled / 3.0f + 20);
 
                 _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
                 _sprite.Origin = new Vector2f(GameProperties.TileSizeInPixelOriginal / 2.0f, 2.5f);
