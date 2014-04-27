@@ -3,6 +3,7 @@
 /// Published by Julian Dinges and Simon Weis, 2013
 /// Contact laguna_1989@gmx.net
 
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using JamUtilities;
@@ -96,19 +97,23 @@ namespace JamTemplate
                 switch (gid)
                 {
                     case 0:
+                        // We got a lot of gids from the tileset for the building. Just use this (upper left corner)
+                        type = Tile.TileType.MINING_BUILDING;
+                        break;
+                    case 4:
                         type = Tile.TileType.GENERATOR_2;
                         break;
-                    case 1:
+                    case 5:
                         type = Tile.TileType.GENERATOR_1;
                         break;
-                    case 2:
+                    case 6:
                         type = Tile.TileType.LAMP;
                         LampList.Add(new Lamp(new Vector2f(
                             xPos * TileSize.X * SmartSprite._scaleVector.X,
                             yPos * TileSize.Y * SmartSprite._scaleVector.Y
                         )));
                         break;
-                    case 3:
+                    case 7:
                         type = Tile.TileType.CABLE;
                         break;
                     default:

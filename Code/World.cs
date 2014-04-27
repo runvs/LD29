@@ -76,7 +76,7 @@ namespace JamTemplate
 
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
-            AreatricCloud.GlobalPositionOffset = Camera.CameraPosition* 0.75f;
+            AreatricCloud.GlobalPositionOffset = Camera.CameraPosition * 0.75f;
         }
 
         private void CheckIfAreaTriggered()
@@ -385,8 +385,8 @@ namespace JamTemplate
             AddSpeechBubble("Tap above the ground to walk.", new Vector2f(_player.AbsolutePositionInPixel.X, _player.AbsolutePositionInPixel.Y - 200));
 
             ParticleManager.CreateChimney(
-                new FloatRect(20 * GameProperties.TileSizeInPixelScaled + 29, 2 * GameProperties.TileSizeInPixelScaled + 3, 8, 2),
-                GameProperties.ColorPink4, 
+                new FloatRect(20 * GameProperties.TileSizeInPixelScaled + 48, 2 * GameProperties.TileSizeInPixelScaled + 3, 8, 2),
+                GameProperties.ColorPink4,
                 90);
 
         }

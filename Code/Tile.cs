@@ -21,7 +21,8 @@ namespace JamTemplate
             CABLE,
             GENERATOR_1,
             GENERATOR_2,
-            LAMP
+            LAMP,
+            MINING_BUILDING
         }
         #endregion Enums
 
@@ -92,6 +93,9 @@ namespace JamTemplate
                     break;
                 case TileType.LAMP:
                     _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
+                    break;
+                case TileType.MINING_BUILDING:
+                    _sprite = new SmartSprite("../GFX/mining_building.png");
                     break;
             }
         }
