@@ -38,7 +38,7 @@
         <key>dataFormat</key>
         <string>sparrow</string>
         <key>textureFileName</key>
-        <filename>../GFX/tileset_decorations.png</filename>
+        <filename>../GFX/src/tileset_decorations.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -131,7 +131,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../GFX/tileset_decorations.xml</filename>
+                <filename>../GFX/src/tileset_decorations.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
