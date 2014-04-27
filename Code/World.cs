@@ -496,5 +496,10 @@ namespace JamTemplate
 
         #endregion Methods
 
+
+        internal void AddTile(Tile tile)
+        {
+            _tileList.Add(tile);
+        }
     }
 }

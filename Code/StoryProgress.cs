@@ -353,11 +353,34 @@ namespace JamTemplate
 
         private static void DoNiceDrillStuff()
         {
-            for (int i = 40; i != 45; i++)
+            for (int i = 40; i != 46; i++)
             {
-                _world._waypointGrid[i,37] = PathFinderHelper.EMPTY_TILE;
+
+
+                // remove the middle layer
+                _world._waypointGrid[i,38] = PathFinderHelper.EMPTY_TILE;
                 _world.RemoveTileAt(new Vector2i(i, 37));
+
+                // remove the layer below and replace it with the correct tiles
+                _world.RemoveTileAt(new Vector2i(i, 36));
+                _world.AddTile(new Tile(i, 36, Tile.TileType.UNDERWORLD_BOTTOM));
+
+                // remove the layer above and replace it with the correct tiles
+                _world.RemoveTileAt(new Vector2i(i, 38));
+                _world.AddTile(new Tile(i, 38, Tile.TileType.UNDERWORLD_TOP));
             }
+
+            ParticleProperties props = new ParticleProperties();
+            props.Type = ParticleManager.ParticleType.PT_SmokeCloud;
+            props.col = GameProperties.ColorBrown3;
+            props.lifeTime = 2.5f;
+            props.sizeMultiple = 100.0f;
+            props.sizeSingle = 8;
+            props.RotationType = ParticleManager.ParticleRotationType.PRT_None;
+            props.AffectedByGravity = false;
+            var emitter = new ParticleEmitter(new FloatRect(40*GameProperties.TileSizeInPixelScaled, 37 * GameProperties.TileSizeInPixelScaled, 5 * GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled), props, 5);
+            emitter.Update(3);
+
         }
 
        
