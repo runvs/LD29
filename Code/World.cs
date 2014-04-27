@@ -336,26 +336,21 @@ namespace JamTemplate
 
         private void CreateLampPositions()
         {
-            foreach (var startingTile in _tileList)
-            {
-                Tile t = startingTile;
-                Vector2i tilePosition = t.TilePosition;
-                Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
-                if (tBelow == null)
-                {
-                    if (RandomGenerator.Random.NextDouble() > 0.5)
-                    {
-                        Vector2f lampPosition =
-                            new Vector2f((float)(tilePosition.X) + 0.5f, (float)(tilePosition.Y) + 1.15f) * GameProperties.TileSizeInPixelScaled;
-                        _lampList.Add(new Lamp(lampPosition));
-                    }
-                }
-                //Vector2f DropSpawnPosition = new Vector2f(finallyFound.TilePosition.X, finallyFound.TilePosition.Y) * GameProperties.TileSizeInPixelScaled;
-                //ParticleManager.CreateAreaRain(new FloatRect(DropSpawnPosition.X, DropSpawnPosition.Y + GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled, GameProperties.TileSizeInPixelScaled / 8), GameProperties.ColorBlue4, 0.35f + 0.1f * (float)RandomGenerator.Random.NextDouble());
-            }
-
-
-
+            //foreach (var startingTile in _tileList)
+            //{
+            //    Tile t = startingTile;
+            //    Vector2i tilePosition = t.TilePosition;
+            //    Tile tBelow = GetTileOnPosition(tilePosition.X, tilePosition.Y + 1);
+            //    if (tBelow == null)
+            //    {
+            //        if (RandomGenerator.Random.NextDouble() > 0.5)
+            //        {
+            //            Vector2f lampPosition =
+            //                new Vector2f((float)(tilePosition.X) + 0.5f, (float)(tilePosition.Y) + 1.15f) * GameProperties.TileSizeInPixelScaled;
+            //            _lampList.Add(new Lamp(lampPosition));
+            //        }
+            //    }
+            //}
         }
 
         private void CreateWaterDropSpaces()
