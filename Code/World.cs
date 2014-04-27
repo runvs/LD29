@@ -21,6 +21,7 @@ namespace JamTemplate
         private List<Vector2f> _waypointList;
         private List<IGameObject> _speechBubbleList;
         private List<Lamp> _lampList;
+        private List<AreatricCloud> _cloudList;
         public Player _player;
         internal byte[,] _waypointGrid;
         private Dictionary<string, Action<object>> _functionDict;
@@ -74,6 +75,7 @@ namespace JamTemplate
 
             Camera.ShouldBePosition = _player.AbsolutePositionInPixel - new Vector2f(400, 300);
             Camera.DoCameraMovement(timeObject);
+            AreatricCloud.GlobalPositionOffset = Camera.CameraPosition* 0.75f;
         }
 
         private void CheckIfAreaTriggered()
@@ -109,6 +111,11 @@ namespace JamTemplate
 
             ParticleManager.Draw(rw);
 
+            foreach (var ac in _cloudList)
+            {
+                ac.Draw(rw);
+            }
+
             foreach (var t in _tileList)
             {
                 t.Draw(rw);
@@ -128,6 +135,8 @@ namespace JamTemplate
             {
                 l.DrawGlow(rw);
             }
+
+
 
             DrawOverlayEffect(rw);
 
@@ -174,8 +183,11 @@ namespace JamTemplate
             _speechBubbleList = new List<IGameObject>();
             _lampList = new List<Lamp>();
             _functionDict = new Dictionary<string, Action<object>>();
+
             _player = new Player(this, 0);
             LoadWorld();
+
+            CreateClouds();
 
             _functionDict.Add("Helm", StoryProgress.Helm);
             _functionDict.Add("MoveIn", StoryProgress.MoveIn);
@@ -186,6 +198,22 @@ namespace JamTemplate
             _functionDict.Add("GeneratorArea", StoryProgress.VisitGeneratorArea);
             _functionDict.Add("Cable", StoryProgress.PickupCable);
 
+        }
+
+        private void CreateClouds()
+        {
+            Color cloudColor = GameProperties.ColorPink4;
+            Color backgroundColor = GameProperties.ColorPink1;
+
+            _cloudList = new System.Collections.Generic.List<AreatricCloud>();
+            for (int i = 0; i != 120; i++)
+            {
+                AreatricCloud ac = new AreatricCloud(
+                    RandomGenerator.GetRandomVector2f(new Vector2f(-64, 1600), new Vector2f(-100, 64)),
+                    cloudColor,
+                    backgroundColor);
+                _cloudList.Add(ac);
+            }
         }
 
 
