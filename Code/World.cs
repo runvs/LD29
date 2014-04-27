@@ -241,6 +241,11 @@ namespace JamTemplate
 
 
             _functionDict.Add("LadderDamaged", StoryProgress.LadderDamaged);
+            _functionDict.Add("ThisWay", StoryProgress.ThisWay);
+            _functionDict.Add("UpNorth", StoryProgress.UpNorth);
+            
+            
+
 
             _functionDict.Add("Finish", StoryProgress.Finished);
 

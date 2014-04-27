@@ -385,7 +385,19 @@ namespace JamTemplate
 
         }
 
-       
+
+
+        internal static void ThisWay(object obj)
+        {
+            _world.AddSpeechBubble("Let's go! This way.",
+                               new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+        }
+
+        internal static void UpNorth(object obj)
+        {
+            _world.AddSpeechBubble("Just Go up and east.",
+                               new Vector2f(_world._player.AbsolutePositionInPixel.X - 150, _world._player.AbsolutePositionInPixel.Y - 256));
+        }
     }
 }
 
