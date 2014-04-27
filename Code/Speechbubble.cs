@@ -25,6 +25,7 @@ namespace JamTemplate
         private static Texture _glowShadeTexture;
         private static Sprite _glowShadeSprite;
         private float _timeSinceStart;
+        private static byte _spriteBasicAlphaValue = 155;
 
 
 
@@ -34,8 +35,8 @@ namespace JamTemplate
             {
                 _isInitialized = true;
                 _sprite = new SmartSprite("../GFX/speech.png");
-                _spriteOffset = new Vector2f(-25, -15);
-                _sprite.Alpha = 185;
+                _spriteOffset = new Vector2f(-25, -5);
+                _sprite.Alpha = _spriteBasicAlphaValue;
 
                 GlowSpriteCreator.CreateRadialGlow(out _glowShadeTexture, 450, GameProperties.ColorPink4, 0.7f, PennerDoubleAnimation.EquationType.Linear);
                 _glowShadeSprite = new Sprite(_glowShadeTexture);
@@ -80,6 +81,7 @@ namespace JamTemplate
         {
             if (!IsDead)
             {
+                // position Stuff
                 Vector2f screenPos = 
                     AbsolutePosition - 
                     Camera.CameraPosition + 
@@ -88,26 +90,33 @@ namespace JamTemplate
                 _sprite.Position = screenPos + _spriteOffset;
                 _glowShadeSprite.Position = screenPos + _spriteOffset;
 
+                // fading Stuff
                 float alphaVal = (1.0f - (float)PennerDoubleAnimation.GetValue(
                         PennerDoubleAnimation.EquationType.CubicEaseIn,
                         GameProperties.SpeechBubbleFadeTime- _remainingDisplayTime,
                         0,1,GameProperties.SpeechBubbleFadeTime));
                 if (IsFadingOut)
                 {
-                    _sprite.Alpha = (byte)(135.0 *  alphaVal);
+                    _sprite.Alpha = (byte)((float)_spriteBasicAlphaValue * alphaVal);
                     Color colshade = Color.White;
                     colshade.A = (byte)(255.0f * alphaVal);
                     _glowShadeSprite.Color = colshade;
                 }
                 else
                 {
-                    _sprite.Alpha = 185;
+                    Color colshade = Color.White;
+                    colshade.A = 255;
+                    _glowShadeSprite.Color = colshade;
+                    _sprite.Alpha = _spriteBasicAlphaValue;
                 }
                 rw.Draw(_glowShadeSprite);
                 _sprite.Draw(rw);
+
+                // Text Stuff
                 Color col = GameProperties.ColorBlue1;
                 col.A = (byte)((float)_sprite.Alpha / 185.0f * 255.0f);
-                screenPos += ScreenEffects.GlobalSpriteOffset + new Vector2f(- 1.0f * (float)Math.Sin(_timeSinceStart * 0.5 + 3.2f),
+                screenPos += ScreenEffects.GlobalSpriteOffset + 
+                        new Vector2f(- 1.0f * (float)Math.Sin(_timeSinceStart * 0.5 + 3.2f),
                         - 4 * (float)Math.Sin(_timeSinceStart* 1.5 + 2)); ;
                 SmartText.DrawTextWithLineBreaks(Text, TextAlignment.LEFT, screenPos , new Vector2f(1.0f, 1.0f), col, rw);
             }
