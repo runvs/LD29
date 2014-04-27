@@ -22,6 +22,9 @@ namespace JamTemplate
             LAMP,
             MINING_BUILDING,
 
+            MINER,
+            DRILL,
+
             OVERWORLD_TOP,
             OVERWORLD_TOP_LEFT,
             OVERWORLD_TOP_RIGHT,

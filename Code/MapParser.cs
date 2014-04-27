@@ -161,16 +161,23 @@ namespace JamTemplate
 
                 switch (gid)
                 {
+                    // The mining building
+                    // We get a lot of gids from the tileset for the building. Just use this (upper left corner)
                     case 0:
-                        // We got a lot of gids from the tileset for the building. Just use this (upper left corner)
                         type = Tile.TileType.MINING_BUILDING;
                         break;
+
+                    // Miner NPC
                     case 4:
-                        type = Tile.TileType.GENERATOR_2;
+                        type = Tile.TileType.MINER;
                         break;
+
+                    // Right part of the generator
                     case 5:
                         type = Tile.TileType.GENERATOR_1;
                         break;
+
+                    // Lamp
                     case 6:
                         type = Tile.TileType.LAMP;
                         LampList.Add(new Lamp(new Vector2f(
@@ -178,9 +185,22 @@ namespace JamTemplate
                             yPos * TileSize.Y * SmartSprite._scaleVector.Y
                         )));
                         break;
-                    case 7:
+
+                    // Left part of the generator
+                    case 11:
+                        type = Tile.TileType.GENERATOR_2;
+                        break;
+
+                    // Drill machine
+                    case 12:
+                        type = Tile.TileType.DRILL;
+                        break;
+
+                    // The cable that has to be picked up
+                    case 13:
                         type = Tile.TileType.CABLE;
                         break;
+
                     default:
                         if (xPos != 0 && (xPos + 1) % WorldSize.X == 0)
                         {
