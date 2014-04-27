@@ -115,10 +115,16 @@ namespace JamTemplate
                     break;
                 case TileType.LAMP:
                     _sprite = new SmartSprite("../GFX/ceiling_lamp.png");
-                    _sprite.Origin = new Vector2f(0,2);
+                    _sprite.Origin = new Vector2f(0, 2);
                     break;
                 case TileType.MINING_BUILDING:
                     _sprite = new SmartSprite("../GFX/mining_building.png");
+                    break;
+                case TileType.MINER:
+                    _sprite = new SmartSprite("../GFX/miner.png");
+                    break;
+                case TileType.DRILL:
+                    _sprite = new SmartSprite("../GFX/drill_machine.png");
                     break;
                 default:
                     _sprite = new SmartSprite(string.Format("../GFX/tiles/{0}.png", _type.ToString()));
