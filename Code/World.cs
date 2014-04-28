@@ -264,17 +264,24 @@ namespace JamTemplate
 
         private void CreateClouds()
         {
-            Color cloudColor = GameProperties.ColorGrey1;
-            Color backgroundColor = GameProperties.ColorPink4;
-
             _cloudList = new System.Collections.Generic.List<AreatricCloud>();
-            for (int i = 0; i != 120; i++)
+            try
             {
-                AreatricCloud ac = new AreatricCloud(
-                    RandomGenerator.GetRandomVector2f(new Vector2f(-64, 1600), new Vector2f(-100, 64)),
-                    cloudColor,
-                    backgroundColor);
-                _cloudList.Add(ac);
+                Color cloudColor = GameProperties.ColorGrey1;
+                Color backgroundColor = GameProperties.ColorPink4;
+                for (int i = 0; i != 120; i++)
+                {
+                    AreatricCloud ac = new AreatricCloud(
+                        RandomGenerator.GetRandomVector2f(new Vector2f(-64, 1600), new Vector2f(-100, 64)),
+                        cloudColor,
+                        backgroundColor);
+                    _cloudList.Add(ac);
+                }
+            }
+            catch (AccessViolationException e)
+            {
+                Console.WriteLine(e.Message);
+                _cloudList.Clear();
             }
         }
 
