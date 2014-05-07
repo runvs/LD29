@@ -158,24 +158,25 @@ namespace JamTemplate
 
             _player.Draw(rw);
 
-            foreach (var sb in _speechBubbleList)
-            {
-                sb.Draw(rw);
-            }
+
             foreach (var l in _lampList)
             {
                 l.DrawGlow(rw);
             }
 
-            DrawOverlayEffect(rw);
 
+            DrawOverlayEffect(rw);
+            foreach (var sb in _speechBubbleList)
+            {
+                sb.Draw(rw);
+            }
+            ScreenEffects.GetStaticEffect("vignette").Draw(rw);
 
             ScreenEffects.Draw(rw);
         }
 
         private void DrawOverlayEffect(RenderWindow rw)
         {
-            ScreenEffects.GetStaticEffect("vignette").Draw(rw);
             ScreenEffects.GetStaticEffect("scanlines").Draw(rw);
             if (StoryProgress.ExplosionHasHappened && !StoryProgress.HasReachedExit)
             {

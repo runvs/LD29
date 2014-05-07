@@ -57,11 +57,11 @@ namespace JamTemplate
 
                 _clickSndBuf = new SoundBuffer("../SFX/click.ogg");
                 _clickSound = new Sound (_clickSndBuf);
-                _clickSound.Volume = 150;
+                _clickSound.Volume = 45;
                 _walkSndBuf = new SoundBuffer("../SFX/walking.ogg");
                 _walkSound = new Sound(_walkSndBuf);
                 _walkSound.Loop = true;
-                _walkSound.Volume = 20;
+                _walkSound.Volume = 35;
                 
             }
             catch (LoadingFailedException e)
